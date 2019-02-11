@@ -10,7 +10,7 @@ a web micro-framework.
 - Abhaya Tamrakar
 - Suwamik Paul
 - Michael Bianconi
-
+- Nicholas Chieppa
 
 ## Prerequisites
 

@@ -7,8 +7,8 @@ a web micro-framework.
 ## Team
 
 - Dylan Cuprewich
-- MEMBER2
-- MEMBER3
+- Abhaya Tamrakar
+- Suwamik Paul
 - MEMBER4
 
 

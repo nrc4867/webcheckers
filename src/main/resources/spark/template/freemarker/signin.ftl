@@ -20,11 +20,12 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl">
 
-    <!-- TODO: future content on the Home:
-            to start games,
-            spectating active games,
-            or replay archived games
-    -->
+    <form action="./signin" method="POST">
+        Username: 
+        <input name="username" />
+        <br/><br/>
+        <button type="submit">Sign in</button>
+      </form>
 
   </div>
 

@@ -21,8 +21,12 @@ import com.webcheckers.util.Message;
 public class GetSignInRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
+  public static final String TITLE_ATTR = "title";
+  public static final String MESSAGE_ATTR = "message";
+
   private static final String VIEW_FORM = "signin.ftl";
   private static final Message SIGNIN_MSG = Message.info("Please register a name for yourself.");
+  public static final String TITLE = "Sign in";
 
   private final TemplateEngine templateEngine;
 
@@ -54,10 +58,10 @@ public class GetSignInRoute implements Route {
     LOG.finer("GetSignInRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Sign In");
+    vm.put(TITLE_ATTR, TITLE);
 
     // display a user message in the Sign In page
-    vm.put("message", SIGNIN_MSG);
+    vm.put(MESSAGE_ATTR, SIGNIN_MSG);
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_FORM));

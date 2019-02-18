@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The UI controller for the POST signin page
+ *
+ * @author Nicholas Chieppa
+ */
 public class PostSignInRoute implements Route {
 
     public static final String VIEW_NAME = "signin.ftl";
@@ -16,6 +21,12 @@ public class PostSignInRoute implements Route {
     private final SignInService signInService;
     private final TemplateEngine templateEngine;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
+     *
+     * @param signInService the username checker service
+     * @param templateEngine the HTML template rendering engine
+     */
     public PostSignInRoute(SignInService signInService, TemplateEngine templateEngine) {
         Objects.requireNonNull(signInService, "SignInService must not be null");
         Objects.requireNonNull(templateEngine, "TemplateEngine must not be null");
@@ -24,6 +35,17 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Render the WebCheckers SignIn page or redirect to homepage.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the SignIn page, Redirect to homepage
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         // Start creating elements that must be placed in the page
@@ -42,6 +64,12 @@ public class PostSignInRoute implements Route {
         return null;
     }
 
+    /**
+     * Handle error messages for signing in
+     * @param pageElements the elements on the page
+     * @param message the message to return to the user
+     * @return the UI view that the user sees
+     */
     private ModelAndView error(Map<String, Object> pageElements, String message) {
         pageElements.put(GetSignInRoute.MESSAGE_ATTR, Message.info(message));
         return new ModelAndView(pageElements, VIEW_NAME);

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.SignInService;
 import spark.TemplateEngine;
 
 
@@ -59,6 +60,7 @@ public class WebServer {
   // Attributes
   //
 
+  private final SignInService signInService;
   private final TemplateEngine templateEngine;
   private final Gson gson;
 
@@ -84,6 +86,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
+    this.signInService = new SignInService();
   }
 
   //
@@ -141,6 +144,7 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
+    post(SIGNIN_URL, new PostSignInRoute(signInService, templateEngine));
     //
     LOG.config("WebServer is initialized.");
   }

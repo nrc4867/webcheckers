@@ -25,6 +25,20 @@
             spectating active games,
             or replay archived games
     -->
+    <div class="playerlist">
+      <h2>Players Online</h2>
+      <#list users>
+        <ul>
+          <#items as user>
+            <li>${user}</li>
+          </#items>
+        </ul>
+      <#else>
+        <ul>
+          <li>No players are online.</li>
+        </ul>
+      </#list>
+    </div>
 
   </div>
 

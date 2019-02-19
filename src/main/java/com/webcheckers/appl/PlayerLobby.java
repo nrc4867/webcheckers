@@ -11,9 +11,9 @@ import java.util.HashSet;
  * @author Michael Bianconi
  * @since Sprint 1
  */
-public class SignInService {
+public class PlayerLobby {
 
-  private static final Logger LOG = Logger.getLogger(SignInService.class.getName());
+  private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
   public static final String NAME_TAKEN_MESSAGE =
       "That name's already taken!.";
@@ -25,12 +25,12 @@ public class SignInService {
 
 
   /**
-   * Creates a new SignInService. All SignInServices reference the same
+   * Creates a new PlayerLobby. All SignInServices reference the same
    * namesInUse set.
    *
    * @author Michael Bianconi
    */
-  public SignInService() {
+  public PlayerLobby() {
     LOG.fine("New sign in service instance created.");
   }
 

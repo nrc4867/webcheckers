@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.SignInException;
-import com.webcheckers.appl.SignInService;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -18,20 +18,20 @@ public class PostSignInRoute implements Route {
 
     public static final String VIEW_NAME = "signin.ftl";
 
-    private final SignInService signInService;
+    private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
      *
-     * @param signInService the username checker service
+     * @param playerLobby the username checker service
      * @param templateEngine the HTML template rendering engine
      */
-    public PostSignInRoute(SignInService signInService, TemplateEngine templateEngine) {
-        Objects.requireNonNull(signInService, "SignInService must not be null");
+    public PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+        Objects.requireNonNull(playerLobby, "PlayerLobby must not be null");
         Objects.requireNonNull(templateEngine, "TemplateEngine must not be null");
 
-        this.signInService = signInService;
+        this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
@@ -56,7 +56,7 @@ public class PostSignInRoute implements Route {
 
         ModelAndView mv;
         try {
-            signInService.reserveName(playerName);
+            playerLobby.reserveName(playerName);
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

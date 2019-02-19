@@ -61,6 +61,7 @@ public class PostSignInRoute implements Route {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);
         }
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 

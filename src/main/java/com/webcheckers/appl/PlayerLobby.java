@@ -16,7 +16,7 @@ public class PlayerLobby {
   private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
   public static final String NAME_TAKEN_MESSAGE =
-      "That name's already taken!.";
+      "That name's already taken!";
 
   public static final String NAME_INVALID_MESSAGE =
       "Your name must have at least one alphanumeric character!";
@@ -101,6 +101,14 @@ public class PlayerLobby {
   public int numReserved() {
 
     return namesInUse.size();
+  }
+
+  /**
+   * @return the list of player names that are on this server
+   */
+  public String[] names() {
+    String[] names = new String[namesInUse.size()];
+    return namesInUse.toArray(names);
   }
 
 }

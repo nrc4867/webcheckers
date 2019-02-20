@@ -2,10 +2,10 @@ package com.webcheckers.appl;
 
 public class Player {
 
-	public enum Color {RED, WHITE};
+	public enum Color {RED, WHITE, UNASSIGNED};
 
 	private final String name;
-	private final Color color;
+	private Color color;
 
 	// CONSTRUCTORS ===========================================================
 
@@ -19,6 +19,8 @@ public class Player {
 
 	public String getName() {return name;}
 	public Color getColor() {return color;}
+	
+	public void setColor(Color c) {this.color = c;}
 
 	// OBJECT =================================================================
 

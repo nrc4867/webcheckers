@@ -40,7 +40,7 @@ public class Board {
 	}
 
 	// ACCESSORS ==============================================================
-
+	
 	/**
 	 * Creates the checkerboard pattern with new pieces. White goes on top.
 	 */

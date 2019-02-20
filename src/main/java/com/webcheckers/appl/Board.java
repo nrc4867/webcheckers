@@ -21,12 +21,15 @@ public class Board {
 
 	/**
 	 * Constructs the board. Red goes first. Board starts with 3 rows of 4
-	 * pieces for each player.
+	 * pieces for each player. Players must NOT have unassigned colors.
 	 *
 	 * @param red Red player.
 	 * @param white White player.
 	 */
 	public Board(Player red, Player white) {
+		assert(red.getColor() != Player.Color.UNASSIGNED);
+		assert(white.getColor() != Player.Color.UNASSIGNED);
+
 		redPlayer = red;
 		whitePlayer = white;
 		squares = new Piece[SIZE][SIZE];
@@ -74,9 +77,21 @@ public class Board {
 		for (int row = 0; row < SIZE; row++) {
 			for (int col = 0; col < SIZE; col++) {
 
-
+				if (squares[row][col] == null) {
+					builder.append(" ");
+				}
+				else if (squares[row][col].getColor() == Player.Color.RED) {
+					builder.append("R");
+				}
+				else if (squares[row][col].getColor() == Player.Color.WHITE) {
+					builder.append("W");
+				}
 			}
+
+			builder.append("\n");
 		}
+
+		return builder.toString();
 	}
 
 }

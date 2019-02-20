@@ -54,6 +54,7 @@ public class Piece {
 	public int getRow() {return row;}
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
+	public Player.Color getColor() {return owner.getColor();}
 
 	// Object =================================================================
 

@@ -6,11 +6,8 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.util.NavBar;
+import spark.*;
 
 import com.webcheckers.util.Message;
 
@@ -55,6 +52,7 @@ public class GetHomeRoute implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
+    final Session httpSession = request.session();
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
@@ -65,6 +63,8 @@ public class GetHomeRoute implements Route {
 
     // create the list of players
     vm.put("users", playerLobby.names());
+
+    NavBar.updateNavBar(vm, httpSession);
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

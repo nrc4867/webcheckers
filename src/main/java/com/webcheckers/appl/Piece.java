@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import java.util.Objects;
+
 public class Piece {
 
 	// TYPE ENUM ==============================================================
@@ -11,10 +12,10 @@ public class Piece {
 	// ATTRIBUTES =============================================================
 	
 	private final Player owner; // red, white
-	private Type type; // standard, king
+	private final Type type; // standard, king
 
-	private int col;
-	private int row;
+	private final int col;
+	private final int row;
 
 	// CONSTRUCTORS ===========================================================
 
@@ -40,7 +41,7 @@ public class Piece {
 	 * @param type What kind of piece this is.
 	 * @see Piece(int, int, Player)
 	 */
-	public Piece(int col, int y, Player owner, Type type) {
+	public Piece(int col, int row, Player owner, Type type) {
 		this.col = col;
 		this.row = row;
 		this.owner = owner;
@@ -53,12 +54,6 @@ public class Piece {
 	public int getRow() {return row;}
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
-
-	public void setCol(int c) {col = c;}
-	public void setRow(int r) {row = r;}
-	public void setType(Type t) {type = t;}
-	public void king() {type = Type.KING;}
-	public void kill() {type = Type.DEAD;}
 
 	// Object =================================================================
 
@@ -87,7 +82,7 @@ public class Piece {
 	public String toString() {
 		return String.format(
 			"%s'S %s PIECE AT (%d,%d)",
-			owner.name(), type.name(), col, row
+			owner.toString(), type.name(), col, row
 		);
 	}
 }

@@ -56,7 +56,7 @@ public class SignInService {
    * @see freeName()
    * @author Michael Bianconi
    */
-  public void reserveName(String name) throws SignInException {
+  public void register(String name) throws SignInException {
 
     if (!validName(name)) {
       throw new SignInException(NAME_INVALID_MESSAGE);
@@ -75,10 +75,10 @@ public class SignInService {
    *
    * @param name Name to remove.
    * @return Returns false if the name isn't in the list (should never happen).
-   * @see reserveName()
+   * @see #reserveName()
    * @author Michael Bianconi
    */
-  public boolean freeName(String name) {
+  public boolean free(String name) {
 
     return namesInUse.remove(name);
   }
@@ -88,7 +88,7 @@ public class SignInService {
    * @return Returns the number of reserved names.
    * @author Michael Bianconi
    */
-  public int numReserved() {
+  public int numRegistered() {
 
     return namesInUse.size();
   }

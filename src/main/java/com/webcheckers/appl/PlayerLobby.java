@@ -37,24 +37,14 @@ public class PlayerLobby {
 
   /**
    * Checks that the name is valid (contains at least one alphanumeric
-   * character).
+   * character) with the help of regular expressions.
    *
-   * We could probably regex this to make it simpler, but not right now.
    *
    * @param name Name to check.
    * @return Returns true if the name is valid, false otherwise.
-   * @author Michael Bianconi
+   * @author Michael Bianconi, Dylan Cuprewich
    */
-  public boolean validName(String name) {
-
-    for (char c : name.toCharArray()) {
-      if (Character.isDigit(c) || Character.isLetter(c)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
+  public boolean validName(String name) { return name.matches(".*\\w.*"); }
 
 
   /**

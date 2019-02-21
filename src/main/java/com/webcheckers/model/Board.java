@@ -15,6 +15,8 @@ public class Board {
 	private Player whitePlayer;
 	private Piece[][] squares;
 	private Player activePlayer;
+	private int activeRow;
+	private int activeCol;
 
 	// CONSTRUCTORS ===========================================================
 
@@ -34,6 +36,8 @@ public class Board {
 		squares = new Piece[SIZE][SIZE];
 
 		activePlayer = red;
+		activeRow = 0;
+		activeCol = 0;
 		initialize();
 
 	}
@@ -76,12 +80,37 @@ public class Board {
 		}
 	}
 
+	/** Sets the currently active square. */
+	public void setActiveSquare(int row, int col) {
+		activeRow = row;
+		activeCol = col;
+	}
+
+	/** @return Returns the Red player. */
 	public Player getRedPlayer() {return redPlayer;}
+
+	/** @return Returns the White player. */
 	public Player getWhitePlayer() {return whitePlayer;}
+
+	/** @return Returns the active player. */
 	public Player getActivePlayer() {return activePlayer;}
+
+	/** @return Returns a 2D array. Empty squares have null pieces. */
 	public Piece[][] getSquares() {return squares;}
+
+	/** @return Returns the width/length of the board. */
 	public int getSize() {return SIZE;}
+
+	/** @return Returns the SIZE of the board, squared. */
 	public int getTotalSquares() {return SIZE*SIZE;}
+
+	/** @return Returns the active piece. */
+	public Piece getActivePiece() {return squares[activeRow][activeCol];}
+
+	/** @return Returns whether the given square is holding a piece. */
+	public boolean hasPiece(int row, int col) {
+		return squares[row][col] == null;
+	}
 
 
 	// Object =================================================================

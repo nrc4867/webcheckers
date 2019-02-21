@@ -7,12 +7,12 @@ public class Piece {
 	// TYPE ENUM ==============================================================
 
 	// DEAD may be extraneous, including it right now in case we need it.
-	public enum Type {STANDARD, KING, DEAD};
+	public enum Type {SINGLE, KING};
 
 	// ATTRIBUTES =============================================================
 	
-	private final Player owner; // red, white
-	private final Type type; // standard, king
+	private final Player owner;
+	private Type type;
 
 	private final int col;
 	private final int row;
@@ -29,7 +29,7 @@ public class Piece {
 	 */
 	public Piece(int col, int row, Player owner)
 	{
-		this(col, row, owner, Type.STANDARD);
+		this(col, row, owner, Type.SINGLE);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class Piece {
 	public int getRow() {return row;}
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
-	public Player.Color getColor() {return owner.getColor();}
+	public Color getColor() {return owner.getColor();}
 
 	// Object =================================================================
 

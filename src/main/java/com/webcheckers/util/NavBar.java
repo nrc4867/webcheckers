@@ -22,7 +22,7 @@ public class NavBar {
     public static void updateNavBar(Map<String, Object> pageElements, Session session) {
         if(session.attribute(PLAYER_SIGNIN_KEY) != null) { // if the user has a key assigned to them
             Player player = (Player) session.attribute(PLAYER_SIGNIN_KEY);
-            pageElements.put(NAV_BAR_ATTR, player.getName()); // display their name in the nav-bar
+            pageElements.put(NAV_BAR_ATTR, player); // display their name in the nav-bar
         }
     }
 }

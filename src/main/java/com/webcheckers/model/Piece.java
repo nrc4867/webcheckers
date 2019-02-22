@@ -2,11 +2,14 @@ package com.webcheckers.model;
 
 import java.util.Objects;
 
+/**
+ * Pieces are moved around by Players. They inhabit {@link Space} on the
+ * {@link Board}. They may be
+ */
 public class Piece {
 
 	// TYPE ENUM ==============================================================
 
-	// DEAD may be extraneous, including it right now in case we need it.
 	public enum Type {SINGLE, KING};
 
 	// ATTRIBUTES =============================================================
@@ -14,8 +17,8 @@ public class Piece {
 	private final Player owner;
 	private Type type;
 
-	private final int col;
-	private final int row;
+	private int col;
+	private int row;
 
 	// CONSTRUCTORS ===========================================================
 
@@ -55,6 +58,23 @@ public class Piece {
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
 	public Color getColor() {return owner.getColor();}
+
+	public void setCol(int c) {
+		if (c < 0 || c >= Board.getSize()) {
+			throw new IllegalArgumentException("Piece out of bounds!");
+		}
+		col = c;
+	}
+
+	public void setRow(int r) {
+		if (r < 0 || r >= Board.getSize()) {
+			throw new IllegalArgumentException("Piece out of bounds!");
+		}
+		row = r;
+	}
+
+	public void setType(Type t) {type = t;}
+
 
 	// Object =================================================================
 

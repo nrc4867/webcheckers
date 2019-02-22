@@ -3,16 +3,7 @@ package com.webcheckers.model;
 /**
  * Board model for WebCheckers.
  *
- * Notes:
- *
- * 	game.ftl variables
- *
- * 		${currentUser.name} = activePlayer.getName()
- * 		${redPlayer.name} = redPlayer.getName()
- * 		${whitePlayer.name} = whitePlayer.getName()
- * 		${activeColor} = EITHER getActivePiece().getColor().name()
- * 	                         OR getActivePlayer().getColor().name()
- * 	                     depending on what it actually wants.
+ * @see com.webcheckers.ui.view.BoardView
  */
 public class Board {
 
@@ -90,18 +81,17 @@ public class Board {
 		}
 	}
 
-	/** Sets the opposing player to be the active player. */
-	public void switchActivePlayer() {
-		if (activePlayer.equals(redPlayer)) {
-			activePlayer = whitePlayer;
-		}
-		else {
-			activePlayer = redPlayer;
-		}
-	}
+	/** Sets the currently active player. */
+	public void setActivePlayer(Player p) {activePlayer = p;}
 
 	/** Sets the currently active square. */
-	public void setActiveSquare(int row, int col) {
+	public void setActiveSpace(int row, int col) {
+
+		if ((row < 0 || row >= Board.getSize())
+		||  (col < 0 || col >= Board.getSize())) {
+			throw new IllegalArgumentException("Active space out of bounds!");
+		}
+
 		activeRow = row;
 		activeCol = col;
 	}
@@ -127,9 +117,7 @@ public class Board {
 	/** @return Returns the SIZE of the board, squared. */
 	public static int getTotalSpaces() {return SIZE*SIZE;}
 
-	/**
-	 * @return Returns the active square.
-	 */
+	/** @return Returns the active square. */
 	public Space getActiveSpace() {
 		return spaces[activeRow][activeCol];
 	}

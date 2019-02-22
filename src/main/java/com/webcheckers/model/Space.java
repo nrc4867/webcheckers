@@ -2,6 +2,9 @@ package com.webcheckers.model;
 
 import java.util.Objects;
 
+/**
+ * Spaces are the tiles that make up the Board. Each
+ */
 public class Space {
 
     private Piece piece;
@@ -11,6 +14,7 @@ public class Space {
 
     // Constructors ===========================================================
 
+    /** Simplified constructor that sets the piece to null. */
     public Space(int row, int col) {
         this(row, col, null);
     }
@@ -55,6 +59,15 @@ public class Space {
      */
     public boolean isBlack() {
         return rowIdx % 2 != cellIdx % 2;
+    }
+
+    /**
+     * Check, based on row and cell index, if it's a White square.
+     *
+     * @return True if this is a white square, false otherwise.
+     */
+    public boolean isWhite() {
+        return rowIdx % 2 == cellIdx % 2;
     }
 
     // Object =================================================================

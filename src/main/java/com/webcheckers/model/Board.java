@@ -115,6 +115,9 @@ public class Board {
 	/** @return Returns the active player. */
 	public Player getActivePlayer() {return activePlayer;}
 
+	/** @return Returns the color of the active player. */
+	public Color getActiveColor() {return getActivePlayer().getColor();}
+
 	/** @return Returns a 2D array. Empty spaces have null pieces. */
 	public Space[][] getSpaces() {return spaces;}
 

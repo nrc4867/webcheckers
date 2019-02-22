@@ -2,8 +2,6 @@ package com.webcheckers.model;
 
 public class Player {
 
-	public enum Color {RED, WHITE, UNASSIGNED};
-
 	private final String name;
 	private Color color;
 

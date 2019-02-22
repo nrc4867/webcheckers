@@ -1,5 +1,19 @@
 package com.webcheckers.model;
 
+/**
+ * Board model for WebCheckers.
+ *
+ * Notes:
+ *
+ * 	game.ftl variables
+ *
+ * 		${currentUser.name} = activePlayer.getName()
+ * 		${redPlayer.name} = redPlayer.getName()
+ * 		${whitePlayer.name} = whitePlayer.getName()
+ * 		${activeColor} = EITHER getActivePiece().getColor().name()
+ * 	                         OR getActivePlayer().getColor().name()
+ * 	                     depending on what it actually wants.
+ */
 public class Board {
 
 	///
@@ -13,7 +27,7 @@ public class Board {
 	///
 	private Player redPlayer;
 	private Player whitePlayer;
-	private Piece[][] squares;
+	private Space[][] spaces;
 	private Player activePlayer;
 	private int activeRow;
 	private int activeCol;
@@ -29,11 +43,11 @@ public class Board {
 	 * @param white White player.
 	 */
 	public Board(Player red, Player white) {
-		red.setColor(Player.Color.RED);
-		white.setColor(Player.Color.WHITE);
+		red.setColor(Color.RED);
+		white.setColor(Color.WHITE);
 		redPlayer = red;
 		whitePlayer = white;
-		squares = new Piece[SIZE][SIZE];
+		spaces = new Space[SIZE][SIZE];
 
 		activePlayer = red;
 		activeRow = 0;
@@ -49,24 +63,30 @@ public class Board {
 	 */
 	private void initialize() {
 
+		for (int row = 0; row < getSize(); row++) {
+			for (int col = 0; col < getSize(); col++) {
+				spaces[row][col] = new Space(row, col);
+			}
+		}
+
 		for (int i = 1; i < SIZE; i+=2) {
-			squares[0][i] = new Piece(i,0,whitePlayer);
+			spaces[0][i].setPiece(new Piece(i,0,whitePlayer));
 		}
 		for (int i = 0; i < SIZE; i+=2) {
-			squares[1][i] = new Piece(i, 1, whitePlayer);
+			spaces[0][i].setPiece(new Piece(i,1,whitePlayer));
 		}
 		for (int i = 1; i < SIZE; i+=2) {
-			squares[2][i] = new Piece(i, 1, whitePlayer);
+			spaces[0][i].setPiece(new Piece(i,2,whitePlayer));
 		}
 
 		for (int i = 0; i < SIZE; i+=2) {
-			squares[SIZE-3][i] = new Piece(i, 1, redPlayer);
+			spaces[SIZE-3][i].setPiece(new Piece(i, getSize()-3, redPlayer));
 		}
 		for (int i = 1; i < SIZE; i+=2) {
-			squares[SIZE-2][i] = new Piece(i, 1, redPlayer);
+			spaces[SIZE-2][i].setPiece(new Piece(i, getSize()-2, redPlayer));
 		}
 		for (int i = 0; i < SIZE; i+=2) {
-			squares[SIZE-1][i] = new Piece(i, 1, redPlayer);
+			spaces[SIZE-1][i].setPiece(new Piece(i, getSize()-1, redPlayer));
 		}
 	}
 
@@ -95,21 +115,30 @@ public class Board {
 	/** @return Returns the active player. */
 	public Player getActivePlayer() {return activePlayer;}
 
-	/** @return Returns a 2D array. Empty squares have null pieces. */
-	public Piece[][] getSquares() {return squares;}
+	/** @return Returns a 2D array. Empty spaces have null pieces. */
+	public Space[][] getSpaces() {return spaces;}
 
 	/** @return Returns the width/length of the board. */
-	public int getSize() {return SIZE;}
+	public static int getSize() {return SIZE;}
 
 	/** @return Returns the SIZE of the board, squared. */
-	public int getTotalSquares() {return SIZE*SIZE;}
+	public static int getTotalSpaces() {return SIZE*SIZE;}
+
+	/**
+	 * @return Returns the active square.
+	 */
+	public Space getActiveSpace() {
+		return spaces[activeRow][activeCol];
+	}
 
 	/** @return Returns the active piece. */
-	public Piece getActivePiece() {return squares[activeRow][activeCol];}
+	public Piece getActivePiece() {
+		return getActiveSpace().getPiece();
+	}
 
 	/** @return Returns whether the given square is holding a piece. */
 	public boolean hasPiece(int row, int col) {
-		return squares[row][col] == null;
+		return spaces[row][col] == null;
 	}
 
 
@@ -123,13 +152,13 @@ public class Board {
 		for (int row = 0; row < SIZE; row++) {
 			for (int col = 0; col < SIZE; col++) {
 
-				if (squares[row][col] == null) {
+				if (spaces[row][col] == null) {
 					builder.append(" ");
 				}
-				else if (squares[row][col].getColor() == Player.Color.RED) {
+				else if (spaces[row][col].getPiece().getColor() == Color.RED) {
 					builder.append("R");
 				}
-				else if (squares[row][col].getColor() == Player.Color.WHITE) {
+				else if (spaces[row][col].getPiece().getColor() == Color.WHITE) {
 					builder.append("W");
 				}
 			}

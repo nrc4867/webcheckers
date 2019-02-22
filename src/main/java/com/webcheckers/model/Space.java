@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 import java.util.Objects;
 
-public class Square {
+public class Space {
 
     private Piece piece;
 
@@ -11,20 +11,20 @@ public class Square {
 
     // Constructors ===========================================================
 
-    public Square(int row, int col) {
+    public Space(int row, int col) {
         this(row, col, null);
     }
 
     /**
-     * Construct a new Square. Square must exist within the bounds of
+     * Construct a new Space. Space must exist within the bounds of
      * the board.
      * @param row Row index of the square.
      * @param col Column index of the square.
      * @param piece Piece to place on the square (may be null).
      */
-    public Square(int row, int col, Piece piece) {
-        if (row < 0 || row > Board.getSize()
-        ||  col < 0 || col > Board.getSize()) {
+    public Space(int row, int col, Piece piece) {
+        if (row < 0 || row >= Board.getSize()
+        ||  col < 0 || col >= Board.getSize()) {
             throw new IllegalArgumentException(
                     "Creating a square out of bounds!"
             );
@@ -66,8 +66,8 @@ public class Square {
     @Override
     public boolean equals(Object o) {
         if (this == o) {return true;}
-        if (!(o instanceof Square)) {return false;}
-        final Square s = (Square) o;
+        if (!(o instanceof Space)) {return false;}
+        final Space s = (Space) o;
         return s.cellIdx == this.cellIdx && s.rowIdx == this.rowIdx;
     }
 

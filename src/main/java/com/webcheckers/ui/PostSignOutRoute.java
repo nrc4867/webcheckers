@@ -50,14 +50,8 @@ public class PostSignOutRoute implements Route {
             httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, null); // remove sign-in from session
         }
         // send user back to the sign-in page
-        Map<String, Object> vm = new HashMap<>();
-        vm.put(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
-
-        // display a user message in the Sign In page
-        vm.put(GetSignInRoute.MESSAGE_ATTR, SIGN_OUT_MESS);
-
-        // render the View
-        return templateEngine.render(new ModelAndView(vm, VIEW_FORM));
+        response.redirect(WebServer.SIGNIN_URL);
+        return null;
     }
 
 }

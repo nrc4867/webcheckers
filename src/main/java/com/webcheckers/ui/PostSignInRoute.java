@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.Player;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Message;

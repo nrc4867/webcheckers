@@ -1,6 +1,9 @@
 package com.webcheckers.appl;
 
 
+import com.webcheckers.model.Color;
+import com.webcheckers.model.Player;
+
 import java.util.logging.Logger;
 import java.util.Set;
 import java.util.HashSet;
@@ -56,7 +59,7 @@ public class PlayerLobby {
    * @author Michael Bianconi
    */
   public Player reserveName(String name) throws SignInException {
-    Player newPlayer = new Player(name, Player.Color.UNASSIGNED);
+    Player newPlayer = new Player(name);
     if (!validName(name)) {
       throw new SignInException(NAME_INVALID_MESSAGE);
     }

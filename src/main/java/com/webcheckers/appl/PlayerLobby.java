@@ -91,9 +91,12 @@ public class PlayerLobby {
   /**
    * @return the list of player names that are on this server
    */
-  public String[] names() {
-    String[] names = new String[players.size()];
-    return players.toArray(names);
+  public synchronized Set<String> names() {
+    Set<String> names = new HashSet<>();
+    for(Player player: players) {
+      names.add(player.getName());
+    }
+    return names;
   }
 
 }

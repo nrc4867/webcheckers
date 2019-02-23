@@ -60,9 +60,7 @@ public class PostSignInRoute implements Route {
 
         ModelAndView mv;
         try {
-            playerLobby.reserveName(playerName);
-            Player newPlayer = new Player(playerName, Player.Color.UNASSIGNED);
-            httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, newPlayer);
+            httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, playerLobby.reserveName(playerName));
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

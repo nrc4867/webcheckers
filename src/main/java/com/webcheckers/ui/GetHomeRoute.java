@@ -62,7 +62,7 @@ public class GetHomeRoute implements Route {
     vm.put("message", WELCOME_MSG);
 
     // create the list of players
-    vm.put("users", playerLobby.names());
+    vm.put("users", playerLobby.names().toArray());
 
     NavBar.updateNavBar(vm, httpSession);
 

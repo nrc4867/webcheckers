@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import com.webcheckers.appl.Player;
+import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Message;
 import com.webcheckers.util.NavBar;
@@ -46,11 +46,10 @@ public class PostSignOutRoute implements Route {
         Session httpSession = request.session();
         if (httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY) != null) { 
             if(!(httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY) instanceof Player)) return null;
-            Player player = (Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY);
-            //TODO: lobby.freeName(player); // remove the player from the lobby
+            lobby.removePlayer((Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY)); // remove player from lobby
             httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, null); // remove sign-in from session
         }
-        //response.redirect(WebServer.SIGNIN_URL); // send user back to the sign-in page
+        // send user back to the sign-in page
         Map<String, Object> vm = new HashMap<>();
         vm.put(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
 

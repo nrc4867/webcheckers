@@ -1,6 +1,9 @@
 package com.webcheckers.appl;
 
 
+import com.webcheckers.model.Color;
+import com.webcheckers.model.Player;
+
 import java.util.logging.Logger;
 import java.util.Set;
 import java.util.HashSet;
@@ -21,12 +24,12 @@ public class PlayerLobby {
   public static final String NAME_INVALID_MESSAGE =
       "Your name must have at least one alphanumeric character!";
 
-  private static Set<String> namesInUse = new HashSet<>();
+  private static Set<Player> players = new HashSet<>();
 
 
   /**
    * Creates a new PlayerLobby. All SignInServices reference the same
-   * namesInUse set.
+   * players set.
    *
    * @author Michael Bianconi
    */
@@ -53,34 +56,30 @@ public class PlayerLobby {
    *
    * @param name Name to add.
    * @throws SignInException if name is taken or invalid.
-   * @see freeName()
    * @author Michael Bianconi
    */
-  public void register(String name) throws SignInException {
-
+  public Player reserveName(String name) throws SignInException {
+    Player newPlayer = new Player(name);
     if (!validName(name)) {
       throw new SignInException(NAME_INVALID_MESSAGE);
     }
-
-    if (!namesInUse.add(name)) {
+    if(players.contains(newPlayer)) {
       throw new SignInException(NAME_TAKEN_MESSAGE);
     }
-
-    return;
+    players.add(newPlayer);
+    return newPlayer;
   }
 
 
   /**
    * Attempts to remove a name from the list.
    *
-   * @param name Name to remove.
+   * @param player player to remove.
    * @return Returns false if the name isn't in the list (should never happen).
-   * @see #reserveName()
    * @author Michael Bianconi
    */
-  public boolean free(String name) {
-
-    return namesInUse.remove(name);
+  public boolean removePlayer(Player player) {
+    return players.remove(player);
   }
 
 
@@ -88,17 +87,19 @@ public class PlayerLobby {
    * @return Returns the number of reserved names.
    * @author Michael Bianconi
    */
-  public int numRegistered() {
-
-    return namesInUse.size();
+  public int numReserved() {
+    return players.size();
   }
 
   /**
    * @return the list of player names that are on this server
    */
-  public String[] names() {
-    String[] names = new String[namesInUse.size()];
-    return namesInUse.toArray(names);
+  public synchronized Set<String> names() {
+    Set<String> names = new HashSet<>();
+    for(Player player: players) {
+      names.add(player.getName());
+    }
+    return names;
   }
 
 }

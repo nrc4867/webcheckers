@@ -67,15 +67,17 @@ public class GetHomeRoute implements Route {
     Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby
     if(current!=null) {
-
       for (Player player : PlayerLobby.getPlayers()) {
         if (!current.equals(player)) {
           names.add(player.getName());
         }
       }
+    }else{
+      int num_players= PlayerLobby.getPlayers().size();
+      names.add("Number of Players online: "+num_players); //show Number of players online.
     }
       // create the list of players
-      vm.put("users", names.toArray());
+    vm.put("users", names.toArray());
 
     NavBar.updateNavBar(vm, httpSession);
 

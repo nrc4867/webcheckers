@@ -1,11 +1,10 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.NavBar;
 import spark.*;
 
@@ -24,6 +23,7 @@ public class GetHomeRoute implements Route {
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
 
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
@@ -38,6 +38,7 @@ public class GetHomeRoute implements Route {
     //
     LOG.config("GetHomeRoute is initialized.");
   }
+
 
   /**
    * Render the WebCheckers Home page.
@@ -61,8 +62,20 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
-    // create the list of players
-    vm.put("users", playerLobby.names().toArray());
+    // get current session player
+    Player current = (Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY);
+    Set<String> names = new HashSet<>();
+    //remove player from displaying yourself on lobby
+    if(current!=null) {
+
+      for (Player player : PlayerLobby.getPlayers()) {
+        if (!current.equals(player)) {
+          names.add(player.getName());
+        }
+      }
+    }
+      // create the list of players
+      vm.put("users", names.toArray());
 
     NavBar.updateNavBar(vm, httpSession);
 

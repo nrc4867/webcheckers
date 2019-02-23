@@ -1,8 +1,10 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.Player;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Message;
+import com.webcheckers.util.NavBar;
 import spark.*;
 
 import java.util.HashMap;
@@ -48,6 +50,8 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        final Session httpSession = request.session();
+
         // Start creating elements that must be placed in the page
         final Map<String, Object> pageElements = new HashMap<>();
         pageElements.put(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
@@ -57,6 +61,8 @@ public class PostSignInRoute implements Route {
         ModelAndView mv;
         try {
             playerLobby.reserveName(playerName);
+            Player newPlayer = new Player(playerName, Player.Color.UNASSIGNED);
+            httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, newPlayer);
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

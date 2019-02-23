@@ -92,6 +92,15 @@ public class PlayerLobby {
   }
 
   /**
+   * Get the Players object list from the lobby
+   * @return Players List
+   * @author Abhaya Tamrakar
+   */
+  public static Set<Player> getPlayers() {
+    return players;
+  }
+
+  /**
    * @return the list of player names that are on this server
    */
   public synchronized Set<String> names() {

@@ -64,20 +64,19 @@ public class GetHomeRoute implements Route {
 
     // get current session player
     Player current = (Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY);
-
+    Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby
     if(current!=null) {
-      Set<String> names = new HashSet<>();
+
       for (Player player : PlayerLobby.getPlayers()) {
         if (!current.equals(player)) {
           names.add(player.getName());
         }
       }
+    }
       // create the list of players
       vm.put("users", names.toArray());
-    }else{
-      vm.put("users", playerLobby.names().toArray());
-    }
+
     NavBar.updateNavBar(vm, httpSession);
 
     // render the View

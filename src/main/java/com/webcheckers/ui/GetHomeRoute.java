@@ -8,6 +8,7 @@ import com.webcheckers.model.Player;
 import com.webcheckers.util.NavBar;
 import spark.*;
 
+import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 
 /**
@@ -63,20 +64,17 @@ public class GetHomeRoute implements Route {
     vm.put("message", WELCOME_MSG);
 
     // get current session player
-    Player current = (Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY);
+    Player current = (Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
     Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby
     if(current!=null) {
-      for (Player player : PlayerLobby.getPlayers()) {
-        if (!current.equals(player)) {
-          names.add(player.getName());
-        }
-      }
+      names.addAll(playerLobby.names());
+      names.remove(current.getName());
     }else{
       int num_players= PlayerLobby.getPlayers().size();
       names.add("Number of Players online: "+num_players); //show Number of players online.
     }
-      // create the list of players
+    // create the list of players
     vm.put("users", names.toArray());
 
     NavBar.updateNavBar(vm, httpSession);

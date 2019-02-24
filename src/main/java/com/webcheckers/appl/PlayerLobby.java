@@ -22,9 +22,9 @@ public class PlayerLobby {
       "That name's already taken!";
 
   public static final String NAME_INVALID_MESSAGE =
-      "Your name must have at least one alphanumeric character!";
+      "Your name must have one alphanumeric character and no symbols!";
 
-  private static Set<Player> players = new HashSet<>();
+  private Set<Player> players = new HashSet<>();
 
 
   /**
@@ -47,7 +47,7 @@ public class PlayerLobby {
    * @return Returns true if the name is valid, false otherwise.
    * @author Michael Bianconi, Dylan Cuprewich
    */
-  public boolean validName(String name) {
+  public static boolean validName(String name) {
 
     // name cannot only contain whitespace
     if (name.length() == 0) {return false;}
@@ -68,7 +68,7 @@ public class PlayerLobby {
    * @throws SignInException if name is taken or invalid.
    * @author Michael Bianconi
    */
-  public Player reserveName(String name) throws SignInException {
+  public synchronized Player reserveName(String name) throws SignInException {
     name = name.trim();
     Player newPlayer = new Player(name);
     if (!validName(name)) {
@@ -89,7 +89,7 @@ public class PlayerLobby {
    * @return Returns false if the name isn't in the list (should never happen).
    * @author Michael Bianconi
    */
-  public boolean removePlayer(Player player) {
+  public synchronized boolean removePlayer(Player player) {
     return players.remove(player);
   }
 
@@ -98,7 +98,7 @@ public class PlayerLobby {
    * @return Returns the number of reserved names.
    * @author Michael Bianconi
    */
-  public int numReserved() {
+  public synchronized int numReserved() {
     return players.size();
   }
 
@@ -107,7 +107,7 @@ public class PlayerLobby {
    * @return Players List
    * @author Abhaya Tamrakar
    */
-  public static Set<Player> getPlayers() {
+  public synchronized Set<Player> getPlayers() {
     return players;
   }
 

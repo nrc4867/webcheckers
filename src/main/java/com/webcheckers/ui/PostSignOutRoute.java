@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import com.webcheckers.util.NavBar;
 
@@ -44,10 +45,10 @@ public class PostSignOutRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session httpSession = request.session();
-        if (httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY) != null) { 
-            if(!(httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY) instanceof Player)) return null;
-            lobby.removePlayer((Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY)); // remove player from lobby
-            httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, null); // remove sign-in from session
+        if (httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY) != null) { 
+            if(!(httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY) instanceof Player)) return null;
+            lobby.removePlayer((Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY)); // remove player from lobby
+            httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, null); // remove sign-in from session
         }
         // send user back to the sign-in page
         response.redirect(WebServer.SIGNIN_URL);

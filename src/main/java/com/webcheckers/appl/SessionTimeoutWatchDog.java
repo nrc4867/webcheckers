@@ -17,7 +17,7 @@ public class SessionTimeoutWatchDog implements HttpSessionBindingListener {
     /**
      * The length of time given to a player before they are removed from the server
      */
-    public static final int maxInactiveInterval = 60;
+    public static final int maxInactiveInterval = 1;
 
     private final PlayerLobby lobby;
     private final Player player;

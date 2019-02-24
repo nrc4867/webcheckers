@@ -55,6 +55,15 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     final Session httpSession = request.session();
+
+    // get current session player
+    Player current = (Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+
+    if(current != null && current.getBoard() != null) {
+      response.redirect(WebServer.GAME_URL);
+      return null;
+    }
+
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
@@ -63,8 +72,6 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
-    // get current session player
-    Player current = (Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
     Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby
     if(current!=null) {

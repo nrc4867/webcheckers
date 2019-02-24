@@ -127,6 +127,7 @@ public class PlayerLobby {
    * @return a player, if the player doesn't exist then null
    */
   public synchronized Player getPlayer(String name) {
+    if (name == null) return null;
     return players.getOrDefault(name, null);
   }
 

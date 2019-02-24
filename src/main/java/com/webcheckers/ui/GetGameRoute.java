@@ -27,7 +27,6 @@ public class GetGameRoute implements Route {
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -35,14 +34,13 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    public GetGameRoute(final TemplateEngine templateEngine) {
 
 //        /************************** TEST CODE *******************************/
 //        Board b = new Board(new Player("red"), new Player("white"));
 //        this.board = Objects.requireNonNull(b, "Board is required!");
 //        /*********************** END TEST CODE ******************************/
 
-        this.playerLobby = Objects.requireNonNull(playerLobby, "Playerlobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("GetGameRoute is initialized.");
@@ -62,17 +60,15 @@ public class GetGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
+        // player who sent the request
+        final Player reqPlayer = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+        final Board board = (reqPlayer != null)?reqPlayer.getBoard():null;
 
-        if(httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY) == null) {
-            // a player that is not signed in cannot be in a game
+        if(board == null) {
+            // a player has to be on a board to see games
             response.redirect(WebServer.HOME_URL);
             return null;
         }
-
-        Player reqPlayer = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
-        Board board = reqPlayer.getBoard();
-
-
 
         LOG.finer("GetGameRoute is invoked.");
         //

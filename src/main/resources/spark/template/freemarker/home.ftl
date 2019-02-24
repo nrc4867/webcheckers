@@ -29,9 +29,11 @@
       <h2>Players Online</h2>
       <#list users>
         <ul>
+          <form action="./game" method="post">
           <#items as user>
-            <li> <a href="/game">${user}</a></li>
+            <li><input type="submit" name="challenge" value="${user}"></li>
           </#items>
+          </form>
         </ul>
       <#else>
         <ul>

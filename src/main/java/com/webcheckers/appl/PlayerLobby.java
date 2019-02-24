@@ -47,8 +47,20 @@ public class PlayerLobby {
    * @return Returns true if the name is valid, false otherwise.
    * @author Michael Bianconi, Dylan Cuprewich
    */
-  public boolean validName(String name) { return name.matches(".*\\w.*"); }
+  public boolean validName(String name) {
 
+    name = name.trim(); // remove leading and trailing white space
+
+    // name cannot only contain whitespace
+    if (name.length() == 0) {return false;}
+
+    // name has no symbols
+    for (char c : name.toCharArray()) {
+      if (!Character.isLetterOrDigit(c) && c!=' ') {return false;}
+    }
+
+    return true;
+  }
 
   /**
    * Attempts to add a name to the names in use list.

@@ -38,10 +38,11 @@ public class GetGameRoute implements Route {
     public GetGameRoute(final TemplateEngine templateEngine) {
 
         /************************** TEST CODE *******************************/
-        this.board = new Board(new Player("red"), new Player("white"));
+        Board b = new Board(new Player("red"), new Player("white"));
+        /*********************** END TEST CODE ******************************/
 
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //this.board = Objects.requireNonNull(board, "Board is required!");
+        this.board = Objects.requireNonNull(b, "Board is required!");
         //
         LOG.config("GetGameRoute is initialized.");
     }

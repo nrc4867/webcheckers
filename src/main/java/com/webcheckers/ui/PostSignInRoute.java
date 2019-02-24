@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.SessionTimeoutWatchDog;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
@@ -8,6 +9,7 @@ import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import com.webcheckers.util.NavBar;
 import spark.*;
+import static spark.Spark.halt;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +26,23 @@ public class PostSignInRoute implements Route {
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
+    private final LazySessionWatcher sessionWatcher;
+
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
+     *
+     * @param playerLobby the username checker service
+     * @param sessionWatcher an active thread that prunes inactive sessions
+     * @param templateEngine the HTML template rendering engine
+     */
+    public PostSignInRoute(PlayerLobby playerLobby, LazySessionWatcher sessionWatcher, TemplateEngine templateEngine) {
+        Objects.requireNonNull(playerLobby, "PlayerLobby must not be null");
+        Objects.requireNonNull(templateEngine, "TemplateEngine must not be null");
+
+        this.playerLobby = playerLobby;
+        this.templateEngine = templateEngine;
+        this.sessionWatcher = sessionWatcher;
+    }
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
@@ -32,12 +51,9 @@ public class PostSignInRoute implements Route {
      * @param templateEngine the HTML template rendering engine
      */
     public PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
-        Objects.requireNonNull(playerLobby, "PlayerLobby must not be null");
-        Objects.requireNonNull(templateEngine, "TemplateEngine must not be null");
-
-        this.playerLobby = playerLobby;
-        this.templateEngine = templateEngine;
+        this(playerLobby, null, templateEngine);
     }
+
 
     /**
      * Render the WebCheckers SignIn page or redirect to homepage.
@@ -52,7 +68,7 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        final Session httpSession = request.session();
+        final Session httpSession = request.session(true);
 
         // Start creating elements that must be placed in the page
         final Map<String, Object> pageElements = new HashMap<>();
@@ -66,13 +82,15 @@ public class PostSignInRoute implements Route {
             Player player = playerLobby.reserveName(playerName);
             httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, player);
             // Kill the player login after a minute of session inactivity. (vis. Browser closes)
-            httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
-            httpSession.maxInactiveInterval(SessionTimeoutWatchDog.maxInactiveInterval);
+            if(sessionWatcher != null) sessionWatcher.addSession(httpSession);
+            //httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
+            //httpSession.maxInactiveInterval(SessionTimeoutWatchDog.maxInactiveInterval);
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);
         }
         response.redirect(WebServer.HOME_URL);
+        halt();
         return null;
     }
 

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -63,6 +64,7 @@ public class WebServer {
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
+  private final LazySessionWatcher sessionWatcher;
   private final Gson gson;
 
   //
@@ -88,6 +90,9 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
+
+    this.sessionWatcher = new LazySessionWatcher(playerLobby);
+    sessionWatcher.start();
   }
 
   //
@@ -145,7 +150,7 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
-    post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
+    post(SIGNIN_URL, new PostSignInRoute(playerLobby, sessionWatcher, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
     //
     LOG.config("WebServer is initialized.");

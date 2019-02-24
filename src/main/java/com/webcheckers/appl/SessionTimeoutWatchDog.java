@@ -6,18 +6,13 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import java.util.logging.Logger;
 
-/**
- * A session watchdog that watches for the session to end
- *
- * @author Nicholas Chieppa
- */
 public class SessionTimeoutWatchDog implements HttpSessionBindingListener {
     private static final Logger LOG = Logger.getLogger(SessionTimeoutWatchDog.class.getName());
 
     /**
      * The length of time given to a player before they are removed from the server
      */
-    public static final int maxInactiveInterval = 60;
+    public static final int maxInactiveInterval = 1;
 
     private final PlayerLobby lobby;
     private final Player player;

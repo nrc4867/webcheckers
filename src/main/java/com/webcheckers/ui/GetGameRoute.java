@@ -32,14 +32,16 @@ public class GetGameRoute implements Route {
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
-     * @param  board
-     *   The Board associated with this game.
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetHomeRoute(final Board board, final TemplateEngine templateEngine) {
+    public GetGameRoute(final TemplateEngine templateEngine) {
+
+        /************************** TEST CODE *******************************/
+        this.board = new Board(new Player("red"), new Player("white"));
+
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        this.board = Objects.requireNonNull(board, "Board is required!");
+        //this.board = Objects.requireNonNull(board, "Board is required!");
         //
         LOG.config("GetGameRoute is initialized.");
     }
@@ -61,8 +63,10 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
+
+        vm.put("title", "GAME!");
         vm.put("currentUser", board.getActivePlayer());
-        vm.put("viewMode", 0);
+        vm.put("viewMode", Mode.PLAY);
         vm.put("modeOptions", new ArrayList<>());
         vm.put("redPlayer", board.getRedPlayer());
         vm.put("whitePlayer", board.getWhitePlayer());

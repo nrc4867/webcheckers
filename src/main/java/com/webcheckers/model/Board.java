@@ -64,10 +64,10 @@ public class Board {
 			spaces[0][i].setPiece(new Piece(i,0,whitePlayer));
 		}
 		for (int i = 0; i < SIZE; i+=2) {
-			spaces[0][i].setPiece(new Piece(i,1,whitePlayer));
+			spaces[1][i].setPiece(new Piece(i,1,whitePlayer));
 		}
 		for (int i = 1; i < SIZE; i+=2) {
-			spaces[0][i].setPiece(new Piece(i,2,whitePlayer));
+			spaces[2][i].setPiece(new Piece(i,2,whitePlayer));
 		}
 
 		for (int i = 0; i < SIZE; i+=2) {

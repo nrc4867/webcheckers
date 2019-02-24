@@ -30,7 +30,7 @@
       <#list users>
         <ul>
           <#items as user>
-            <li>${user}</li>
+            <li> <a href="/game">${user}</a></li>
           </#items>
         </ul>
       <#else>

@@ -11,4 +11,9 @@ public class Attributes {
      * this Player model stores the users current signin
      */
     public static final String PLAYER_SIGNIN_KEY = "playerSignin";
+
+    /**
+     * This key stores the session watch dog that is created on player sign in
+     */
+    public static final String PLAYER_SESSION_KEY = "sessionWatcher";
 }

@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.SessionTimeoutWatchDog;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import com.webcheckers.util.NavBar;
@@ -60,7 +62,12 @@ public class PostSignInRoute implements Route {
 
         ModelAndView mv;
         try {
-            httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, playerLobby.reserveName(playerName));
+            // Create a player login
+            Player player = playerLobby.reserveName(playerName);
+            httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, player);
+            // Kill the player login after a minute of session inactivity. (vis. Browser closes)
+            httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
+            httpSession.maxInactiveInterval(SessionTimeoutWatchDog.maxInactiveInterval);
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

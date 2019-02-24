@@ -49,8 +49,6 @@ public class PlayerLobby {
    */
   public boolean validName(String name) {
 
-    name = name.trim(); // remove leading and trailing white space
-
     // name cannot only contain whitespace
     if (name.length() == 0) {return false;}
 
@@ -71,6 +69,7 @@ public class PlayerLobby {
    * @author Michael Bianconi
    */
   public Player reserveName(String name) throws SignInException {
+    name = name.trim();
     Player newPlayer = new Player(name);
     if (!validName(name)) {
       throw new SignInException(NAME_INVALID_MESSAGE);

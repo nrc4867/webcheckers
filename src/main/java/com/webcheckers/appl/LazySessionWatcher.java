@@ -12,7 +12,8 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
- * A session watchdog that watches for the session to end
+ * A session watcher that periodically checks for
+ * old sessions then removes them
  *
  * @author Nicholas Chieppa
  */

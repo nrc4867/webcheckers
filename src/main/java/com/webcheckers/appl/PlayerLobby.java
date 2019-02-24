@@ -4,6 +4,8 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Player;
 
+import java.util.Collection;
+import java.util.Hashtable;
 import java.util.logging.Logger;
 import java.util.Set;
 import java.util.HashSet;
@@ -24,7 +26,7 @@ public class PlayerLobby {
   public static final String NAME_INVALID_MESSAGE =
       "Your name must have one alphanumeric character and no symbols!";
 
-  private Set<Player> players = new HashSet<>();
+  private Hashtable<String, Player> players = new Hashtable<>();
 
 
   /**
@@ -77,7 +79,7 @@ public class PlayerLobby {
     if(players.contains(newPlayer)) {
       throw new SignInException(NAME_TAKEN_MESSAGE);
     }
-    players.add(newPlayer);
+    players.put(name, newPlayer);
     return newPlayer;
   }
 
@@ -89,8 +91,8 @@ public class PlayerLobby {
    * @return Returns false if the name isn't in the list (should never happen).
    * @author Michael Bianconi
    */
-  public synchronized boolean removePlayer(Player player) {
-    return players.remove(player);
+  public synchronized Player removePlayer(Player player) {
+    return players.remove(player.getName());
   }
 
 
@@ -107,19 +109,32 @@ public class PlayerLobby {
    * @return Players List
    * @author Abhaya Tamrakar
    */
-  public synchronized Set<Player> getPlayers() {
-    return players;
+  public synchronized Collection<Player> getPlayers() {
+    return players.values();
+  }
+
+  public synchronized boolean containsPlayer(Player player) {
+    return containsPlayer(player.getName());
+  }
+
+  public synchronized boolean containsPlayer(String name) {
+    return players.containsKey(name);
+  }
+
+  /**
+   * Get a player
+   * @param name the players name
+   * @return a player, if the player doesn't exist then null
+   */
+  public synchronized Player getPlayer(String name) {
+    return players.getOrDefault(name, null);
   }
 
   /**
    * @return the list of player names that are on this server
    */
   public synchronized Set<String> names() {
-    Set<String> names = new HashSet<>();
-    for(Player player: players) {
-      names.add(player.getName());
-    }
-    return names;
+    return new HashSet<>(players.keySet());
   }
 
 }

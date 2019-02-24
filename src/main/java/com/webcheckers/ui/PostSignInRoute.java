@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import com.webcheckers.util.NavBar;
 import spark.*;
@@ -59,7 +60,7 @@ public class PostSignInRoute implements Route {
 
         ModelAndView mv;
         try {
-            httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY, playerLobby.reserveName(playerName));
+            httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, playerLobby.reserveName(playerName));
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

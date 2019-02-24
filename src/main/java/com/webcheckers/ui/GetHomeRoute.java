@@ -8,6 +8,7 @@ import com.webcheckers.model.Player;
 import com.webcheckers.util.NavBar;
 import spark.*;
 
+import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 
 /**
@@ -63,7 +64,7 @@ public class GetHomeRoute implements Route {
     vm.put("message", WELCOME_MSG);
 
     // get current session player
-    Player current = (Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY);
+    Player current = (Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
     //remove player from displaying yourself on lobby
     if(current!=null) {

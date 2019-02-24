@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.util.Attributes;
 import com.webcheckers.util.NavBar;
 import spark.*;
 
@@ -26,8 +27,7 @@ public class GetGameRoute implements Route {
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
     private final TemplateEngine templateEngine;
-
-    private final Board board;
+    private final PlayerLobby playerLobby;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -35,13 +35,14 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final TemplateEngine templateEngine) {
+    public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
 
-        /************************** TEST CODE *******************************/
-        Board b = new Board(new Player("red"), new Player("white"));
-        this.board = Objects.requireNonNull(b, "Board is required!");
-        /*********************** END TEST CODE ******************************/
+//        /************************** TEST CODE *******************************/
+//        Board b = new Board(new Player("red"), new Player("white"));
+//        this.board = Objects.requireNonNull(b, "Board is required!");
+//        /*********************** END TEST CODE ******************************/
 
+        this.playerLobby = Objects.requireNonNull(playerLobby, "Playerlobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("GetGameRoute is initialized.");
@@ -61,6 +62,18 @@ public class GetGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
+
+        if(httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY) == null) {
+            // a player that is not signed in cannot be in a game
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
+        Player reqPlayer = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+        Board board = reqPlayer.getBoard();
+
+
+
         LOG.finer("GetGameRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();

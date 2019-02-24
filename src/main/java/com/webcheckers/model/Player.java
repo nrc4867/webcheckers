@@ -10,6 +10,10 @@ package com.webcheckers.model;
 public class Player {
 
 	private final String name;
+	/**
+	 * The board the player is currently viewing
+	 */
+	private Board board = null;
 
 	/**
 	 * Player's Color (RED or WHITE). Null if unassigned. Will be overwritten
@@ -38,10 +42,17 @@ public class Player {
 	public String getName() {return name;}
 	public Color getColor() {return color;}
 
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
 	public void setColor(Color c) {this.color = c;}
 
 	// OBJECT =================================================================
-
 	@Override
 	public int hashCode() {return name.hashCode();}
 
@@ -62,5 +73,4 @@ public class Player {
 		final Player player = (Player) o;
 		return player.name.equals(this.name);
 	}
-
 }

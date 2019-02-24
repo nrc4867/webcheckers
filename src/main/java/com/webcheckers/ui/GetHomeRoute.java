@@ -71,7 +71,7 @@ public class GetHomeRoute implements Route {
       names.addAll(playerLobby.names());
       names.remove(current.getName());
     }else{
-      int num_players= PlayerLobby.getPlayers().size();
+      int num_players= playerLobby.getPlayers().size();
       names.add("Number of Players online: "+num_players); //show Number of players online.
     }
     // create the list of players

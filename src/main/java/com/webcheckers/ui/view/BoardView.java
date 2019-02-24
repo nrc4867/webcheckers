@@ -83,12 +83,22 @@ public class BoardView implements Iterable<BoardView.Row> {
      * Constructs a new view and creates its rows.
      *
      * @param b Board to view.
+     * @param flip Display the board upside down (for the White player)
      */
-    public BoardView(Board b) {
+    public BoardView(Board b, boolean flip) {
         this.board = b;
         this.rows = new ArrayList<>();
-        for (int i = 0; i < Board.getSize(); i++) {
-            rows.add(new Row(i, board));
+
+        if (!flip) {
+            for (int i = 0; i < Board.getSize(); i++) {
+                rows.add(new Row(i, board));
+            }
+        }
+
+        else {
+            for (int i = Board.getSize()-1; i >= 0; i--) {
+                rows.add(new Row(i, board));
+            }
         }
     }
 

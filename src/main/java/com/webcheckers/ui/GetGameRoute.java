@@ -81,7 +81,14 @@ public class GetGameRoute implements Route {
         vm.put("redPlayer", board.getRedPlayer());
         vm.put("whitePlayer", board.getWhitePlayer());
         vm.put("activeColor", board.getActiveColor());
-        vm.put("board", new BoardView(board));
+
+        if (reqPlayer.getColor() == Color.RED) {
+            vm.put("board", new BoardView(board,false));
+        }
+
+        else if (reqPlayer.getColor() == Color.WHITE) {
+            vm.put("board", new BoardView(board,true));
+        }
 
         // display a user message in the Home page
         vm.put("message", WELCOME_MSG);

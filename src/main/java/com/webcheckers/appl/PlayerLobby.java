@@ -22,7 +22,7 @@ public class PlayerLobby {
       "That name's already taken!";
 
   public static final String NAME_INVALID_MESSAGE =
-      "Your name must have at least one alphanumeric character!";
+      "Your name must have one alphanumeric character and no symbols!";
 
   private static Set<Player> players = new HashSet<>();
 

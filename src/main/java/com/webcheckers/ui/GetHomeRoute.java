@@ -19,7 +19,13 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+  //message for welcoming player
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+
+  public final String CHALLENGE_PARAM = "challenge";
+
+  // message for if player selects another player who us in game
+  private static final Message PLAYER_IN_GAME = Message.info("Selected Player is already in Game.");
 
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
@@ -69,8 +75,15 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    //display message if selected player is in game.
+    if(current!=null && current.isSelectedPlayerInGame()){
+      vm.put("message", PLAYER_IN_GAME);
+    }else {
+      // display a user message in the Home page
+      vm.put("message", WELCOME_MSG);
+    }
+
+
 
     Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby

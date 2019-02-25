@@ -61,11 +61,11 @@ public class LazySessionWatcher extends Thread {
     private synchronized void prune() {
         for (Session session : sessions) {
             if (Instant.now().toEpochMilli() - session.lastAccessedTime() > sessionTimeout) {
-                removeAttributes(session);
                 LOG.info("Session <" + session.id() + "> Timeout");
+                removeAttributes(session);
+                session.invalidate();
+                sessions.remove(session);
             }
-            session.invalidate();
-            sessions.remove(session);
         }
     }
 

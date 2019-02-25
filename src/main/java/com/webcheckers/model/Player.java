@@ -10,6 +10,10 @@ package com.webcheckers.model;
 public class Player {
 
 	private final String name;
+	/**
+	 * The board the player is currently viewing
+	 */
+	private Board board = null;
 
 	/**
 	 * Player's Color (RED or WHITE). Null if unassigned. Will be overwritten
@@ -20,6 +24,8 @@ public class Player {
 	 */
 	private Color color;
 
+	private boolean selectedPlayerInGame;// is selected player in game?
+
 	// CONSTRUCTORS ===========================================================
 
 	/** Simplified constructor that sets the Player's Color to null. */
@@ -28,7 +34,7 @@ public class Player {
 	}
 
 	public Player(String name, Color color) {
-
+		selectedPlayerInGame=false;
 		this.name = name;
 		this.color = color;
 	}
@@ -38,10 +44,18 @@ public class Player {
 	public String getName() {return name;}
 	public Color getColor() {return color;}
 
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
 	public void setColor(Color c) {this.color = c;}
 
 	// OBJECT =================================================================
-
 	@Override
 	public int hashCode() {return name.hashCode();}
 
@@ -61,6 +75,22 @@ public class Player {
 		if (!(o instanceof Player)) {return false;}
 		final Player player = (Player) o;
 		return player.name.equals(this.name);
+	}
+
+	/**
+	 * Is the player you selected in game?
+	 * @return true or false
+	 */
+	public boolean isSelectedPlayerInGame() {
+		return selectedPlayerInGame;
+	}
+
+	/**
+	 * Did you select an ingame player ?
+	 * @param value true for yes and false for no
+	 */
+	public void selectInGameOpponent(boolean value){
+		selectedPlayerInGame=value;
 	}
 
 }

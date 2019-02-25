@@ -6,6 +6,7 @@ package com.webcheckers.model;
  * @see com.webcheckers.ui.view.BoardView
  */
 public class Board {
+	private static int totalBoards = 0;
 
 	///
 	/// Constants
@@ -22,6 +23,7 @@ public class Board {
 	private Player activePlayer;
 	private int activeRow;
 	private int activeCol;
+	private final int boardID;
 
 	// CONSTRUCTORS ===========================================================
 
@@ -34,6 +36,8 @@ public class Board {
 	 * @param white White player.
 	 */
 	public Board(Player red, Player white) {
+		boardID = totalBoards++;
+
 		red.setColor(Color.RED);
 		white.setColor(Color.WHITE);
 		redPlayer = red;
@@ -64,10 +68,10 @@ public class Board {
 			spaces[0][i].setPiece(new Piece(i,0,whitePlayer));
 		}
 		for (int i = 0; i < SIZE; i+=2) {
-			spaces[0][i].setPiece(new Piece(i,1,whitePlayer));
+			spaces[1][i].setPiece(new Piece(i,1,whitePlayer));
 		}
 		for (int i = 1; i < SIZE; i+=2) {
-			spaces[0][i].setPiece(new Piece(i,2,whitePlayer));
+			spaces[2][i].setPiece(new Piece(i,2,whitePlayer));
 		}
 
 		for (int i = 0; i < SIZE; i+=2) {
@@ -160,4 +164,15 @@ public class Board {
 		return builder.toString();
 	}
 
+	@Override
+	public int hashCode() {
+		return boardID;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Board)) return false;
+		Board board = (Board) obj;
+		return this.boardID == board.boardID;
+	}
 }

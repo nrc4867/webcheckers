@@ -2,10 +2,7 @@ package com.webcheckers.ui.view;
 
 import com.webcheckers.model.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * The BoardView class is the intermediary between the Board model
@@ -28,14 +25,21 @@ public class BoardView implements Iterable<BoardView.Row> {
 
         private final int index;
         private Board board;
+        private final boolean reverse;
 
-        public Row(int index, Board board) {
+        /**
+         * @param index Row index
+         * @param board Board to display
+         * @param reverse Reverse the pieces
+         */
+        public Row(int index, Board board, boolean reverse) {
             if (index < 0 || index >= Board.getSize()) {
                 throw new IllegalArgumentException("Row out of bounds!");
             }
 
             this.board = board;
             this.index = index;
+            this.reverse = reverse;
         }
 
         // ACCESSORS ==========================================================
@@ -65,7 +69,14 @@ public class BoardView implements Iterable<BoardView.Row> {
          */
         @Override
         public Iterator<Space> iterator() {
-            return Arrays.asList(board.getSpaces()[index]).iterator();
+
+            List<Space> list = Arrays.asList(board.getSpaces()[index]);
+
+            if (reverse) {
+                Collections.reverse(list);
+            }
+
+            return list.iterator();
         }
     }
 
@@ -83,12 +94,22 @@ public class BoardView implements Iterable<BoardView.Row> {
      * Constructs a new view and creates its rows.
      *
      * @param b Board to view.
+     * @param flip Display the board upside down (for the White player)
      */
-    public BoardView(Board b) {
+    public BoardView(Board b, boolean flip) {
         this.board = b;
         this.rows = new ArrayList<>();
-        for (int i = 0; i < Board.getSize(); i++) {
-            rows.add(new Row(i, board));
+
+        if (!flip) {
+            for (int i = 0; i < Board.getSize(); i++) {
+                rows.add(new Row(i, board, flip));
+            }
+        }
+
+        else {
+            for (int i = Board.getSize()-1; i >= 0; i--) {
+                rows.add(new Row(i, board, flip));
+            }
         }
     }
 

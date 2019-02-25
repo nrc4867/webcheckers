@@ -4,6 +4,8 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Player;
 
+import java.util.Collection;
+import java.util.Hashtable;
 import java.util.logging.Logger;
 import java.util.Set;
 import java.util.HashSet;
@@ -22,9 +24,9 @@ public class PlayerLobby {
       "That name's already taken!";
 
   public static final String NAME_INVALID_MESSAGE =
-      "Your name must have at least one alphanumeric character!";
+      "Your name must have one alphanumeric character and no symbols!";
 
-  private static Set<Player> players = new HashSet<>();
+  private Hashtable<String, Player> players = new Hashtable<>();
 
 
   /**
@@ -47,8 +49,18 @@ public class PlayerLobby {
    * @return Returns true if the name is valid, false otherwise.
    * @author Michael Bianconi, Dylan Cuprewich
    */
-  public boolean validName(String name) { return name.matches(".*\\w.*"); }
+  public static boolean validName(String name) {
 
+    // name cannot only contain whitespace
+    if (name.length() == 0) {return false;}
+
+    // name has no symbols
+    for (char c : name.toCharArray()) {
+      if (!Character.isLetterOrDigit(c) && c!=' ') {return false;}
+    }
+
+    return true;
+  }
 
   /**
    * Attempts to add a name to the names in use list.
@@ -58,7 +70,8 @@ public class PlayerLobby {
    * @throws SignInException if name is taken or invalid.
    * @author Michael Bianconi
    */
-  public Player reserveName(String name) throws SignInException {
+  public synchronized Player reserveName(String name) throws SignInException {
+    name = name.trim();
     Player newPlayer = new Player(name);
     if (!validName(name)) {
       throw new SignInException(NAME_INVALID_MESSAGE);
@@ -66,7 +79,9 @@ public class PlayerLobby {
     if(players.contains(newPlayer)) {
       throw new SignInException(NAME_TAKEN_MESSAGE);
     }
-    players.add(newPlayer);
+    players.put(name, newPlayer);
+    newPlayer.setLobby(this);
+
     return newPlayer;
   }
 
@@ -78,8 +93,8 @@ public class PlayerLobby {
    * @return Returns false if the name isn't in the list (should never happen).
    * @author Michael Bianconi
    */
-  public boolean removePlayer(Player player) {
-    return players.remove(player);
+  public synchronized Player removePlayer(Player player) {
+    return players.remove(player.getName());
   }
 
 
@@ -87,7 +102,7 @@ public class PlayerLobby {
    * @return Returns the number of reserved names.
    * @author Michael Bianconi
    */
-  public int numReserved() {
+  public synchronized int numReserved() {
     return players.size();
   }
 
@@ -96,19 +111,33 @@ public class PlayerLobby {
    * @return Players List
    * @author Abhaya Tamrakar
    */
-  public static Set<Player> getPlayers() {
-    return players;
+  public synchronized Collection<Player> getPlayers() {
+    return players.values();
+  }
+
+  public synchronized boolean containsPlayer(Player player) {
+    return containsPlayer(player.getName());
+  }
+
+  public synchronized boolean containsPlayer(String name) {
+    return players.containsKey(name);
+  }
+
+  /**
+   * Get a player
+   * @param name the players name
+   * @return a player, if the player doesn't exist then null
+   */
+  public synchronized Player getPlayer(String name) {
+    if (name == null) return null;
+    return players.getOrDefault(name, null);
   }
 
   /**
    * @return the list of player names that are on this server
    */
   public synchronized Set<String> names() {
-    Set<String> names = new HashSet<>();
-    for(Player player: players) {
-      names.add(player.getName());
-    }
-    return names;
+    return new HashSet<>(players.keySet());
   }
 
 }

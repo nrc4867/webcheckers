@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -56,6 +57,7 @@ public class WebServer {
   public static final String HOME_URL = "/";
   public static final String SIGNIN_URL = "/signin";
   public static final String SIGNOUT_URL = "/signout";
+  public static final String GAME_URL = "/game";
 
   //
   // Attributes
@@ -63,6 +65,7 @@ public class WebServer {
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
+  private final LazySessionWatcher sessionWatcher;
   private final Gson gson;
 
   //
@@ -88,6 +91,9 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
+
+    this.sessionWatcher = new LazySessionWatcher();
+    sessionWatcher.start();
   }
 
   //
@@ -145,8 +151,11 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
-    post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
+    post(SIGNIN_URL, new PostSignInRoute(playerLobby, sessionWatcher, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
+
+    get(GAME_URL, new GetGameRoute(templateEngine));
+    post(GAME_URL, new PostGameRoute(playerLobby));
     //
     LOG.config("WebServer is initialized.");
   }

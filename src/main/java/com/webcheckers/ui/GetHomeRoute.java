@@ -8,6 +8,7 @@ import com.webcheckers.model.Player;
 import com.webcheckers.util.NavBar;
 import spark.*;
 
+import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 
 /**
@@ -18,7 +19,13 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+  //message for welcoming player
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+
+  public final String CHALLENGE_PARAM = "challenge";
+
+  // message for if player selects another player who us in game
+  private static final Message PLAYER_IN_GAME = Message.info("Selected Player is already in Game.");
 
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
@@ -54,30 +61,42 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     final Session httpSession = request.session();
+
+    // get current session player
+    Player current = (Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+
+    if(current != null && current.getBoard() != null) {
+      response.redirect(WebServer.GAME_URL);
+      return null;
+    }
+
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    //display message if selected player is in game.
+    if(current!=null && current.isSelectedPlayerInGame()){
+      vm.put("message", PLAYER_IN_GAME);
+    }else {
+      // display a user message in the Home page
+      vm.put("message", WELCOME_MSG);
+    }
 
-    // get current session player
-    Player current = (Player) httpSession.attribute(NavBar.PLAYER_SIGNIN_KEY);
 
+
+    Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby
     if(current!=null) {
-      Set<String> names = new HashSet<>();
-      for (Player player : PlayerLobby.getPlayers()) {
-        if (!current.equals(player)) {
-          names.add(player.getName());
-        }
-      }
-      // create the list of players
-      vm.put("users", names.toArray());
+      names.addAll(playerLobby.names());
+      names.remove(current.getName());
     }else{
-      vm.put("users", playerLobby.names().toArray());
+      int num_players= playerLobby.getPlayers().size();
+      names.add("Number of Players online: "+num_players); //show Number of players online.
     }
+    // create the list of players
+    vm.put("users", names.toArray());
+
     NavBar.updateNavBar(vm, httpSession);
 
     // render the View

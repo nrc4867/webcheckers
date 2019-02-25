@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.PlayerLobby;
+
 /**
  * Players play WebCheckers. They should <i>only</i> be created
  * after the user has signed in with a valid username.
@@ -7,13 +9,17 @@ package com.webcheckers.model;
  * Their color is assigned when they are added to a Board, but can
  * be changed using {@link #setColor(Color)}.
  */
-public class Player {
+public class Player implements Cleanup {
 
 	private final String name;
 	/**
 	 * The board the player is currently viewing
 	 */
 	private Board board = null;
+    /**
+     * The lobby the player is currently part of
+     */
+    private PlayerLobby lobby;
 
 	/**
 	 * Player's Color (RED or WHITE). Null if unassigned. Will be overwritten
@@ -48,10 +54,17 @@ public class Player {
 	public Board getBoard() {
 		return board;
 	}
-
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+
+    public PlayerLobby getLobby() {
+        return lobby;
+    }
+    public void setLobby(PlayerLobby lobby) {
+        if(this.lobby != null) this.lobby.removePlayer(this);
+        this.lobby = lobby;
+    }
 
 	public void setColor(Color c) {this.color = c;}
 
@@ -92,5 +105,11 @@ public class Player {
 	public void selectInGameOpponent(boolean value){
 		selectedPlayerInGame=value;
 	}
+
+    @Override
+    public void cleanup() {
+        lobby.removePlayer(this);
+    }
+
 
 }

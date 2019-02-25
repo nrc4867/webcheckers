@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Cleanup;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Attributes;
@@ -30,12 +31,7 @@ public class LazySessionWatcher extends Thread {
     private final int sessionTimeout = sessionCheckTimer;
 
 
-    private final PlayerLobby lobby;
     private final Set<Session> sessions = new HashSet<>();
-
-    public LazySessionWatcher(final PlayerLobby lobby) {
-        this.lobby = Objects.requireNonNull(lobby, "Playerlobby cannont be null");
-    }
 
     @Override
     public void run() {
@@ -54,6 +50,7 @@ public class LazySessionWatcher extends Thread {
 
     /**
      * Add a session to watch
+     *
      * @param session the watched session
      */
     public synchronized void addSession(Session session) {
@@ -65,17 +62,20 @@ public class LazySessionWatcher extends Thread {
      * Remove any sessions that are past session timeout
      */
     private synchronized void prune() {
-        for (Session session: sessions) {
+        for (Session session : sessions) {
             if (Instant.now().toEpochMilli() - session.lastAccessedTime() > sessionTimeout) {
-                Player player = session.attribute(Attributes.PLAYER_SIGNIN_KEY);
-                if(player != null) lobby.removePlayer(player);
-                /**
-                 * Clear any boards the player may be on
-                 */
+                removeAttributes(session);
                 LOG.info("Session <" + session.id() + "> Timeout");
-                session.invalidate();
-                sessions.remove(session);
             }
+            session.invalidate();
+            sessions.remove(session);
+        }
+    }
+
+    private synchronized void removeAttributes(Session session) {
+        for (String attr : session.attributes()) {
+            if (session.attribute(attr) instanceof Cleanup)
+                ((Cleanup) session.attribute(attr)).cleanup();
         }
     }
 }

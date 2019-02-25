@@ -39,6 +39,7 @@ public class PostGameRoute implements Route {
 
         if(selectedPlayer.getBoard() != null) {
             // the selected player is already in a game
+            response.redirect(WebServer.HOME_URL);
         }
 
         if(reqPlayer.getBoard() == null) {

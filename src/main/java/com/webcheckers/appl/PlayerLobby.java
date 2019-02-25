@@ -80,6 +80,8 @@ public class PlayerLobby {
       throw new SignInException(NAME_TAKEN_MESSAGE);
     }
     players.put(name, newPlayer);
+    newPlayer.setLobby(this);
+
     return newPlayer;
   }
 

@@ -82,9 +82,13 @@ public class PostSignInRoute implements Route {
             Player player = playerLobby.reserveName(playerName);
             httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, player);
             // Kill the player login after a minute of session inactivity. (vis. Browser closes)
-            if(sessionWatcher != null) sessionWatcher.addSession(httpSession);
-            //httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
-            //httpSession.maxInactiveInterval(SessionTimeoutWatchDog.maxInactiveInterval);
+            if(sessionWatcher != null) {
+                sessionWatcher.addSession(httpSession);
+            }
+            else { // remove the session after 10 mins
+                httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
+                httpSession.maxInactiveInterval(1); // not respected by server
+            }
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

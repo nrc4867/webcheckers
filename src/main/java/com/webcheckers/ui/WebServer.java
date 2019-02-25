@@ -92,7 +92,7 @@ public class WebServer {
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
 
-    this.sessionWatcher = new LazySessionWatcher(playerLobby);
+    this.sessionWatcher = new LazySessionWatcher();
     sessionWatcher.start();
   }
 

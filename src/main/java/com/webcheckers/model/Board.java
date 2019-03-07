@@ -115,6 +115,14 @@ public class Board {
 	/** @return Returns a 2D array. Empty spaces have null pieces. */
 	public Space[][] getSpaces() {return spaces;}
 
+	/** @return Returns the Piece at the index, or NULL. */
+	public Piece getPiece(int r, int c) {return spaces[r][c].getPiece();}
+
+	/** @return Returns if the given coordinates are in bounds. */
+	public boolean inBounds(int r, int c) {
+		return c >= 0 && c < SIZE && r >= 0 && r < SIZE;
+	}
+
 	/** @return Returns the width/length of the board. */
 	public static int getSize() {return SIZE;}
 
@@ -133,7 +141,7 @@ public class Board {
 
 	/** @return Returns whether the given square is holding a piece. */
 	public boolean hasPiece(int row, int col) {
-		return spaces[row][col] == null;
+		return spaces[row][col].getPiece() != null;
 	}
 
 

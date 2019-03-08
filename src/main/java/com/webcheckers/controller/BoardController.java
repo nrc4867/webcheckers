@@ -16,10 +16,71 @@ public class BoardController {
     }
 
     /**
+     * Removes the piece from its current position and transfers it.
+     * It might be a good idea to call shouldKing().
+     * @param p Piece to move.
+     * @param destRow Row to move to.
+     * @param destCol Col to move to.
+     * @return True if successful.
+     */
+    public boolean movePiece(Piece p, int destRow, int destCol)
+    {
+        if (!canMoveTo(p, destRow, destCol)) {
+            return false;
+        }
+
+        board.setPiece(null, p.getRow(), p.getCol());
+        board.setPiece(p, destRow, destCol);
+        p.setCol(destCol);
+        p.setRow(destRow);
+
+        return true;
+    }
+
+    /**
+     * Jump the piece. Removes it from its current Space, along
+     * with the Piece jumped over. Places it in the new Space.
+     *
+     * @param p Piece jumping.
+     * @param destRow Row to jump to.
+     * @param destCol Col to jump to.
+     * @return True if jumped.
+     */
+    public boolean jumpPiece(Piece p, int destRow, int destCol)
+    {
+        if (!canJumpTo(p, destRow, destCol)) {
+            return false;
+        }
+
+        int middleRow = p.getRow() - (destRow/2);
+        int middleCol = p.getCol() - (destCol/2);
+
+        board.setPiece(null, p.getRow(), p.getCol());
+        board.setPiece(null, middleRow, middleCol);
+        board.setPiece(p, destRow, destCol);
+
+        return true;
+    }
+
+    /**
+     * Kings the Piece, if it can be kinged.
+     * @param p Piece to king.
+     * @return True if kinged.
+     */
+    public boolean king(Piece p) {
+        if (shouldKing(p)) {
+            p.setType(Piece.Type.KING);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Returns true if the Piece can move (NOT jump!) to the
      * given space.
      */
-    private boolean canMoveTo(Piece p, int destRow, int destCol) {
+    public boolean canMoveTo(Piece p, int destRow, int destCol) {
 
         int rowDelta = destRow - p.getRow();
         int colDelta = destCol - p.getCol();
@@ -72,7 +133,7 @@ public class BoardController {
      *      The space between P and the Destination has an enemy piece.
      *
      */
-    private boolean canJumpTo(Piece p, int destRow, int destCol) {
+    public boolean canJumpTo(Piece p, int destRow, int destCol) {
 
         int rowDelta = destRow - p.getRow();
         int colDelta = destCol - p.getCol();

@@ -144,6 +144,13 @@ public class Board {
 		return spaces[row][col].getPiece() != null;
 	}
 
+	public void setPiece(Piece p, int row, int col) {
+		if (!inBounds(row, col)) {
+			throw new IllegalArgumentException("Out of bounds!");
+		}
+		spaces[row][col].setPiece(p);
+	}
+
 
 	// Object =================================================================
 

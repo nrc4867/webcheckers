@@ -1,9 +1,6 @@
 package com.webcheckers.controller;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Color;
-import com.webcheckers.model.GameException;
-import com.webcheckers.model.Piece;
+import com.webcheckers.model.*;
 
 import java.util.List;
 
@@ -21,13 +18,47 @@ public class BoardController {
     /**
      * Returns true if the Piece can move (NOT jump!) to the
      * given space.
-     *
-     * TODO
      */
     private boolean canMoveTo(Piece p, int destRow, int destCol) {
 
-        return false;
+        int rowDelta = destRow - p.getRow();
+        int colDelta = destCol - p.getCol();
 
+
+        // Destination must be one of four adjacent corners
+        if (rowDelta != 1 && rowDelta != -1 && colDelta != 1 && colDelta != -1) {
+            return false;
+        }
+
+        // Piece must be on the board
+        if (p != board.getPiece(p.getRow(), p.getCol())) {
+            throw new IllegalArgumentException(
+                    "Piece doesn't exist in that location!");
+        }
+
+        // Destination must be in bounds
+        if (!board.inBounds(destRow, destCol)) {
+            return false;
+        }
+
+        // Destination must be empty
+        if (board.hasPiece(destRow, destCol)) {
+            return false;
+        }
+
+        // Destination must be in the correct direction
+        if (p.getType() != Piece.Type.KING) {
+
+            if (p.getColor() == Color.WHITE && destRow < p.getRow()) {
+                return false;
+            }
+
+            if (p.getColor() == Color.RED && destRow > p.getRow()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -49,12 +80,13 @@ public class BoardController {
         // You must specify a valid place to jump to (2 space radius)
         if ((rowDelta != 2 && rowDelta != -2)
         ||  (colDelta != 2 && colDelta != -2)) {
-            throw new IllegalArgumentException("Deltas must be 2 or -2!");
+            return false;
         }
 
         // The Piece doesn't exist on that board.
         if (p != board.getPiece(p.getRow(), p.getCol())) {
-            throw new GameException("Piece doesn't exist in that location!");
+            throw new IllegalArgumentException(
+                    "Piece doesn't exist in that location!");
         }
 
         // The Piece can't jump north if it's white and single (#me)
@@ -105,5 +137,56 @@ public class BoardController {
             || canJumpTo(p, p.getRow()-2, p.getCol()+2)
             || canJumpTo(p, p.getRow()+2, p.getCol()-2)
             || canJumpTo(p, p.getRow()+2, p.getCol()+2);
+    }
+
+    /**
+     * Checks the entire Board to see if any of the given player's
+     * pieces can jump.
+     */
+    public boolean hasAvailableJumps(Player p) {
+
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
+
+                // If a piece exists on the space, and its owned
+                // by the player, check if it can jump
+                if (board.hasPiece(row, col)) {
+                    Piece piece = board.getPiece(row, col);
+                    if (piece.getOwner() == p && hasAvailableJumps(piece)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the Piece should be kinged. A Piece is kinged when it
+     * reaches the opposite side of the board.
+     */
+    public boolean shouldKing(Piece p) {
+
+        // Piece must exist on the board
+        if (p != board.getPiece(p.getRow(), p.getCol())) {
+            throw new IllegalArgumentException(
+                    "Piece doesn't exist in that location!");
+        }
+
+        // Piece cannot be kinged twice
+        if (p.getType() == Piece.Type.KING) {
+            return false;
+        }
+
+        if (p.getColor() == Color.WHITE && p.getRow() == board.getSize()-1) {
+            return true;
+        }
+
+        if (p.getColor() == Color.RED && p.getRow() == 0) {
+            return true;
+        }
+
+        return false;
     }
 }

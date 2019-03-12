@@ -92,7 +92,7 @@ public class BoardController {
         }
 
         // Piece must be on the board
-        if (p != board.getPiece(p.getRow(), p.getCol())) {
+        if (!(p.equals(board.getPiece(p.getRow(), p.getCol())))) {
             throw new IllegalArgumentException(
                     "Piece doesn't exist in that location!");
         }
@@ -145,7 +145,7 @@ public class BoardController {
         }
 
         // The Piece doesn't exist on that board.
-        if (p != board.getPiece(p.getRow(), p.getCol())) {
+        if (!(p.equals(board.getPiece(p.getRow(), p.getCol())))) {
             throw new IllegalArgumentException(
                     "Piece doesn't exist in that location!");
         }
@@ -187,6 +187,8 @@ public class BoardController {
 
         return true;
     }
+
+
 
     /**
      * Checks the piece to see if it can jump <i>over</i>
@@ -230,7 +232,7 @@ public class BoardController {
     public boolean shouldKing(Piece p) {
 
         // Piece must exist on the board
-        if (p != board.getPiece(p.getRow(), p.getCol())) {
+        if (!(p.equals(board.getPiece(p.getRow(), p.getCol())))) {
             throw new IllegalArgumentException(
                     "Piece doesn't exist in that location!");
         }

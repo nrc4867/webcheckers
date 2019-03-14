@@ -52,8 +52,8 @@ public class BoardController {
             return false;
         }
 
-        int middleRow = p.getRow() - (destRow/2);
-        int middleCol = p.getCol() - (destCol/2);
+        int middleRow = p.getRow() - ((p.getRow() - destRow)/2);
+        int middleCol = p.getCol() - ((p.getCol() - destCol)/2);
 
         board.setPiece(null, p.getRow(), p.getCol());
         board.setPiece(null, middleRow, middleCol);
@@ -82,16 +82,25 @@ public class BoardController {
      */
     public boolean canMoveTo(Piece p, int destRow, int destCol) {
 
+        if (p == null) {
+            throw new IllegalArgumentException(
+                    "Piece doesn't exist!"
+            );
+        }
         int rowDelta = destRow - p.getRow();
         int colDelta = destCol - p.getCol();
 
-
         // Destination must be one of four adjacent corners
-        if (rowDelta != 1 && rowDelta != -1 && colDelta != 1 && colDelta != -1) {
+        if ((rowDelta != 1 && rowDelta != -1)
+        ||  (colDelta != 1 && colDelta != -1)) {
             return false;
         }
 
         // Piece must be on the board
+        if (board.getPiece(p.getRow(), p.getCol()) == null) {
+            return false;
+        }
+
         if (!(p.equals(board.getPiece(p.getRow(), p.getCol())))) {
             throw new IllegalArgumentException(
                     "Piece doesn't exist in that location!");
@@ -173,9 +182,9 @@ public class BoardController {
         }
 
         // The intermediate space must have a piece of the opposite color
-        int rowInter = p.getRow() + (rowDelta/2);
-        int colInter = p.getCol() + (colDelta/2);
-        Piece enemy = board.getPiece(rowInter, colInter);
+        int middleRow = p.getRow() - ((p.getRow() - destRow)/2);
+        int middleCol = p.getCol() - ((p.getCol() - destCol)/2);
+        Piece enemy = board.getPiece(middleRow, middleCol);
 
         if (enemy == null) {
             return false;
@@ -203,6 +212,18 @@ public class BoardController {
     }
 
     /**
+     * Checks if the piece can move (NOT jump).
+     * @param p Piece to check.
+     * @return True if it can move.
+     */
+    public boolean hasAvailableMoves(Piece p) {
+        return canMoveTo(p, p.getRow()-1, p.getCol()-1)
+                || canMoveTo(p, p.getRow()-1, p.getCol()+1)
+                || canMoveTo(p, p.getRow()+1, p.getCol()-1)
+                || canMoveTo(p, p.getRow()+1, p.getCol()+1);
+    }
+
+    /**
      * Checks the entire Board to see if any of the given player's
      * pieces can jump.
      */
@@ -223,6 +244,39 @@ public class BoardController {
         }
 
         return false;
+    }
+
+
+    /**
+     * Checks of any of the Player's pieces can move (NOT jump).
+     * @param p Player to check.
+     * @return True if any of their pieces can move.
+     */
+    public boolean hasAvailableMoves(Player p) {
+
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
+
+                // If a piece exists on the space, and its owned
+                // by the player, check if it can jump
+                if (board.hasPiece(row, col)) {
+                    Piece piece = board.getPiece(row, col);
+                    if (piece.getOwner() == p && hasAvailableMoves(piece)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks to see if the Player can move or jump any pieces.
+     */
+    public boolean noMovesLeft(Player p) {
+
+        return !(hasAvailableJumps(p) || hasAvailableMoves(p));
     }
 
     /**

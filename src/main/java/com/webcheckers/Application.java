@@ -36,6 +36,7 @@ public final class Application {
    *    Command line arguments; none expected.
    */
   public static void main(String[] args) {
+
     // initialize Logging
     try {
       ClassLoader classLoader = Application.class.getClassLoader();

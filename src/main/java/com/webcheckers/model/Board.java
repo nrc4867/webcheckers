@@ -28,14 +28,22 @@ public class Board {
 	// CONSTRUCTORS ===========================================================
 
 	/**
+	 * Calls Board(red,white,false).
+	 */
+	public Board(Player red, Player white) {
+		this(red, white, false);
+	}
+
+	/**
 	 * Constructs the board. Red goes first. Board starts with 3 rows of 4
 	 * pieces for each player. Players will have their colors automatically
 	 * assigned.
 	 *
 	 * @param red Red player.
 	 * @param white White player.
+	 * @param empty If true, do not populate the board with Pieces.
 	 */
-	public Board(Player red, Player white) {
+	public Board(Player red, Player white, boolean empty) {
 		boardID = totalBoards++;
 
 		red.setColor(Color.RED);
@@ -47,8 +55,14 @@ public class Board {
 		activePlayer = red;
 		activeRow = 0;
 		activeCol = 0;
-		initialize();
 
+		for (int row = 0; row < getSize(); row++) {
+			for (int col = 0; col < getSize(); col++) {
+				spaces[row][col] = new Space(row, col);
+			}
+		}
+
+		if (!empty) initialize();
 	}
 
 	// ACCESSORS ==============================================================
@@ -57,12 +71,6 @@ public class Board {
 	 * Creates the checkerboard pattern with new pieces. White goes on top.
 	 */
 	private void initialize() {
-
-		for (int row = 0; row < getSize(); row++) {
-			for (int col = 0; col < getSize(); col++) {
-				spaces[row][col] = new Space(row, col);
-			}
-		}
 
 		for (int i = 1; i < SIZE; i+=2) {
 			spaces[0][i].setPiece(new Piece(i,0,whitePlayer));
@@ -151,6 +159,10 @@ public class Board {
 		spaces[row][col].setPiece(p);
 	}
 
+	public void switchActivePlayer() {
+		activePlayer = (activePlayer == redPlayer) ? whitePlayer : redPlayer;
+	}
+
 
 	// Object =================================================================
 
@@ -159,17 +171,31 @@ public class Board {
 
 		StringBuilder builder = new StringBuilder();
 
+		builder.append("  ");
+
+		for (int col = 0; col < SIZE; col++) {
+			builder.append(col);
+		}
+
+		builder.append("\n");
+
 		for (int row = 0; row < SIZE; row++) {
+
+			builder.append(row + " ");
+
 			for (int col = 0; col < SIZE; col++) {
 
-				if (spaces[row][col] == null) {
-					builder.append(" ");
+				if (row%2 == col%2)
+					builder.append("\u001B[47m");
+
+				if (spaces[row][col].getPiece() == null) {
+					builder.append(" \u001B[0m");
 				}
 				else if (spaces[row][col].getPiece().getColor() == Color.RED) {
-					builder.append("R");
+					builder.append("\u001B[31m"+'R'+ "\u001B[0m");
 				}
 				else if (spaces[row][col].getPiece().getColor() == Color.WHITE) {
-					builder.append("W");
+					builder.append("\u001B[37m"+'W'+ "\u001B[0m");
 				}
 			}
 

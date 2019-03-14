@@ -5,8 +5,6 @@ import com.webcheckers.model.Board;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class CommandLine {
@@ -57,12 +55,24 @@ public class CommandLine {
 
             // Try to move piece
             if (control.movePiece(selected, eRow, eCol)) {
+
+                if (control.shouldKing(selected)) {
+                    control.king(selected);
+                }
+
                 board.switchActivePlayer();
                 continue;
             }
 
             // Try to jump piece
             if (control.jumpPiece(selected, eRow, eCol)) {
+
+                // When kinged, end the turn
+                if (control.shouldKing(selected)) {
+                    control.king(selected);
+                    board.switchActivePlayer();
+                    continue;
+                }
 
                 // Multi jump
                 if (control.hasAvailableJumps(board.getActivePlayer())) {

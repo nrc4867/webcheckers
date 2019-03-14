@@ -14,6 +14,8 @@ public class CommandLine {
         Player white = new Player("white");
         Board board = new Board(red, white);
         BoardController control = new BoardController(board);
+        boolean jumping = false;
+        Piece selected = null;
 
         System.out.println("Board test!");
         System.out.println("Usage: [start row,start col] [end row,end col]");
@@ -28,69 +30,120 @@ public class CommandLine {
             // Prompt
             System.out.print(board);
             System.out.print(board.getActivePlayer()+"> ");
+            if (jumping) System.out.print("(jump to) ");
             System.out.flush();
 
             // Read input
             Scanner scanner = new Scanner(System.in);
             String[] in = scanner.nextLine().split("[ ,]");
 
-            // Bad input length
-            if (in.length != 4) {
-                System.out.println("Bad input!");
-                continue;
+            int sRow;
+            int sCol;
+            int eRow;
+            int eCol;
+
+            if (!jumping) {
+                // Bad input length
+                if (in.length != 4) {
+                    System.out.println("Bad input!");
+                    continue;
+                }
+
+                sRow = Integer.valueOf(in[0]);
+                sCol = Integer.valueOf(in[1]);
+                eRow = Integer.valueOf(in[2]);
+                eCol = Integer.valueOf(in[3]);
+
+                selected = board.getPiece(sRow, sCol);
             }
 
-            int sRow = Integer.valueOf(in[0]);
-            int sCol = Integer.valueOf(in[1]);
-            int eRow = Integer.valueOf(in[2]);
-            int eCol = Integer.valueOf(in[3]);
+            else {
+                if (in.length != 2) {
+                    System.out.println("Bad input!");
+                    continue;
+                }
 
-            Piece selected = board.getPiece(sRow, sCol);
+                eRow = Integer.valueOf(in[0]);
+                eCol = Integer.valueOf(in[1]);
+            }
 
             // Bad starting position
-            if (selected == null) {
+            if (selected == null
+            || selected.getColor() != board.getActivePlayer().getColor()) {
                 System.out.println("Bad piece!");
                 continue;
             }
 
-            // Try to move piece
-            if (control.movePiece(selected, eRow, eCol)) {
+            if (jumping) {
+
+                if (!control.jumpPiece(selected, eRow, eCol)) {
+                    System.out.println("You must jump!");
+                    continue;
+                } else {
+                    // When kinged, end the turn
+                    if (control.shouldKing(selected)) {
+                        control.king(selected);
+                        jumping = false;
+                        board.switchActivePlayer();
+                        continue;
+                    }
+
+                    // Multi jump
+                    if (control.hasAvailableJumps(selected)) {
+                        jumping = true;
+                        continue;
+                    }
+
+                    // No more jumps
+                    else {
+                        jumping = false;
+                        board.switchActivePlayer();
+                        continue;
+                    }
+                }
+            }
+
+                // Try to move
+            else if (control.movePiece(selected, eRow, eCol)) {
 
                 if (control.shouldKing(selected)) {
                     control.king(selected);
                 }
 
+                jumping = false;
                 board.switchActivePlayer();
                 continue;
             }
 
             // Try to jump piece
-            if (control.jumpPiece(selected, eRow, eCol)) {
+            else if (control.jumpPiece(selected, eRow, eCol)) {
 
                 // When kinged, end the turn
                 if (control.shouldKing(selected)) {
                     control.king(selected);
+                    jumping = false;
                     board.switchActivePlayer();
                     continue;
                 }
 
                 // Multi jump
-                if (control.hasAvailableJumps(board.getActivePlayer())) {
+                if (control.hasAvailableJumps(selected)) {
+                    jumping = true;
                     continue;
                 }
 
                 // No more jumps
                 else
                 {
+                    jumping = false;
                     board.switchActivePlayer();
                     continue;
                 }
             }
 
+
             // Can't move or jump
             System.out.println("Bad destination!");
         }
     }
-
-
 }

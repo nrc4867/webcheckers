@@ -25,6 +25,8 @@ public class BoardController {
      */
     public boolean movePiece(Piece p, int destRow, int destCol)
     {
+        System.out.printf("Moving from %d,%d to %d,%d\n",
+                p.getCol(),p.getRow(), destCol, destRow);
         if (!canMoveTo(p, destRow, destCol)) {
             return false;
         }
@@ -33,6 +35,8 @@ public class BoardController {
         board.setPiece(p, destRow, destCol);
         p.setCol(destCol);
         p.setRow(destRow);
+
+        System.out.println("Moved to " + p.getCol() +","+ p.getRow());
 
         return true;
     }
@@ -58,6 +62,9 @@ public class BoardController {
         board.setPiece(null, p.getRow(), p.getCol());
         board.setPiece(null, middleRow, middleCol);
         board.setPiece(p, destRow, destCol);
+
+        p.setCol(destCol);
+        p.setRow(destRow);
 
         return true;
     }

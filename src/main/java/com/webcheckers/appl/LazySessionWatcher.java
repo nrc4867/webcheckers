@@ -6,6 +6,7 @@ import spark.Session;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -21,7 +22,7 @@ public class LazySessionWatcher extends Thread {
     /**
      * How often the sessions are
      */
-    private final int sessionCheckTimer = 30 * 1000;
+    private final int sessionCheckTimer = 120 * 1000;
     /**
      * The min amount of time a session has to report before it is removed
      */
@@ -59,12 +60,14 @@ public class LazySessionWatcher extends Thread {
      * Remove any sessions that are past session timeout
      */
     private synchronized void prune() {
-        for (Session session : sessions) {
+        Iterator<Session> itr = sessions.iterator();
+        while(itr.hasNext()){
+            Session session = itr.next();
             if (Instant.now().toEpochMilli() - session.lastAccessedTime() > sessionTimeout) {
                 LOG.info("Session <" + session.id() + "> Timeout");
                 removeAttributes(session);
                 session.invalidate();
-                sessions.remove(session);
+                itr.remove();
             }
         }
     }

@@ -23,6 +23,7 @@ import java.util.Objects;
 public class PostSignInRoute implements Route {
 
     public static final String VIEW_NAME = "signin.ftl";
+    public static final String USERNAME_PARAM = "username";
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
@@ -67,14 +68,14 @@ public class PostSignInRoute implements Route {
      *   the rendered HTML for the SignIn page, Redirect to homepage
      */
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session(true);
 
         // Start creating elements that must be placed in the page
         final Map<String, Object> pageElements = new HashMap<>();
         pageElements.put(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
 
-        final String playerName = request.queryParams("username");
+        final String playerName = request.queryParams(USERNAME_PARAM);
 
         ModelAndView mv;
         try {

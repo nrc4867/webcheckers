@@ -1,5 +1,6 @@
 package com.webcheckers.util;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -113,4 +114,16 @@ public final class Message {
     return "{Msg " + type + " '" + text + "'}";
   }
 
+
+  @Override
+  public boolean equals(Object obj) {
+    if(!(obj instanceof Message)) return false;
+    Message message = (Message) obj;
+    return text.equals(message.text) && type.equals(message.type);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(text, type);
+  }
 }

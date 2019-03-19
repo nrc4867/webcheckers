@@ -5,6 +5,7 @@ import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Attributes;
 import spark.*;
+import static spark.Spark.halt;
 
 import java.util.Objects;
 
@@ -34,6 +35,7 @@ public class PostGameRoute implements Route {
         if(reqPlayer == null || selectedPlayer == null) {
             // a player that is not signed in cannot be in a game
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 
@@ -41,6 +43,7 @@ public class PostGameRoute implements Route {
             // the selected player is already in a game
             reqPlayer.selectInGameOpponent(true);
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 
@@ -54,6 +57,7 @@ public class PostGameRoute implements Route {
             response.redirect(WebServer.GAME_URL);
         }
 
+        halt();
         return null;
     }
 }

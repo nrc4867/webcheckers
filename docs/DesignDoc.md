@@ -22,15 +22,15 @@ geometry: margin=1in
 This is a summary of the project.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+WebCheckers is a game that allows users to connect with one another and play Checkers.
+It's implemented in Java, using the Spark, Ajax, and FreeMarker API's.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
+| MVP | Minimum Viable Product |
 
 
 ## Requirements

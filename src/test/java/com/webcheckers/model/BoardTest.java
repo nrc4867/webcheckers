@@ -1,11 +1,16 @@
 package com.webcheckers.model;
 
 import static org.junit.jupiter.api.Assertions.*;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Testing class for Board
+ *
+ * @author Suwamik Paul
+ */
+@Tag("Model-tier")
 public class BoardTest {
 
     private static Player r = new Player("r", Color.RED);

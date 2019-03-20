@@ -29,7 +29,9 @@ It's implemented in Java, using the Spark, Ajax, and FreeMarker API's.
 |------|------------|
 | VO | Value Object |
 | MVP | Minimum Viable Product |
-
+| Spark | Java-based Server |
+| FreeMarker | Java-generated HTML |
+| Ajax | Allows asynchronous server requests |
 
 ## Requirements
 

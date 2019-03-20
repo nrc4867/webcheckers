@@ -51,7 +51,7 @@ public class PostSignOutRoute implements Route {
             httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, null); // remove sign-in from session
         }
         // send user back to the sign-in page
-        response.redirect(WebServer.SIGNIN_URL);
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 

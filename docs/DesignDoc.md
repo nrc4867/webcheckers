@@ -28,8 +28,8 @@ WebCheckers allows users to connect with a server and play against each other at
 |------|------------|
 | VO | Value Object |
 | MVP | Minimum Viable Product |
-| Spark | Java-based Server |
-| FreeMarker | Java-generated HTML |
+| Spark | Java-based Server API |
+| FreeMarker | Java-generated HTML API |
 | Ajax | Allows asynchronous server requests |
 
 ## Requirements

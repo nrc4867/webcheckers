@@ -19,10 +19,8 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
-
 ### Purpose
-WebCheckers is a game that allows users to connect with one another and play Checkers.
+WebCheckers is a game that allows users to connect with one another over the internet and play Checkers.
 It's implemented in Java, using the Spark, Ajax, and FreeMarker API's.
 
 ### Glossary and Acronyms

@@ -18,14 +18,14 @@ public class PostGameRoute implements Route {
 
     private final PlayerLobby playerLobby;
 
-    public final String CHALLENGE_PARAM = "challenge";
+    public static final String CHALLENGE_PARAM = "challenge";
 
     public PostGameRoute(final PlayerLobby playerLobby) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "Playerlobby must be set");
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         // player who sent the request
         Player reqPlayer = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);

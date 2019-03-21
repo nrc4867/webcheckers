@@ -1,6 +1,7 @@
 package com.webcheckers.controller;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Piece;

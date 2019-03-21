@@ -50,8 +50,8 @@ public class PostSignOutRoute implements Route {
             lobby.removePlayer((Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY)); // remove player from lobby
             httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, null); // remove sign-in from session
         }
-        // send user back to the sign-in page
-        response.redirect(WebServer.SIGNIN_URL);
+        // send user back to the home page
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 

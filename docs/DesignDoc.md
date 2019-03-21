@@ -9,28 +9,28 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Damns
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Dylan Cuprewich
+  * Abhaya Tamrakar
+  * Mike Bianconi
+  * Nicholas Chieppa
+  * Suwamik Paul
 
 ## Executive Summary
 
-This is a summary of the project.
-
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+WebCheckers allows users to connect with a server and play against each other at an online game of Checkers.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
-
+| MVP | Minimum Viable Product |
+| Spark | Java-based Server API |
+| FreeMarker | Java-generated HTML API |
+| Ajax | Allows asynchronous server requests |
 
 ## Requirements
 

@@ -1,4 +1,4 @@
-package com.webcheckers.controller;
+package com.webcheckers.appl;
 
 import com.webcheckers.model.*;
 
@@ -13,6 +13,10 @@ public class BoardController {
 
     public BoardController(Board b) {
         this.board = b;
+    }
+
+    public BoardController(Player player) {
+        this.board = player.getBoard();
     }
 
     /**

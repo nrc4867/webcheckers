@@ -45,8 +45,8 @@ public class Piece {
 	 * @see Piece(int, int, Player)
 	 */
 	public Piece(int col, int row, Player owner, Type type) {
-		this.col = col;
-		this.row = row;
+		setCol(col);
+		setRow(row);
 		this.owner = owner;
 		this.type = type;
 	}

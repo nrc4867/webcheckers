@@ -5,6 +5,7 @@ import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Attributes;
 import spark.*;
+import static spark.Spark.halt;
 
 import java.util.Objects;
 
@@ -17,14 +18,14 @@ public class PostGameRoute implements Route {
 
     private final PlayerLobby playerLobby;
 
-    public final String CHALLENGE_PARAM = "challenge";
+    public static final String CHALLENGE_PARAM = "challenge";
 
     public PostGameRoute(final PlayerLobby playerLobby) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "Playerlobby must be set");
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         final Session httpSession = request.session();
         // player who sent the request
         Player reqPlayer = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
@@ -34,6 +35,7 @@ public class PostGameRoute implements Route {
         if(reqPlayer == null || selectedPlayer == null) {
             // a player that is not signed in cannot be in a game
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 
@@ -41,6 +43,7 @@ public class PostGameRoute implements Route {
             // the selected player is already in a game
             reqPlayer.selectInGameOpponent(true);
             response.redirect(WebServer.HOME_URL);
+            halt();
             return null;
         }
 
@@ -54,6 +57,7 @@ public class PostGameRoute implements Route {
             response.redirect(WebServer.GAME_URL);
         }
 
+        halt();
         return null;
     }
 }

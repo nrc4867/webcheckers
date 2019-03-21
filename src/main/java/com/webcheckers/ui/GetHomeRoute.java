@@ -22,6 +22,7 @@ public class GetHomeRoute implements Route {
   //message for welcoming player
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+  public static final String VIEW_NAME = "home.ftl";
   public final String CHALLENGE_PARAM = "challenge";
 
   // message for if player selects another player who us in game
@@ -100,6 +101,6 @@ public class GetHomeRoute implements Route {
     NavBar.updateNavBar(vm, httpSession);
 
     // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+    return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
 }

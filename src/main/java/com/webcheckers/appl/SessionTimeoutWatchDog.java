@@ -1,7 +1,5 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Player;
-
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import java.util.logging.Logger;

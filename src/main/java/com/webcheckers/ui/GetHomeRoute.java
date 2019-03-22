@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.NavBar;
 import spark.*;
 
@@ -20,7 +20,7 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   //message for welcoming player
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online CheckersPlay.");
 
   public static final String VIEW_NAME = "home.ftl";
   public final String CHALLENGE_PARAM = "challenge";

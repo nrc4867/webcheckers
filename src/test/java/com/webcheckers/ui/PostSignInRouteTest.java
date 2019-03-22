@@ -2,20 +2,13 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.SessionTimeoutWatchDog;
 import com.webcheckers.appl.SignInException;
-import com.webcheckers.model.Player;
-import com.webcheckers.util.Attributes;
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.Message;
-import com.webcheckers.util.NavBar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import spark.*;
 
-import javax.servlet.http.HttpSession;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;

@@ -22,7 +22,7 @@ public class LazySessionWatcher extends Thread {
     /**
      * How often the sessions are
      */
-    private final int sessionCheckTimer = 120 * 1000;
+    private final int sessionCheckTimer = 500 * 1000;
     /**
      * The min amount of time a session has to report before it is removed
      */

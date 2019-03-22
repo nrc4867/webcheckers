@@ -2,21 +2,15 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.*;
 
-import java.util.List;
-
 //
 // Remember, white player is at the top of the board!
 //
 public class BoardController {
 
-    private Board board;
+    private final Board board;
 
     public BoardController(Board b) {
         this.board = b;
-    }
-
-    public BoardController(Player player) {
-        this.board = player.getBoard();
     }
 
     /**
@@ -317,4 +311,15 @@ public class BoardController {
 
         return false;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public boolean isActivePlayer(Player player) {
+        return player.equals(board.getActivePlayer());
+    }
+
+    
+
 }

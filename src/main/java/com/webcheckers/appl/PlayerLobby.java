@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
 
-import com.webcheckers.model.Color;
-import com.webcheckers.model.Player;
-
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.logging.Logger;

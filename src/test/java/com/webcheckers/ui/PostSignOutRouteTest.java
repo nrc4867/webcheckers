@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 import static org.junit.jupiter.api.Assertions.*;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.SignInException;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.Attributes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;

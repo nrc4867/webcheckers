@@ -4,10 +4,9 @@ import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.SessionTimeoutWatchDog;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
-import com.webcheckers.util.NavBar;
 import spark.*;
 import static spark.Spark.halt;
 

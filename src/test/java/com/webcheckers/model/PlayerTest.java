@@ -1,9 +1,13 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.BoardController;
+import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.Tag;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +24,7 @@ public class PlayerTest {
    protected static Color colorWhite = Color.WHITE;
    protected static PlayerLobby playerLobby;
    protected static PlayerLobby playerLobbyAnother;
-   protected static Board playerBoard;
+   protected static BoardController playerBoard;
 
    /**
     * Component under Testing.
@@ -137,11 +141,12 @@ public class PlayerTest {
    public void setBoard_test(){
       Player player1 = new Player(playerName);
 
-      playerBoard = mock(Board.class);
+      playerBoard = mock(BoardController.class);
 
-      player1.setBoard(playerBoard);
+      player1.setBoardController(playerBoard);
+      player1.getBoard();
 
-      assertEquals(playerBoard, player1.getBoard());
+      verify(playerBoard, times(1)).getBoard();
    }
 
    @Test

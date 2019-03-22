@@ -1,6 +1,6 @@
 package com.webcheckers.util;
 
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import spark.Session;
 
 import java.util.Map;

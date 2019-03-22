@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.Player;
+
 /**
  * Board model for WebCheckers.
  *
@@ -21,6 +23,8 @@ public class Board {
 	private Player whitePlayer;
 	private Space[][] spaces;
 	private Player activePlayer;
+	// The player who resigned from the game
+	private Player resign;
 	private int activeRow;
 	private int activeCol;
 	private final int boardID;
@@ -150,6 +154,21 @@ public class Board {
 	/** @return Returns whether the given square is holding a piece. */
 	public boolean hasPiece(int row, int col) {
 		return spaces[row][col].getPiece() != null;
+	}
+
+	/**
+	 * @return the player who resigned from the game
+	 */
+	public Player getResign() {
+		return resign;
+	}
+
+	/**
+	 * Set the player who resigned from the game
+	 * @param player the player who resigned
+	 */
+	public void setResign(Player player) {
+		this.resign = player;
 	}
 
 	public void setPiece(Piece p, int row, int col) {

@@ -1,16 +1,16 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.Attributes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import spark.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -107,7 +107,7 @@ class PostGameRouteTest {
     public void createGame() {
         when(player1.getBoard()).thenReturn(null);
 
-        final ArgumentCaptor<Board> captor = ArgumentCaptor.forClass(Board.class);
+        final ArgumentCaptor<BoardController> captor = ArgumentCaptor.forClass(BoardController.class);
 
         try {
             CuT.handle(request, response);
@@ -115,10 +115,10 @@ class PostGameRouteTest {
             verify(response).redirect(WebServer.GAME_URL);
         }
 
-        verify(player1).setBoard(captor.capture());
+        verify(player1).setBoardController(captor.capture());
 
-        verify(player1, times(1)).setBoard(captor.getValue());
-        verify(player2, times(1)).setBoard(captor.getValue());
+        verify(player1, times(1)).setBoardController(captor.getValue());
+        verify(player2, times(1)).setBoardController(captor.getValue());
     }
 
     /**

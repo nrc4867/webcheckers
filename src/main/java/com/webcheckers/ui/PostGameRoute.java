@@ -1,8 +1,9 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.Attributes;
 import spark.*;
 import static spark.Spark.halt;
@@ -48,9 +49,9 @@ public class PostGameRoute implements Route {
         }
 
         if(reqPlayer.getBoard() == null) {
-            final Board board = new Board(reqPlayer, selectedPlayer);
-            reqPlayer.setBoard(board);
-            selectedPlayer.setBoard(board);
+            final BoardController boardController = new BoardController(new Board(reqPlayer, selectedPlayer));
+            reqPlayer.setBoardController(boardController);
+            selectedPlayer.setBoardController(boardController);
             response.redirect(WebServer.GAME_URL);
         } else {
             // the player challenged someone while still playing a game

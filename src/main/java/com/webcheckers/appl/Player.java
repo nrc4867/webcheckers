@@ -1,6 +1,8 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
 
-import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Cleanup;
+import com.webcheckers.model.Color;
 
 /**
  * Players play WebCheckers. They should <i>only</i> be created
@@ -13,9 +15,9 @@ public class Player implements Cleanup {
 
 	private final String name;
 	/**
-	 * The board the player is currently viewing
+	 * The boardController the player is currently viewing
 	 */
-	private Board board = null;
+	private BoardController boardController = null;
     /**
      * The lobby the player is currently part of
      */
@@ -51,11 +53,15 @@ public class Player implements Cleanup {
 	public Color getColor() {return color;}
 
 
-	public Board getBoard() {
-		return board;
+	public BoardController getBoardController() {
+		return boardController;
 	}
-	public void setBoard(Board board) {
-		this.board = board;
+	public void setBoardController(BoardController board) {
+		this.boardController = board;
+	}
+
+	public Board getBoard() {
+		return (boardController != null)?this.boardController.getBoard():null;
 	}
 
     public PlayerLobby getLobby() {

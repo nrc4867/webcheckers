@@ -3,7 +3,7 @@ package com.webcheckers;
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Piece;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 
 import java.util.Scanner;
 

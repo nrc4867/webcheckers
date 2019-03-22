@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.Player;
 import com.webcheckers.model.*;
 import com.webcheckers.ui.view.*;
 
@@ -9,7 +10,6 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.NavBar;
 import spark.*;
@@ -24,7 +24,7 @@ import com.webcheckers.util.Message;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online CheckersPlay.");
 
     private final TemplateEngine templateEngine;
 

@@ -1,6 +1,5 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Player;
 import org.junit.jupiter.api.Tag;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -8,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
 

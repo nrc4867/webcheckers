@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.Player;
+
 import java.util.Objects;
 
 /**

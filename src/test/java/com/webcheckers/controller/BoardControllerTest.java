@@ -5,7 +5,7 @@ import com.webcheckers.appl.BoardController;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Piece;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

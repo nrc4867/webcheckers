@@ -1,5 +1,6 @@
 package com.webcheckers.util;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public final class Message {
+public final class Message implements Serializable{
   private static final Logger LOG = Logger.getLogger(Message.class.getName());
 
   //

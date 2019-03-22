@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.CheckersPlay.*;
 import spark.TemplateEngine;
 
 
@@ -58,6 +59,19 @@ public class WebServer {
   public static final String SIGNIN_URL = "/signin";
   public static final String SIGNOUT_URL = "/signout";
   public static final String GAME_URL = "/game";
+
+   //
+   // AJAX URLS
+   //
+
+  /**
+   * URL used by players during gameplay
+   */
+  public static final String CHECK_TURN_URL = "/checkTurn";
+  public static final String RESIGN_URL = "/resignGame";
+  public static final String SUBMIT_TURN_URL = "/submitTurn";
+  public static final String BACKUP_URL = "/backupMove";
+  public static final String VALIDATE_MOVE_URL = "/validateMove";
 
   //
   // Attributes
@@ -147,7 +161,7 @@ public class WebServer {
     //// Create separate Route classes to handle each route; this keeps your
     //// code clean; using small classes.
 
-    // Shows the Checkers game Home page.
+    // Shows the CheckersPlay game Home page.
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
@@ -156,6 +170,14 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(templateEngine));
     post(GAME_URL, new PostGameRoute(playerLobby));
+
+    // Handles for Play state AJAX calls
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gson));
+    post(RESIGN_URL, new PostResignRoute(gson));
+    post(VALIDATE_MOVE_URL, new PostValidateRoute(gson));
+    post(SUBMIT_TURN_URL, new PostSubmitRoute(gson));
+    post(BACKUP_URL, new PostBackupRoute(gson));
+
     //
     LOG.config("WebServer is initialized.");
   }

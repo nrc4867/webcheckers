@@ -89,8 +89,10 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+When you connect to the server, you first render to the home page. This Home page displays the players that are online in the lobby. You will have the option to sign in. When you click the sign in button, you render to the sign in page. 
+In the sign in page, you are prompted to enter a username to join other players in the home page. If you enter a valid username, you are rendered back to the home page. If it an invalid name, you are prompted to enter the name again.
+Once you are signed in and waiting in the home page, if you are challenged or if you challenge another player and they accept, you are sent to the game.
+You may sign out after playing the game and you render back to the home page.
 
 
 ### UI Tier

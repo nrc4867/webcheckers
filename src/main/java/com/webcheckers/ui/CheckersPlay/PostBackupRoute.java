@@ -26,8 +26,7 @@ public class PostBackupRoute implements Route {
         Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
         if (!PostValidateRoute.playerInGame(requester)) {
-            halt();
-            return null;
+            return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
         PostValidateRoute.getMoves(httpSession).clear();

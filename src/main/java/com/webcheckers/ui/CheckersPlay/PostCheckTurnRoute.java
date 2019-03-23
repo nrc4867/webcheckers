@@ -16,8 +16,9 @@ public class PostCheckTurnRoute implements Route {
 
     private final Gson gson;
 
-    public final String OPPONENT_RESIGNED_FORMAT = "%s has resigned from the game!";
-    public final String YOUR_TURN = "It is now your turn.";
+    public final static String NO_GAME = "You are not in a game";
+    public final static String OPPONENT_RESIGNED_FORMAT = "%s has resigned from the game!";
+    public final static String YOUR_TURN = "It is now your turn.";
 
     public PostCheckTurnRoute(Gson gson) {
         this.gson = gson;
@@ -29,8 +30,7 @@ public class PostCheckTurnRoute implements Route {
         Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
         if (!PostValidateRoute.playerInGame(requester)) {
-            halt();
-            return null;
+            return gson.toJson(Message.error(NO_GAME));
         }
 
         if(requester.checkTurn())

@@ -320,6 +320,9 @@ public class BoardController {
         return player.equals(board.getActivePlayer());
     }
 
+    public void resign(Player player) {
+        board.setResign(player);
+    }
     
 
 }

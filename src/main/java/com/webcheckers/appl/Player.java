@@ -54,7 +54,7 @@ public class Player implements Cleanup {
 
 
 	public BoardController getBoardController() {
-		return boardController;
+		return (boardController != null)?boardController:null;
 	}
 	public void setBoardController(BoardController board) {
 		this.boardController = board;
@@ -80,6 +80,19 @@ public class Player implements Cleanup {
 
 	@Override
 	public String toString() {return name;}
+
+	public void resign() {
+		if(boardController != null)
+			boardController.resign(this);
+	}
+
+	public boolean checkTurn() {
+		return boardController.isActivePlayer(this);
+	}
+
+	public Player checkResigned() {
+		return boardController.getBoard().getResign();
+	}
 
 	/**
 	 * Checks the Player's names for equality. Per specifications, no two

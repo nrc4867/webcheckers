@@ -18,6 +18,12 @@ public class Attributes {
     public static final String PLAYER_BOARD_KEY = "playerBoard";
 
     /**
+     * This key stores the players current moves,
+     * Move objects are stored in an ArrayList
+     */
+    public static final String PLAYER_MOVES_KEY = "playerMoves";
+
+    /**
      * This key stores the session watch dog that is created on player sign in
      */
     public static final String PLAYER_SESSION_KEY = "sessionWatcher";

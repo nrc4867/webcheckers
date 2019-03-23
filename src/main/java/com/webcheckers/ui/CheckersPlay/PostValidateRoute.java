@@ -14,6 +14,8 @@ import spark.Session;
 import static spark.Spark.halt;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+
 import static java.net.URLDecoder.decode;
 
 public class PostValidateRoute implements Route {
@@ -45,12 +47,25 @@ public class PostValidateRoute implements Route {
 
         final Piece startPosition = new Piece(move.getStartCell(), move.getStartRow(), requester);
 
-        if(controller.canMoveTo(startPosition, move.getEndRow(), move.getEndCell())) {
+        final boolean testMove = controller.canMoveTo(startPosition, move.getEndRow(), move.getEndCell());
+        final boolean testJump = controller.canJumpTo(startPosition, move.getEndRow(), move.getEndCell());
+
+        if(testMove || testJump) {
+            move.setMovement((testMove)? Move.MoveType.REGULAR: Move.MoveType.JUMP);
+
+            ArrayList<Move> moves = getMoves(httpSession);
+            moves.add(move);
             return gson.toJson(Message.info(VALID_MOVE));
         }
         return gson.toJson(Message.error(INVALID_MOVE));
-//        return gson.toJson(Message.error(ERROR));
-}
+    }
+
+    public static ArrayList<Move> getMoves(Session playerSession) {
+        if(playerSession.attribute(Attributes.PLAYER_MOVES_KEY) == null) {
+            playerSession.attribute(Attributes.PLAYER_MOVES_KEY, new ArrayList<Move>());
+        }
+        return playerSession.attribute(Attributes.PLAYER_MOVES_KEY);
+    }
 
     public static boolean playerInGame(Player player) {
         return (player != null) && player.getBoardController() != null;

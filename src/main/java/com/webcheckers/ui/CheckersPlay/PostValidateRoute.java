@@ -35,7 +35,6 @@ public class PostValidateRoute implements Route {
         final Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
         if (!playerInGame(requester)) {
-            response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }
@@ -45,7 +44,7 @@ public class PostValidateRoute implements Route {
         final String dataStr  = decode(request.body().substring(11), StandardCharsets.UTF_8.name());
         final Move move = gson.fromJson(dataStr, Move.class);
 
-        final Piece startPosition = new Piece(move.getStartRow(), move.getStartCell(), requester);
+        final Piece startPosition = new Piece(move.getStartCell(), move.getStartRow(), requester);
 
         if(controller.canMoveTo(startPosition, move.getEndRow(), move.getEndCell())) {
             return gson.toJson(Message.info(VALID_MOVE));

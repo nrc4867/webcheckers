@@ -28,7 +28,6 @@ public class PostResignRoute implements Route {
         Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
         if (!PostValidateRoute.playerInGame(requester)) {
-            response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }

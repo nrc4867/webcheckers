@@ -69,8 +69,7 @@ public class BoardView implements Iterable<BoardView.Row> {
          */
         @Override
         public Iterator<Space> iterator() {
-
-            List<Space> list = Arrays.asList(board.getSpaces()[index]);
+            List<Space> list = Arrays.asList(Arrays.copyOf(board.getSpaces()[index], 8));
 
             if (reverse) {
                 Collections.reverse(list);

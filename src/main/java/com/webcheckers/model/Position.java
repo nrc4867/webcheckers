@@ -1,4 +1,4 @@
-package com.webcheckers.ui.CheckersPlay.Json;
+package com.webcheckers.model;
 
 import java.io.Serializable;
 

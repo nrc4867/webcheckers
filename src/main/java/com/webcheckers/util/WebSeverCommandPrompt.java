@@ -26,18 +26,32 @@ public class WebSeverCommandPrompt extends Thread {
      * usage: load save-name red-player white-player [location: ./boards/]
      */
     public static final String LOAD = "load";
+    private static final String LOAD_MESSAGE = "FILE LOADED";
 
     /**
      * create a board from a comma separated value file
      * usage: csv save-name red-player white-player [location: ./boards/]
      */
     public static final String LOADCSV = "csv";
+    // inputs on the csv-file, all other inputs ignored
+    private static final String RED = "r";
+    private static final String WHITE = "w";
+    private static final String RED_KING = "rk";
+    private static final String WHITE_KING = "wk";
 
     /**
      * The save command
      * usage: save player save-name [location: ./boards/]
      */
     public static final String SAVE = "save";
+    private static final String SAVE_MESSAGE = "FILE SAVED";
+
+    /**
+     * Toggle command, changes the turn of the players board
+     * usage: toggle player
+     */
+    public static final String TOGGLE_TURN = "toggle";
+    public static final String TOGGLE_MESSAGE = "TOGGLED PLAYER";
 
     public static final String INVALID = "Invalid Command";
     public static final String INVALID_ARGS = "Incorrect arguments";
@@ -59,7 +73,7 @@ public class WebSeverCommandPrompt extends Thread {
         while (true) {
             try {
                 readInput();
-                sleep(2000);
+                sleep(500);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -82,11 +96,40 @@ public class WebSeverCommandPrompt extends Thread {
                 case SAVE:
                     save(input);
                     break;
+                case TOGGLE_TURN:
+                    toggle(input);
+                    break;
                 default:
                     System.out.println(INVALID);
                     break;
             }
         }
+    }
+
+    /**
+     * The toggle command
+     * usage: toggle player
+     */
+    private void toggle(String... args) {
+        if(args.length < 2) {
+            System.out.println(INVALID_ARGS);
+            return;
+        }
+
+        Player player = lobby.getPlayer(args[1]);
+        if(player == null) {
+            System.out.println(PLAYER_ERROR);
+            return;
+        }
+
+        Board board = player.getBoard();
+        if(board == null) {
+            System.out.println(BOARD_ERROR);
+            return;
+        }
+
+        board.switchActivePlayer();
+        System.out.println(TOGGLE_MESSAGE);
     }
 
     /**
@@ -122,6 +165,77 @@ public class WebSeverCommandPrompt extends Thread {
         board.setSpaces(spaces);
         redPlayer.setBoardController(new BoardController(board));
         whitePlayer.setBoardController(new BoardController(board));
+        System.out.println(LOAD_MESSAGE);
+    }
+
+    /**
+     * create a board from a comma separated value file
+     * usage: csv save-name red-player white-player [location: ./boards/]
+     */
+    private void csv(String... args) {
+        if(args.length < 4) {
+            System.out.println(INVALID_ARGS);
+            return;
+        }
+
+        Player redPlayer = lobby.getPlayer(args[2]);
+        Player whitePlayer = lobby.getPlayer(args[3]);
+        if(redPlayer == null || whitePlayer == null) {
+            System.out.println(PLAYER_ERROR);
+            return;
+        }
+
+        String basePath = ((args.length >= 5)?args[4]:defaultSave).replace("\\", "/");
+        if(!(basePath.endsWith("/") || basePath.endsWith("\\"))) basePath += "/";
+
+        Board board = new Board(redPlayer, whitePlayer, false);
+
+        Space[][] spaces = new Space[Board.getSize()][];
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(basePath + args[1]))) {
+            for(int i = 0; i < Board.getSize(); i++)
+                spaces[i] = readSpaces(redPlayer, whitePlayer, i, reader.readLine().split(","));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + basePath + args[1]);
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        board.setSpaces(spaces);
+        redPlayer.setBoardController(new BoardController(board));
+        whitePlayer.setBoardController(new BoardController(board));
+        System.out.println(LOAD_MESSAGE);
+    }
+
+    private Space[] readSpaces(Player redPlayer, Player whitePlayer, int row, String... input) {
+        Space[] spaces = new Space[Board.getSize()];
+        int j = 0;
+        for(; j < input.length; j++) {
+            Piece piece = null;
+
+            switch (input[j].toLowerCase()) {
+                case RED:
+                    piece = new Piece(j, row, redPlayer, Piece.Type.SINGLE);
+                    break;
+                case WHITE:
+                    piece = new Piece(j, row, whitePlayer, Piece.Type.SINGLE);
+                    break;
+                case RED_KING:
+                    piece = new Piece(j, row, redPlayer, Piece.Type.KING);
+                    break;
+                case WHITE_KING:
+                    piece = new Piece(j, row, whitePlayer, Piece.Type.KING);
+                    break;
+            }
+
+            spaces[j] = new Space(row, j, piece);
+        }
+        for (; j < Board.getSize(); j++) {
+            spaces[j] = new Space(j, row, null);
+        }
+        return spaces;
     }
 
     private void setSpace(Player redPlayer, Player whitePlayer, Space[][] spaces, int row, int column) {
@@ -157,14 +271,7 @@ public class WebSeverCommandPrompt extends Thread {
         String basePath = (args.length >= 4)?args[3]:defaultSave;
         if(!(basePath.endsWith("/") || basePath.endsWith("\\"))) basePath += "/";
         saveObject(board.getSpaces(), basePath + args[2]);
-    }
-
-    /**
-     * create a board from a comma separated value file
-     * usage: csv save-name red-player white-player [location: ./boards/]
-     */
-    private void csv(String... args) {
-
+        System.out.println(SAVE_MESSAGE);
     }
 
     /**

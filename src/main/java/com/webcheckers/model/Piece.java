@@ -61,6 +61,13 @@ public class Piece {
 	public Type getType() {return type;}
 	public Color getColor() {return owner.getColor();}
 
+	/**
+	 * Checks if two pieces are enemies
+	 * @param piece the piece to compare
+	 * @return true if the colors of the pieces are opposite
+	 */
+	public boolean enemyOf(Piece piece) {return !getColor().equals(piece.getColor());}
+
 	public void setCol(int c) {
 		if (c < 0 || c >= Board.getSize()) {
 			throw new IllegalArgumentException("Piece out of bounds!");

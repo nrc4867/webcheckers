@@ -37,6 +37,11 @@ public class PostSubmitRoute implements Route {
         if(PostValidateRoute.getMoves(httpSession).size() != 0) {
             final BoardController controller = requester.getBoardController();
 
+            controller.movePieces(PostValidateRoute.getMoves(httpSession));
+            controller.toggleTurn();
+
+            PostValidateRoute.getMoves(httpSession).clear();
+            return gson.toJson(Message.info(SUCCESSFUL_SUBMISSION));
         }
 
         return gson.toJson(Message.error(ERROR));

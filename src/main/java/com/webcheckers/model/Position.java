@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Position implements Serializable{
     private int row;
@@ -17,5 +18,17 @@ public class Position implements Serializable{
     @Override
     public String toString() {
         return "(" + row + ", " + cell + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Position)) return false;
+        Position pos = (Position)obj;
+        return pos.cell == cell && pos.row == row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, cell);
     }
 }

@@ -127,6 +127,12 @@ public class Board {
 	/** @return Returns a 2D array. Empty spaces have null pieces. */
 	public Space[][] getSpaces() {return spaces;}
 
+	public void setSpaces(Space[][] spaces) {
+		if(spaces.length == Board.getSize() && spaces[0].length == Board.getSize()) {
+			this.spaces = spaces;
+		}
+	}
+
 	/** @return Returns the Piece at the index, or NULL. */
 	public Piece getPiece(int r, int c) {return spaces[r][c].getPiece();}
 

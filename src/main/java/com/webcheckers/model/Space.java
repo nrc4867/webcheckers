@@ -1,11 +1,12 @@
 package com.webcheckers.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Spaces are the tiles that make up the Board. Each
  */
-public class Space {
+public class Space implements Serializable{
 
     private Piece piece;
 
@@ -42,7 +43,7 @@ public class Space {
 
     public int getRowIdx() {return rowIdx;}
     public int getCellIdx() {return cellIdx;}
-    public Piece getPiece() {return piece;}
+    public Piece getPiece() {return (piece != null)?piece:null;}
     public void setPiece(Piece p) {piece = p;}
 
     /**

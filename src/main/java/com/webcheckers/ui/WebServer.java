@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.CheckersPlay.*;
+import com.webcheckers.util.WebSeverCommandPrompt;
 import spark.TemplateEngine;
 
 
@@ -47,6 +48,7 @@ import spark.TemplateEngine;
  */
 public class WebServer {
   private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
+  public static final Boolean DEBUG = true;
 
   //
   // Constants
@@ -105,6 +107,11 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
+
+    if(DEBUG) {
+      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
+      cmd.start();
+    }
 
     this.sessionWatcher = new LazySessionWatcher();
     sessionWatcher.start();

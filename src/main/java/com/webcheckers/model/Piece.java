@@ -2,13 +2,14 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Player;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Pieces are moved around by Players. They inhabit {@link Space} on the
  * {@link Board}. They may be
  */
-public class Piece {
+public class Piece implements Serializable{
 
 	// TYPE ENUM ==============================================================
 
@@ -16,7 +17,8 @@ public class Piece {
 
 	// ATTRIBUTES =============================================================
 	
-	private final Player owner;
+	transient private final Player owner;
+	private final Color color;
 	private Type type;
 
 	private int col;
@@ -51,6 +53,7 @@ public class Piece {
 		setRow(row);
 		this.owner = owner;
 		this.type = type;
+		this.color = owner.getColor();
 	}
 
 	// ACCESSORS ==============================================================
@@ -59,7 +62,7 @@ public class Piece {
 	public int getRow() {return row;}
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
-	public Color getColor() {return owner.getColor();}
+	public Color getColor() {return color;}
 
 	/**
 	 * Checks if two pieces are enemies

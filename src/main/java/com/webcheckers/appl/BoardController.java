@@ -16,6 +16,10 @@ public class BoardController {
     }
 
 
+    /**
+     * Move pieces on the board
+     * @param moves a set of moves in order that they should be made, the moves have already been tested as valid
+     */
     public void movePieces(ArrayList<Move> moves) {
         for (Move move: moves) {
             if(move.getMovement() == Move.MoveType.REGULAR) {
@@ -53,6 +57,11 @@ public class BoardController {
         return true;
     }
 
+    /**
+     * Move a piece on the board, the move has previously been tested as valid
+     * @param move the move to make
+     * @return the move was completed
+     */
     public boolean makeMove(Move move) {
         Piece moved = board.getPiece(move.getStartRow(), move.getStartCell());
         if(moved == null) return false;
@@ -65,6 +74,11 @@ public class BoardController {
         return true;
     }
 
+    /**
+     * make a jump move by removing a piece on the board while moving, the move has previously been tested as valid
+     * @param jump the jump to make
+     * @return the jump was completed
+     */
     public boolean makeJump(Move jump) {
         if(!makeMove(jump)) return false;
         Piece middle = getMiddlePiece(jump);
@@ -219,8 +233,6 @@ public class BoardController {
             return false;
         }
 
-
-
         // Destination must be in the correct direction
         if (!allowedDirection(move, piece)) {
             return false;
@@ -345,6 +357,12 @@ public class BoardController {
         return true;
     }
 
+    /**
+     * Check to make sure a piece can move in a direction
+     * @param move the movement
+     * @param piece the piece
+     * @return the move is valid for the piece
+     */
     private boolean allowedDirection(Move move, Piece piece) {
         // The Piece can't jump north if it's white and single (#me)
         if (piece.getColor() == Color.WHITE && piece.getType() != Piece.Type.KING
@@ -484,14 +502,26 @@ public class BoardController {
         return board;
     }
 
+    /**
+     * Check the active player
+     * @param player the player to check
+     * @return true if player is active
+     */
     public boolean isActivePlayer(Player player) {
         return player.equals(board.getActivePlayer());
     }
 
+    /**
+     * Remove a player from play
+     * @param player the player to resign
+     */
     public void resign(Player player) {
         board.setResign(player);
     }
 
+    /**
+     * Toggle the active player
+     */
     public void toggleTurn() {
         board.switchActivePlayer();
     }

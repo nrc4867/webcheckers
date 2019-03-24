@@ -32,6 +32,7 @@ public class PostResignRoute implements Route {
         }
 
         requester.resign();
+        requester.getOpponent().setBoardController(null);
         requester.setBoardController(null);
 
         return gson.toJson(Message.info(resign));

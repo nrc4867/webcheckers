@@ -94,6 +94,12 @@ public class Player implements Cleanup {
 		return boardController.getBoard().getResign();
 	}
 
+	public Player getOpponent() {
+		if(getBoardController() != null)
+			return (color == Color.WHITE)?getBoard().getRedPlayer():getBoard().getWhitePlayer();
+		return null;
+	}
+
 	/**
 	 * Checks the Player's names for equality. Per specifications, no two
 	 * players should have the same name.

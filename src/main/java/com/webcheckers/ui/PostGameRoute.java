@@ -33,7 +33,7 @@ public class PostGameRoute implements Route {
         // the challenged player
         Player selectedPlayer = playerLobby.getPlayer(request.queryParams(CHALLENGE_PARAM));
 
-        if(reqPlayer == null || selectedPlayer == null) {
+        if(reqPlayer == null || selectedPlayer == null || selectedPlayer.equals(reqPlayer)) {
             // a player that is not signed in cannot be in a game
             response.redirect(WebServer.HOME_URL);
             halt();

@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.Player;
 import com.webcheckers.model.*;
+import com.webcheckers.ui.CheckersPlay.PostValidateRoute;
 import com.webcheckers.ui.view.*;
 
 import java.util.HashMap;
@@ -63,6 +64,8 @@ public class GetGameRoute implements Route {
         final Session httpSession = request.session();
         // player who sent the request
         final Player reqPlayer = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+        PostValidateRoute.getMoves(httpSession).clear();
+
         final Board board = (reqPlayer != null)?reqPlayer.getBoard():null;
 
         if(board == null) {

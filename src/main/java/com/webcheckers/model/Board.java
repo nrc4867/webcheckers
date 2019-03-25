@@ -159,6 +159,9 @@ public class Board {
 
 	/** @return Returns whether the given square is holding a piece. */
 	public boolean hasPiece(int row, int col) {
+		if (!inBounds(row, col)){
+			throw new IllegalArgumentException("Out of bounds!");
+		}
 		return spaces[row][col].getPiece() != null;
 	}
 

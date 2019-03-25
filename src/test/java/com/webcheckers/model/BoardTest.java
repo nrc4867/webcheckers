@@ -16,6 +16,7 @@ public class BoardTest {
 
     private static Player r = new Player("r", Color.RED);
     private static Player w = new Player("w", Color.WHITE);
+    private static Board b = new Board(r,w);
 
     @Test
     public void testTwoArgs(){
@@ -23,8 +24,19 @@ public class BoardTest {
     }
 
     @Test
+    public void testPieces(){
+        try {
+            b.getPiece(5347, 43);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        assertNull(b.getPiece(0,0));
+
+    }
+
+    @Test
     public void testPlayers(){
-        Board b = new Board(r,w);
         assertEquals(b.getWhitePlayer(), w);
         assertEquals(b.getRedPlayer(), r);
         assertEquals(b.getActivePlayer(), r);
@@ -33,7 +45,6 @@ public class BoardTest {
 
     @Test
     public void testInBounds(){
-        Board b = new Board(r,w);
         // Both inbound
         assertTrue(b.inBounds(0,0));
         assertTrue(b.inBounds(7,7));
@@ -50,11 +61,27 @@ public class BoardTest {
 
     @Test
     public void testSwitchActivePlayer(){
-        Board b = new Board(r,w);
         b.switchActivePlayer();
         assertEquals(b.getActivePlayer(), w);
         b.switchActivePlayer();
         assertEquals(b.getActivePlayer(), r);
+    }
+
+    @Test
+    public void testResign(){
+        b.setResign(r);
+        assertEquals(b.getResign(), r);
+        b.setResign(w);
+        assertEquals(b.getResign(), w);
+    }
+
+    @Test
+    public void testEquals(){
+        Board a = new Board(r,w);
+
+        assertNotEquals(a,b);
+        assertEquals(a,a);
+        assertEquals(b,b);
     }
 
 }

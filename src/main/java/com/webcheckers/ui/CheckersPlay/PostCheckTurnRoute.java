@@ -2,6 +2,7 @@ package com.webcheckers.ui.CheckersPlay;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
+import com.webcheckers.ui.GetGameRoute;
 import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
@@ -36,6 +37,6 @@ public class PostCheckTurnRoute implements Route {
         if(requester.checkTurn())
             return gson.toJson(Message.info(YOUR_TURN));
 
-        return gson.toJson(Message.error("No True implementation"));
+        return gson.toJson(GetGameRoute.opponentsTurn(requester.getBoard().getActivePlayer()));
     }
 }

@@ -12,7 +12,7 @@ import spark.Session;
 import static spark.Spark.halt;
 
 public class PostBackupRoute implements Route {
-    public static final String SUCCESS_BACKUP = "The players moves have been reset";
+    public static final String SUCCESS_BACKUP = "Your moves have been reset.";
 
     private final Gson gson;
 

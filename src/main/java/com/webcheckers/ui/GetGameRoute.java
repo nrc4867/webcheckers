@@ -24,7 +24,8 @@ import com.webcheckers.util.Message;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    public static final String MATCH_TURN_FORMAT = "It is currently %s's turn.";
+    public static final String YOUR_TURN = "It is currently your turn.";
 
     private final TemplateEngine templateEngine;
 
@@ -91,11 +92,19 @@ public class GetGameRoute implements Route {
         }
 
         // display a user message in the Home page
-        vm.put("message", WELCOME_MSG);
+        if(!reqPlayer.equals(board.getActivePlayer())) {
+            vm.put("message", opponentsTurn(board.getActivePlayer()));
+        } else {
+            vm.put("message", Message.info(YOUR_TURN));
+        }
 
         NavBar.updateNavBar(vm, httpSession);
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+    }
+
+    public static Message opponentsTurn(Player opponent) {
+        return Message.error(String.format(MATCH_TURN_FORMAT, opponent.toString()));
     }
 }

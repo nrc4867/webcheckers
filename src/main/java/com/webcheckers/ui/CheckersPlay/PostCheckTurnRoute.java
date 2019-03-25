@@ -35,7 +35,7 @@ public class PostCheckTurnRoute implements Route {
         }
 
         if(requester.checkTurn())
-            return gson.toJson(Message.info(YOUR_TURN));
+            return gson.toJson(Message.info("true"));
 
         return gson.toJson(GetGameRoute.opponentsTurn(requester.getBoard().getActivePlayer()));
     }

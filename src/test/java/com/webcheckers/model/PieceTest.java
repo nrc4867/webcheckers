@@ -33,7 +33,7 @@ public class PieceTest {
     @Test
     public void ctorBadArgsLowCol() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Piece(OUTBOUNDS_LOW, INBOUNDS, PLAYER);},
+            new Piece(INBOUNDS, OUTBOUNDS_LOW, PLAYER);},
             "Piece allowed low column.");
     }
 
@@ -41,7 +41,7 @@ public class PieceTest {
     @Test
     public void ctorBadArgsHighCol() {
         assertThrows(IllegalArgumentException.class, () -> {
-                    new Piece(OUTBOUNDS_HIGH, INBOUNDS, PLAYER);},
+                    new Piece(INBOUNDS, OUTBOUNDS_HIGH, PLAYER);},
                 "Piece allowed high column.");
     }
 
@@ -49,7 +49,7 @@ public class PieceTest {
     @Test
     public void ctorBadArgsLowRow() {
         assertThrows(IllegalArgumentException.class, () -> {
-                    new Piece(INBOUNDS, OUTBOUNDS_LOW, PLAYER);},
+                    new Piece(OUTBOUNDS_LOW, INBOUNDS, PLAYER);},
                 "Piece allowed low row.");
     }
 
@@ -57,7 +57,7 @@ public class PieceTest {
     @Test
     public void ctorBadArgsHighRow() {
         assertThrows(IllegalArgumentException.class, () -> {
-                    new Piece(INBOUNDS, OUTBOUNDS_LOW, PLAYER);},
+                    new Piece(OUTBOUNDS_LOW, INBOUNDS, PLAYER);},
                 "Piece allowed high row.");
     }
 

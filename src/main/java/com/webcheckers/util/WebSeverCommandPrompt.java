@@ -217,16 +217,16 @@ public class WebSeverCommandPrompt extends Thread {
 
             switch (input[j].toLowerCase()) {
                 case RED:
-                    piece = new Piece(j, row, redPlayer, Piece.Type.SINGLE);
+                    piece = new Piece(row, j, redPlayer, Piece.Type.SINGLE);
                     break;
                 case WHITE:
-                    piece = new Piece(j, row, whitePlayer, Piece.Type.SINGLE);
+                    piece = new Piece(row, j, whitePlayer, Piece.Type.SINGLE);
                     break;
                 case RED_KING:
-                    piece = new Piece(j, row, redPlayer, Piece.Type.KING);
+                    piece = new Piece(row, j, redPlayer, Piece.Type.KING);
                     break;
                 case WHITE_KING:
-                    piece = new Piece(j, row, whitePlayer, Piece.Type.KING);
+                    piece = new Piece(row, j, whitePlayer, Piece.Type.KING);
                     break;
             }
 
@@ -242,7 +242,7 @@ public class WebSeverCommandPrompt extends Thread {
         if(spaces[row][column].getPiece() == null) return;
         Piece piece = spaces[row][column].getPiece();
 
-        spaces[row][column] = new Space(row, column, new Piece(column, row, (piece.getColor() == Color.WHITE)?whitePlayer:redPlayer, piece.getType()));
+        spaces[row][column] = new Space(row, column, new Piece(row, column, (piece.getColor() == Color.WHITE)?whitePlayer:redPlayer, piece.getType()));
 
     }
 

@@ -77,23 +77,23 @@ public class Board {
 	private void initialize() {
 
 		for (int i = 1; i < SIZE; i+=2) {
-			spaces[0][i].setPiece(new Piece(i,0,whitePlayer));
+			spaces[0][i].setPiece(new Piece(0, i, whitePlayer));
 		}
 		for (int i = 0; i < SIZE; i+=2) {
-			spaces[1][i].setPiece(new Piece(i,1,whitePlayer));
+			spaces[1][i].setPiece(new Piece(1, i, whitePlayer));
 		}
 		for (int i = 1; i < SIZE; i+=2) {
-			spaces[2][i].setPiece(new Piece(i,2,whitePlayer));
+			spaces[2][i].setPiece(new Piece(2, i, whitePlayer));
 		}
 
 		for (int i = 0; i < SIZE; i+=2) {
-			spaces[SIZE-3][i].setPiece(new Piece(i, getSize()-3, redPlayer));
+			spaces[SIZE-3][i].setPiece(new Piece(getSize()-3, i, redPlayer));
 		}
 		for (int i = 1; i < SIZE; i+=2) {
-			spaces[SIZE-2][i].setPiece(new Piece(i, getSize()-2, redPlayer));
+			spaces[SIZE-2][i].setPiece(new Piece(getSize()-2, i, redPlayer));
 		}
 		for (int i = 0; i < SIZE; i+=2) {
-			spaces[SIZE-1][i].setPiece(new Piece(i, getSize()-1, redPlayer));
+			spaces[SIZE-1][i].setPiece(new Piece(getSize()-1, i, redPlayer));
 		}
 	}
 

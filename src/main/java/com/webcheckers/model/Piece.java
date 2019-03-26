@@ -29,26 +29,26 @@ public class Piece implements Serializable{
 	/**
 	 * Constructs a new standard piece.
 	 *
-	 * @param col Column position on the board
 	 * @param row Row position on the board
+	 * @param col Column position on the board
 	 * @param owner Which player this belongs to.
 	 * @see Piece(int, int, Player, Type)
 	 */
-	public Piece(int col, int row, Player owner)
+	public Piece(int row, int col, Player owner)
 	{
-		this(col, row, owner, Type.SINGLE);
+		this(row, col, owner, Type.SINGLE);
 	}
 
 	/**
 	 * Constructs a new Piece with the given parameters.
 	 *
-	 * @param col Column position on the board
 	 * @param row Row position on the board
+	 * @param col Column position on the board
 	 * @param owner Which player this belongs to.
 	 * @param type What kind of piece this is.
 	 * @see Piece(int, int, Player)
 	 */
-	public Piece(int col, int row, Player owner, Type type) {
+	public Piece(int row, int col, Player owner, Type type) {
 		setCol(col);
 		setRow(row);
 		this.owner = owner;

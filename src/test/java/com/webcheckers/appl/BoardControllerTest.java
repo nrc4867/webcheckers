@@ -1,15 +1,11 @@
 package com.webcheckers.appl;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import com.webcheckers.appl.BoardController;
 import com.webcheckers.model.*;
-import com.webcheckers.appl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
@@ -54,7 +50,7 @@ public class BoardControllerTest {
         m2.setStart(start2);
         m2.setEnd(end2);
 
-        Piece p2P= new Piece(2,3,player2);
+        Piece p2P= new Piece(3, 2, player2);
         boardController.getBoard().setPiece(p2P,3,2);
 
         ArrayList<Move> moves = new ArrayList<>();
@@ -112,7 +108,7 @@ public class BoardControllerTest {
         end.setCell(2);
         m1.setStart(start);
         m1.setEnd(end);
-        Piece p2P= new Piece(1,4,player2);
+        Piece p2P= new Piece(4, 1, player2);
         boardController.getBoard().setPiece(p2P,4,1);
 
         assertNotNull(boardController.getBoard().getPiece(5,0));
@@ -128,8 +124,8 @@ public class BoardControllerTest {
 
     @Test
     public void kingTest(){
-        Piece p1= new Piece(5,0,player1);
-        Piece p4 = new Piece(1,3,player2);
+        Piece p1= new Piece(0, 5, player1);
+        Piece p4 = new Piece(3, 1, player2);
 
         boardController.getBoard().setPiece(p1,0,5);
         boardController.getBoard().setPiece(p4,3,1);
@@ -170,11 +166,11 @@ public class BoardControllerTest {
 
     @Test
     public void shouldKingTest(){
-        Piece p1= new Piece(5,0,player1);
-        Piece p2 = new Piece(3,7,player2);
-        Piece p3 = new Piece(3,2,player1);
-        Piece p4 = new Piece(1,3,player2);
-        Piece p5 = new Piece(2,3,player2);
+        Piece p1= new Piece(0, 5, player1);
+        Piece p2 = new Piece(7, 3, player2);
+        Piece p3 = new Piece(2, 3, player1);
+        Piece p4 = new Piece(3, 1, player2);
+        Piece p5 = new Piece(3, 2, player2);
 
         boardController.getBoard().setPiece(p1,0,5);
         boardController.getBoard().setPiece(p2,7,3);

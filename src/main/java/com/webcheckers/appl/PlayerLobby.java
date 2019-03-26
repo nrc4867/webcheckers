@@ -23,7 +23,7 @@ public class PlayerLobby {
   public static final String NAME_INVALID_MESSAGE =
       "Your name must have one alphanumeric character and no symbols!";
 
-  private Hashtable<String, Player> players = new Hashtable<>();
+  private Hashtable<String, Player> players;
 
 
   /**
@@ -32,8 +32,9 @@ public class PlayerLobby {
    *
    * @author Michael Bianconi
    */
-  public PlayerLobby() {
+  public PlayerLobby(Hashtable<String, Player> players) {
     LOG.fine("New sign in service instance created.");
+    this.players=players;
   }
 
 
@@ -49,13 +50,15 @@ public class PlayerLobby {
   public static boolean validName(String name) {
 
     // name cannot only contain whitespace
-    if (name.length() == 0) {return false;}
+
+    if (name.trim().length() == 0) {return false;}
 
     // name has no symbols
     for (char c : name.toCharArray()) {
-      if (!Character.isLetterOrDigit(c) && c!=' ') {return false;}
+      if (!Character.isLetterOrDigit(c) && c != ' ') {
+        return false;
+      }
     }
-
     return true;
   }
 
@@ -136,5 +139,6 @@ public class PlayerLobby {
   public synchronized Set<String> names() {
     return new HashSet<>(players.keySet());
   }
+
 
 }

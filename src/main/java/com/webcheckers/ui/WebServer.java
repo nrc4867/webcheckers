@@ -2,12 +2,14 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import java.util.Hashtable;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
 import com.webcheckers.appl.LazySessionWatcher;
+import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.CheckersPlay.*;
 import com.webcheckers.util.WebSeverCommandPrompt;
@@ -106,7 +108,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
-    this.playerLobby = new PlayerLobby();
+    this.playerLobby = new PlayerLobby(new Hashtable<String, Player>());
 
     if(DEBUG) {
       WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);

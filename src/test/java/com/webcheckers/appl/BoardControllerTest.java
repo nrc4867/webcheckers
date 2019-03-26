@@ -1,4 +1,4 @@
-package com.webcheckers.controller;
+package com.webcheckers.appl;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.appl.BoardController;

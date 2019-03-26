@@ -17,6 +17,8 @@ import spark.Response;
 import spark.Session;
 import spark.TemplateEngine;
 
+import java.util.Hashtable;
+
 @Tag("UI-Tier")
 public class PostSignOutRouteTest {
 
@@ -43,7 +45,7 @@ public class PostSignOutRouteTest {
         response = mock(Response.class);
 
         // Create a Lobby with a Player Signed in
-        playerLobby=new PlayerLobby();
+        playerLobby=new PlayerLobby(new Hashtable<String, Player>());
         // Add Player
         player = playerLobby.reserveName(TEST_NAME);
 

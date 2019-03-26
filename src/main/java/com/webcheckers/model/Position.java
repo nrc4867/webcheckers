@@ -15,6 +15,14 @@ public class Position implements Serializable{
         return row;
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCell(int cell) {
+        this.cell = cell;
+    }
+
     @Override
     public String toString() {
         return "(" + row + ", " + cell + ")";

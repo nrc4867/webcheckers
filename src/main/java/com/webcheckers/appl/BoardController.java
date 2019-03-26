@@ -384,7 +384,7 @@ public class BoardController {
      * @param move the move
      * @return the piece in the middle of the jump, if there is no piece then null
      */
-    private Piece getMiddlePiece(Move move) {
+    public Piece getMiddlePiece(Move move) {
         int middleRow = move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2);
         int middleCol = move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2);
         return board.getPiece(middleRow, middleCol);

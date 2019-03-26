@@ -30,6 +30,14 @@ public class Move implements Serializable {
         return end.getCell();
     }
 
+    public void setStart(Position start) {
+        this.start = start;
+    }
+
+    public void setEnd(Position end) {
+        this.end = end;
+    }
+
     /**
      * @return the change in row position
      */
@@ -96,3 +104,4 @@ public class Move implements Serializable {
         return Objects.hash(start, end);
     }
 }
+

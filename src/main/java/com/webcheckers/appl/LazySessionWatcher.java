@@ -46,11 +46,12 @@ public class LazySessionWatcher extends Thread {
         }
     }
 
-    /**
-     * Add a session to watch
-     *
-     * @param session the watched session
-     */
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
+
+    // Add Session to watch
     public synchronized void addSession(Session session) {
         LOG.info("Session <" + session.id() + "> Added to watch");
         sessions.add(session);
@@ -59,7 +60,7 @@ public class LazySessionWatcher extends Thread {
     /**
      * Remove any sessions that are past session timeout
      */
-    private synchronized void prune() {
+    public synchronized void prune() {
         Iterator<Session> itr = sessions.iterator();
         while(itr.hasNext()){
             Session session = itr.next();
@@ -72,7 +73,7 @@ public class LazySessionWatcher extends Thread {
         }
     }
 
-    private synchronized void removeAttributes(Session session) {
+    public synchronized void removeAttributes(Session session) {
         for (String attr : session.attributes()) {
             if (session.attribute(attr) instanceof Cleanup)
                 ((Cleanup) session.attribute(attr)).cleanup();

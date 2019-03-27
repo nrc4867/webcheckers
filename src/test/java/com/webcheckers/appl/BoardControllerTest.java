@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+/**
+ * BoardController Test
+ * @author Abhaya Tamrakar
+ */
 @Tag("Application-Tier")
 public class BoardControllerTest {
 

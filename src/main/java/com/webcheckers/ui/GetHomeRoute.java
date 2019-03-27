@@ -20,13 +20,16 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   //message for welcoming player
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
-  public static final String VIEW_NAME = "home.ftl";
+  static final String VIEW_NAME = "home.ftl";
+  static final String TITLE_ATTR = "title";
+  static final String MESSAGE_ATTR = "message";
+  static final String TITLE = "Welcome!";
   public final String CHALLENGE_PARAM = "challenge";
 
   // message for if player selects another player who us in game
-  private static final Message PLAYER_IN_GAME = Message.info("Selected Player is already in Game.");
+  static final Message PLAYER_IN_GAME = Message.info("Selected Player is already in Game.");
 
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
@@ -51,13 +54,10 @@ public class GetHomeRoute implements Route {
   /**
    * Render the WebCheckers Home page.
    *
-   * @param request
-   *   the HTTP request
-   * @param response
-   *   the HTTP response
+   * @param request the HTTP request
+   * @param response the HTTP response
+   * @return the rendered HTML for the Home page
    *
-   * @return
-   *   the rendered HTML for the Home page
    */
   @Override
   public Object handle(Request request, Response response) {
@@ -74,17 +74,14 @@ public class GetHomeRoute implements Route {
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
-
+    vm.put(TITLE_ATTR, TITLE);
     //display message if selected player is in game.
     if(current!=null && current.isSelectedPlayerInGame()){
-      vm.put("message", PLAYER_IN_GAME);
+      vm.put(MESSAGE_ATTR, PLAYER_IN_GAME);
     }else {
       // display a user message in the Home page
-      vm.put("message", WELCOME_MSG);
+      vm.put(MESSAGE_ATTR, WELCOME_MSG);
     }
-
-
 
     Set<String> names = new HashSet<>();
     //remove player from displaying yourself on lobby

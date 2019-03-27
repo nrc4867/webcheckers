@@ -28,6 +28,17 @@ public class GetGameRoute implements Route {
     public static final String MATCH_TURN_FORMAT = "It is currently %s's turn.";
     public static final String YOUR_TURN = "It is currently your turn.";
 
+    static final String TITLE = "title";
+    static final String GAME = "GAME!";
+    static final String CURRENT_USER = "currentUser";
+    static final String VIEW_MODE = "viewMode";
+    static final String MODE_OPTIONS = "modeOptions";
+    static final String RED_PLAYER = "redPlayer";
+    static final String WHITE_PLAYER = "whitePlayer";
+    static final String ACTIVE_COLOR = "activeColor";
+
+    static final String VIEW_NAME = "game.ftl";
+
     private final TemplateEngine templateEngine;
 
     /**
@@ -78,13 +89,13 @@ public class GetGameRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-        vm.put("title", "GAME!");
-        vm.put("currentUser", board.getActivePlayer());
-        vm.put("viewMode", Mode.PLAY);
-        vm.put("modeOptions", new ArrayList<>());
-        vm.put("redPlayer", board.getRedPlayer());
-        vm.put("whitePlayer", board.getWhitePlayer());
-        vm.put("activeColor", board.getActiveColor());
+        vm.put(TITLE, GAME);
+        vm.put(CURRENT_USER, board.getActivePlayer());
+        vm.put(VIEW_MODE, Mode.PLAY);
+        vm.put(MODE_OPTIONS, new ArrayList<>());
+        vm.put(RED_PLAYER, board.getRedPlayer());
+        vm.put(WHITE_PLAYER, board.getWhitePlayer());
+        vm.put(ACTIVE_COLOR, board.getActiveColor());
 
         if (reqPlayer.getColor() == Color.RED) {
             vm.put("board", new BoardView(board,false));
@@ -104,7 +115,7 @@ public class GetGameRoute implements Route {
         NavBar.updateNavBar(vm, httpSession);
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 
     public static Message opponentsTurn(Player opponent) {

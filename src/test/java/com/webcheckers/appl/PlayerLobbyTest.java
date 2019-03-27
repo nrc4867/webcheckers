@@ -72,8 +72,16 @@ Setup the Environment
       assertTrue(playerLobby.containsPlayer(p4_name));
       assertThrows(SignInException.class, () -> {
          playerLobby.reserveName(fail_name);}, "Invalid name");
+      assertThrows(SignInException.class, () -> {
+         playerLobby.reserveName(p4_name);}, "Already Taken");
    }
 
+   @Test
+   public void removePlayerTest(){
+      playerLobby.removePlayer(p1);
+
+      assertFalse(playerLobby.containsPlayer(p1));
+   }
    @Test
    public void numReservedTest(){
       assertSame(2, playerLobby.numReserved());

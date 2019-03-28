@@ -324,10 +324,6 @@ public class BoardControllerTest {
         assertFalse(boardController.shouldKing(p4));
         assertFalse(boardController.shouldKing(p6));
 
-        assertThrows(IllegalArgumentException.class,()->{
-            boardController.shouldKing(p5);
-        });
-
     }
 
 

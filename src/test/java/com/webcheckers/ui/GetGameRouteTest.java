@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.util.Checkers.clearMoves;
+import static com.webcheckers.util.Checkers.getMoves;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -11,6 +13,7 @@ import com.webcheckers.model.Move;
 import com.webcheckers.ui.CheckersPlay.PostValidateRoute;
 import com.webcheckers.ui.view.Mode;
 import com.webcheckers.util.Attributes;
+import com.webcheckers.util.Checkers;
 import javafx.geometry.Pos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -58,7 +61,7 @@ public class GetGameRouteTest {
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
         when(player1.getBoard()).thenReturn(null);
 
-        when(PostValidateRoute.getMoves(session)).thenReturn(new ArrayList<Move>());
+        when(getMoves(session)).thenReturn(new ArrayList<>());
         ghr.handle(request,response);
 
         verify(response).redirect(WebServer.HOME_URL);
@@ -66,7 +69,8 @@ public class GetGameRouteTest {
     @Test void handle(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        when(PostValidateRoute.getMoves(session)).thenReturn(new ArrayList<Move>());
+
+        when(getMoves(session)).thenReturn(new ArrayList<>());
 
         Player player1= mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
@@ -102,7 +106,7 @@ public class GetGameRouteTest {
     public void whitePlayer(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        when(PostValidateRoute.getMoves(session)).thenReturn(new ArrayList<Move>());
+        when(getMoves(session)).thenReturn(new ArrayList<>());
 
         Player player1= mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);

@@ -2,7 +2,9 @@ package com.webcheckers.ui.CheckersPlay;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Board;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import spark.*;
 
+import java.util.ArrayList;
+
+import static com.webcheckers.ui.CheckersPlay.PostBackupRoute.SUCCESS_BACKUP;
+import static com.webcheckers.util.Checkers.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -47,18 +54,32 @@ public class PostBackupRouteTest {
 
 
     @Test
-    public void handleTest(){
+    public void handleNullTest() throws Exception {
+        player1 = mock(Player.class);
+        when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
+        String json;
+        when(player1.getBoardController()).thenReturn(null);
+
+        when(getMoves(session)).thenReturn(new ArrayList<>());
+
+        json = (String) pbr.handle(request,response);
+        Message a = gson.fromJson(json,Message.class);
+        System.out.println(a.getText());
+        assertEquals(PostCheckTurnRoute.NO_GAME,a.getText());
+    }
+
+    @Test
+    public void handleNotNullTest() throws Exception {
         player1 = mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
         String json=null;
-//        when(!PostValidateRoute.playerInGame(player1)).thenReturn(true);
-        when(player1.isSelectedPlayerInGame()).thenReturn(false);
-        try {
-            json = (String) pbr.handle(request,response);
-            Message a = gson.fromJson(json,Message.class);
-            System.out.println(a.getText());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        when(player1.getBoardController()).thenReturn(mock(BoardController.class));
+
+        when(getMoves(session)).thenReturn(new ArrayList<>());
+
+        json = (String) pbr.handle(request,response);
+        Message a = gson.fromJson(json,Message.class);
+        System.out.println(a.getText());
+        assertEquals(SUCCESS_BACKUP,a.getText());
     }
 }

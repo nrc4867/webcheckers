@@ -41,6 +41,7 @@ public class BoardController {
 
         moved.setCol(move.getEndCell());
         moved.setRow(move.getEndRow());
+        king(moved);
         board.setPiece(moved, move.getEndRow(), move.getEndCell());
 
         return true;
@@ -216,18 +217,12 @@ public class BoardController {
      */
     public boolean shouldKing(Piece p) {
 
-        // Piece must exist on the board
-        if (!(p.equals(board.getPiece(p.getRow(), p.getCol())))) {
-            throw new IllegalArgumentException(
-                    "Piece doesn't exist in that location!");
-        }
-
         // Piece cannot be kinged twice
         if (p.getType() == Piece.Type.KING) {
             return false;
         }
 
-        if (p.getColor() == Color.WHITE && p.getRow() == board.getSize()-1) {
+        if (p.getColor() == Color.WHITE && p.getRow() == Board.getSize() - 1) {
             return true;
         }
 

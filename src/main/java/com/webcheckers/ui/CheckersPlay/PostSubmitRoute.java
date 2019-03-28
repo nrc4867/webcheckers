@@ -1,5 +1,6 @@
 package com.webcheckers.ui.CheckersPlay;
 
+import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
@@ -28,19 +29,19 @@ public class PostSubmitRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         final Session httpSession = request.session();
-        Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+        Player requester = getPlayer(httpSession);
 
-        if (!PostValidateRoute.playerInGame(requester)) {
+        if (!playerInGame(requester)) {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
-        if(PostValidateRoute.getMoves(httpSession).size() != 0) {
+        if(getMoves(httpSession).size() != 0) {
             final BoardController controller = requester.getBoardController();
 
-            controller.movePieces(PostValidateRoute.getMoves(httpSession));
+            controller.movePieces(getMoves(httpSession));
             controller.toggleTurn();
 
-            PostValidateRoute.getMoves(httpSession).clear();
+            clearMoves(httpSession);
             return gson.toJson(Message.info(SUCCESSFUL_SUBMISSION));
         }
 

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -130,6 +131,7 @@ class PostGameRouteTest {
 
         try {
             CuT.handle(request, response);
+//            assertNull(CuT.handle(request, response));
         } catch (HaltException e) {
             verify(response).redirect(WebServer.GAME_URL);
         }

@@ -43,6 +43,8 @@ public class BoardViewTest {
         BoardView y = new BoardView(b, true);
         assertThrows(IllegalArgumentException.class, () -> {
             BoardView.Row row= new BoardView(b,true).new Row(-1,b,true);},"Invalid index");
+        assertThrows(IllegalArgumentException.class, () -> {
+            BoardView.Row row= new BoardView(b,true).new Row(10,b,true);},"Invalid index");
 
 
         assertNotNull(x);
@@ -62,6 +64,8 @@ public class BoardViewTest {
         assertEquals(row2.getIndex(),2);
         assertEquals(row2.hashCode(),2);
         assertTrue(row2.equals(row3));
+        assertTrue(row2.equals(row2));
+        assertFalse(row2.equals(b));
 
     }
 

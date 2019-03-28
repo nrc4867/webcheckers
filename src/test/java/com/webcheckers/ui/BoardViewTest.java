@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * Testing class for BoardView
  *
- * @author Suwamik Paul
+ * @author Suwamik Paul and AbhayaTamrakar
  */
 @Tag("UI-tier")
 public class BoardViewTest {

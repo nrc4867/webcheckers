@@ -1,9 +1,9 @@
 package com.webcheckers.ui.CheckersPlay;
 
+import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.ui.GetGameRoute;
-import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -28,9 +28,9 @@ public class PostCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         final Session httpSession = request.session();
-        Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+        Player requester = getPlayer(httpSession);
 
-        if (!PostValidateRoute.playerInGame(requester)) {
+        if (!playerInGame(requester)) {
             return gson.toJson(Message.error(NO_GAME));
         }
 

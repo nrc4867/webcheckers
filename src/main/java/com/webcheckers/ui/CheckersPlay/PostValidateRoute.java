@@ -1,9 +1,9 @@
 package com.webcheckers.ui.CheckersPlay;
 
+import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
-import com.webcheckers.model.Piece;
 import com.webcheckers.model.Move;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
@@ -11,7 +11,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
-import static spark.Spark.halt;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -51,14 +50,7 @@ public class PostValidateRoute implements Route {
         return gson.toJson(Message.error(INVALID_MOVE));
     }
 
-    public static ArrayList<Move> getMoves(Session playerSession) {
-        if(playerSession.attribute(Attributes.PLAYER_MOVES_KEY) == null) {
-            playerSession.attribute(Attributes.PLAYER_MOVES_KEY, new ArrayList<Move>());
-        }
-        return playerSession.attribute(Attributes.PLAYER_MOVES_KEY);
-    }
 
-    public static boolean playerInGame(Player player) {
-        return (player != null) && player.getBoardController() != null;
-    }
+
+
 }

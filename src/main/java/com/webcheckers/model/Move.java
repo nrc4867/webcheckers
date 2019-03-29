@@ -50,7 +50,7 @@ public class Move implements Serializable {
      * @return the change in column position
      */
     public int cellDelta() {
-        return getEndCell() - getEndCell();
+        return getEndCell() - getStartCell();
     }
 
     public boolean deltaRadius(int radius) {

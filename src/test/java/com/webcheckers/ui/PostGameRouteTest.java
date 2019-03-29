@@ -131,7 +131,6 @@ class PostGameRouteTest {
 
         try {
             CuT.handle(request, response);
-//            assertNull(CuT.handle(request, response));
         } catch (HaltException e) {
             verify(response).redirect(WebServer.GAME_URL);
         }

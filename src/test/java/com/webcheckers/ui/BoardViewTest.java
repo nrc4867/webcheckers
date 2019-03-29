@@ -5,16 +5,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Space;
 import com.webcheckers.ui.view.BoardView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import com.webcheckers.ui.view.BoardView.Row;
 
+import java.util.*;
+
 /**
  * Testing class for BoardView
  *
- * @author Suwamik Paul
+ * @author Suwamik Paul and AbhayaTamrakar
  */
 @Tag("UI-tier")
 public class BoardViewTest {
@@ -61,11 +64,14 @@ public class BoardViewTest {
 
     @Test
     public void overridingTests(){
+        Iterator<Space> i= row2.iterator();
+        assertNotNull(i);
         assertEquals(row2.getIndex(),2);
         assertEquals(row2.hashCode(),2);
         assertTrue(row2.equals(row3));
         assertTrue(row2.equals(row2));
         assertFalse(row2.equals(b));
+
 
     }
 

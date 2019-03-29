@@ -6,6 +6,7 @@ import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.Player;
 import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
@@ -15,6 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Tag("Application-Tier")
 class PostSignInRouteTest {
 
     private final String TAKEN_NAME = "Bill";

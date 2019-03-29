@@ -1,5 +1,6 @@
 package com.webcheckers.ui.CheckersPlay;
 
+import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.util.Attributes;
@@ -8,8 +9,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
-
-import static spark.Spark.halt;
 
 public class PostBackupRoute implements Route {
     public static final String SUCCESS_BACKUP = "Your moves have been reset.";
@@ -23,13 +22,13 @@ public class PostBackupRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         final Session httpSession = request.session();
-        Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
+        Player requester = getPlayer(httpSession);
 
-        if (!PostValidateRoute.playerInGame(requester)) {
+        if (!playerInGame(requester)) {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
-        PostValidateRoute.getMoves(httpSession).clear();
+        clearMoves(httpSession);
 
         return gson.toJson(Message.info(SUCCESS_BACKUP));
     }

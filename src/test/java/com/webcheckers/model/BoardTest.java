@@ -25,12 +25,7 @@ public class BoardTest {
 
     @Test
     public void testPieces(){
-        try {
-            b.getPiece(5347, 43);
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> b.getPiece(9, 9));
         assertNull(b.getPiece(0,0));
 
     }
@@ -159,6 +154,10 @@ public class BoardTest {
     @Test
     public void testSetPiece(){
         Piece p = new Piece(0,0, r);
+        assertThrows(IllegalArgumentException.class , () ->{b.setPiece(p,-1, -1);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setPiece(p,9, 4);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setPiece(p,4, 9);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setPiece(p,9, 9);});
         b.setPiece(p,0, 0);
         assertTrue(b.hasPiece(0,0));
         assertEquals(b.getPiece(0,0), p);
@@ -182,6 +181,12 @@ public class BoardTest {
         assertNotEquals(a,b);
         assertEquals(a,a);
         assertEquals(b,b);
+    }
+
+    @Test
+    public void testMisc(){
+        System.out.println(b.toString());
+        assertEquals(b.hashCode(), 0);
     }
 
 }

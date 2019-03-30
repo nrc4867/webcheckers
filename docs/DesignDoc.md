@@ -118,15 +118,20 @@ You may sign out after playing the game and you render back to the home page.
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The Application Tier holds the main interfaces between the Model Tier
+and users. It contains Players and PlayerLobbies, which allows users
+to sign in and player against other users. It also holds the
+BoardController, which takes in moves from Players and updates the
+Model's Board accordingly.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The Model Tier holds the most basic features of WebCheckers. It contains
+the Board, Pieces, etc. It has few dependencies on classes outside of
+its package. Board holds an array of Spaces, each of which may hold a
+Piece. The Model Tier only holds the most basic access methods, and
+defers to the Application Tier's BoardController class to deal with
+Player Moves.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were

@@ -121,7 +121,9 @@ public class BoardController {
      * @return true if there are available multi-jumps
      */
     private boolean mustJumpThisTurn(Piece piece, ArrayList<Move> moves) {
-        Set<Move> possibleMoves = Move.generateMoves(piece, 2);
+        final int row = (moves.size() != 0)?getLastMove(moves).getEndRow(): piece.getRow();
+        final int col = (moves.size() != 0)?getLastMove(moves).getEndCell(): piece.getCol();
+        Set<Move> possibleMoves = Move.generateMoves(row, col, 2);
         for (Move move: possibleMoves) {
             if(canJumpTo(move, moves)) return true;
         }
@@ -160,7 +162,7 @@ public class BoardController {
         }
 
         // Destination must be in the correct direction
-        if (!allowedDirection(move, piece)) {
+        if (!allowedDirection(piece, move, moves)) {
             return false;
         }
 
@@ -195,7 +197,7 @@ public class BoardController {
         if(piece == null) return false; // the original piece should exist on the board
 
         // make sure the piece is moving in the right direction
-        if (!allowedDirection(move, piece)) {
+        if (!allowedDirection(piece, move, moves)) {
             return false;
         }
 
@@ -217,16 +219,18 @@ public class BoardController {
      * @param piece the piece
      * @return the move is valid for the piece
      */
-    private boolean allowedDirection(Move move, Piece piece) {
+    private boolean allowedDirection(Piece piece, Move move, ArrayList<Move> moves) {
         // The Piece can't jump north if it's white and single (#me)
-        if (piece.getColor() == Color.WHITE && piece.getType() != Piece.Type.KING
-                &&  move.getEndRow() < piece.getRow()) {
+        int currentRow = (moves.size() != 0)? getLastMove(moves).getEndRow():piece.getRow();
+
+        if (piece.getColor() == Color.WHITE && !piece.isKing()
+                &&  move.getEndRow() < currentRow) {
             return false;
         }
 
         // The Piece can't jump south if it's red and single
-        if (piece.getColor() == Color.RED && piece.getType() != Piece.Type.KING
-                &&  move.getEndRow() > piece.getRow()) {
+        if (piece.getColor() == Color.RED && !piece.isKing()
+                &&  move.getEndRow() > currentRow) {
             return false;
         }
 
@@ -263,7 +267,15 @@ public class BoardController {
         return board.getPiece(moves.get(0).getStartRow(), moves.get(0).getStartCell());
     }
 
-
+    /**
+     * get the last move made this turn
+     * @param moves the list of moves
+     * @return the last move made or null
+     */
+    public Move getLastMove(ArrayList<Move> moves) {
+       if(moves.size() == 0) return null;
+       return moves.get(moves.size() - 1);
+    }
 
     /**
      *  Get the piece in the middle of a jump move

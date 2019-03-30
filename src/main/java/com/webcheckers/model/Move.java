@@ -99,14 +99,14 @@ public class Move implements Serializable {
         return Objects.hash(start, end);
     }
 
-    public static Set<Move> generateMoves(Piece piece, int distance) {
+    public static Set<Move> generateMoves(int row, int col, int distance) {
         Set<Move> moves = new HashSet<>();
         for (int i = distance; i >= -distance; i--) {
             for (int j = distance; j >= -distance; j--) {
                 if(i % 2 == 0 && j % 2 == 0) {
                     Move move = new Move();
-                    move.start = new Position(piece.getRow(), piece.getCol());
-                    move.end = new Position(piece.getRow() + i, piece.getCol() - j);
+                    move.start = new Position(row, col);
+                    move.end = new Position(row + i, col - j);
                     moves.add(move);
                 }
             }

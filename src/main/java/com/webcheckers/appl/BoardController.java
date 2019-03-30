@@ -108,7 +108,7 @@ public class BoardController {
             for (Space space: rowspace) {
                 piece = space.getPiece();
                 if(piece != null && board.getActivePlayer().ownsPiece(piece))
-                    mustJumpThisTurn(piece, moves);
+                    if(mustJumpThisTurn(piece, moves)) return true;
             }
         }
         return false;

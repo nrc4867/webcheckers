@@ -101,8 +101,8 @@ public class Move implements Serializable {
 
     public static Set<Move> generateMoves(Piece piece, int distance) {
         Set<Move> moves = new HashSet<>();
-        for (int i = 0; i < distance; i++) {
-            for (int j = 0; j < distance; j++) {
+        for (int i = distance; i >= -distance; i--) {
+            for (int j = distance; j >= -distance; j--) {
                 if(i % 2 == 0 && j % 2 == 0) {
                     Move move = new Move();
                     move.start = new Position(piece.getRow(), piece.getCol());

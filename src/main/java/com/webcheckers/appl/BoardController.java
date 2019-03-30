@@ -101,20 +101,26 @@ public class BoardController {
     public boolean mustJumpThisTurn(ArrayList<Move> moves) {
         Piece piece = getPiece(moves);
         if(piece != null) {
-            return mustMultiJump(piece, moves);
+            return mustJumpThisTurn(piece, moves);
         }
 
+        for (Space rowspace[]: board.getSpaces()) {
+            for (Space space: rowspace) {
+                piece = space.getPiece();
+                if(piece != null && board.getActivePlayer().ownsPiece(piece))
+                    mustJumpThisTurn(piece, moves);
+            }
+        }
         return false;
-
     }
 
     /**
-     * Checks to see if a player must multi-jump this turn
+     * Checks to see if a player must jump this turn
      * @param piece the piece multi-jumping
      * @param moves the moves already made
      * @return true if there are available multi-jumps
      */
-    private boolean mustMultiJump(Piece piece, ArrayList<Move> moves) {
+    private boolean mustJumpThisTurn(Piece piece, ArrayList<Move> moves) {
         Set<Move> possibleMoves = Move.generateMoves(piece, 2);
         for (Move move: possibleMoves) {
             if(canJumpTo(move, moves)) return true;

@@ -134,14 +134,15 @@ defers to the Application Tier's BoardController class to deal with
 Player Moves.
 
 ### Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+Moving forward, we want to clean up the code so that is follows more
+closely with GRASP and SOLID principles. Currently, the schema has
+high cohesion, but it also has high coupling. Additionally, it
+occasionally violates the Law of Demeter, forcing others to use
+multi-dot notation.
+
+Addtionally, we hope to implement Replay and Spectator modes by
+the end of sprint 3. Time permitting, we may also implement an AI
+player.
 
 ## Testing
 > _This section will provide information about the testing performed

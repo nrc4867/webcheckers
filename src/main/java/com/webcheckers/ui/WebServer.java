@@ -12,7 +12,6 @@ import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.CheckersPlay.*;
-import com.webcheckers.util.WebSeverCommandPrompt;
 import spark.TemplateEngine;
 
 
@@ -110,10 +109,10 @@ public class WebServer {
     this.gson = gson;
     this.playerLobby = new PlayerLobby(new Hashtable<String, Player>());
 
-    if(DEBUG) {
-      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
-      cmd.start();
-    }
+//    if(DEBUG) {
+//      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
+//      cmd.start();
+//    }
 
     this.sessionWatcher = new LazySessionWatcher();
     sessionWatcher.start();

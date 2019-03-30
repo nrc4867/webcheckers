@@ -8,6 +8,11 @@ public class Position implements Serializable{
     private int row;
     private int cell;
 
+    public Position(int row, int cell) {
+        this.row = row;
+        this.cell = cell;
+    }
+
     public int getCell() {
         return cell;
     }

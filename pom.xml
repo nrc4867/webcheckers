@@ -18,24 +18,24 @@
     <maven.compiler.version>3.8.0</maven.compiler.version>
     <maven.assembly.version>3.1.0</maven.assembly.version>
     <maven.exec.version>1.6.0</maven.exec.version>
-    
+
     <!-- Application dependency versions -->
     <spark.version>2.7.2</spark.version>
     <spark.freemarker.version>2.7.1</spark.freemarker.version>
     <freemarker.version>2.3.28</freemarker.version>
     <gson.version>2.8.5</gson.version>
     <slf4j.version>1.7.25</slf4j.version>
-    
+
     <!-- Test build dependency versions -->
     <maven.surefire.version>2.22.0</maven.surefire.version>
     <jacoco.version>0.8.2</jacoco.version>
-    
+
     <!-- Test dependency versions -->
     <junit.jupiter.version>5.3.0</junit.jupiter.version>
     <apiguardian.version>1.0.0</apiguardian.version>
     <junit.version>5.0</junit.version>
     <mockito.version>2.21.0</mockito.version>
-    
+
   </properties>
 
   <dependencies>
@@ -120,8 +120,8 @@
           <mainClass>com.webcheckers.Application</mainClass>
         </configuration>
         <executions>
-	  <!-- Run all tier-specific unit test with code coverage
-	       report -->
+          <!-- Run all tier-specific unit test with code coverage
+               report -->
           <execution>
             <id>tests-and-coverage</id>
             <configuration>
@@ -138,9 +138,9 @@
               </arguments>
             </configuration>
           </execution>
-	  <!-- Generate PDF from markdown design document.
-	       ${project.build.directory} directory must exist already.
-	  -->
+          <!-- Generate PDF from markdown design document.
+               ${project.build.directory} directory must exist already.
+          -->
           <execution>
             <id>docs</id>
             <configuration>
@@ -153,7 +153,7 @@
               </arguments>
             </configuration>
           </execution>
-	  <!-- Generate distribution zipfile for project -->
+          <!-- Generate distribution zipfile for project -->
           <execution>
             <id>zip</id>
             <configuration>
@@ -162,10 +162,10 @@
                 <argument>assembly:single</argument>
               </arguments>
             </configuration>
-          </execution>	  
+          </execution>
         </executions>
       </plugin>
-      
+
       <!-- Distribution zipfile is created using the assembly plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -182,7 +182,7 @@
           <goal>single</goal>
         </goals>
       </plugin>
-      
+
       <!-- END: Application build plugins -->
 
       <!-- START: Testing plugins -->
@@ -233,10 +233,6 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco.version}</version>
-        <configuration>
-          <destfile>/target/coverage-reports/jacoco-unit.exec</destfile>
-          <datafile>/target/coverage-reports/jacoco-unit.exec</datafile>
-        </configuration>
         <executions>
           <execution>
             <id>jacoco-initialize</id>
@@ -284,9 +280,8 @@
         </executions>
       </plugin>
       <!-- END: Testing plugins -->
-      
+
     </plugins>
   </build>
 
 </project>
-

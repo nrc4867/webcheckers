@@ -45,11 +45,14 @@ public class PositionTest {
         Position a = new Position();
         a.setCell(1);
         a.setRow(1);
-        assertNotEquals(a,p);
-        assertNotEquals(p,a);
+        assertFalse(a.equals(p));
+        assertFalse(p.equals(a));
 
-        assertEquals(a,a);
-        assertEquals(p,p);
+        assertTrue(a.equals(a));
+        assertTrue(p.equals(p));
+
+        Player player = new Player("h");
+        assertFalse(p.equals(player));
     }
 
     @Test

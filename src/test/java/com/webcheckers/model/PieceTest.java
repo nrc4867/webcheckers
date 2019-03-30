@@ -1,13 +1,13 @@
-package test;
+package com.webcheckers.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.webcheckers.model.Board;
 import com.webcheckers.appl.Player;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.webcheckers.model.Piece;
+
+import java.util.Objects;
 
 @Tag("Model-tier")
 public class PieceTest {
@@ -15,7 +15,9 @@ public class PieceTest {
     private static final int INBOUNDS = 3;
     private static final int OUTBOUNDS_LOW = -1;
     private static final int OUTBOUNDS_HIGH = Board.getSize()+1;
-    private static final Player PLAYER = new Player("Player");
+    private static Player PLAYER = new Player("Player", Color.RED);
+    private static Piece p = new Piece(0,0, PLAYER, Piece.Type.SINGLE);
+
 
 
     @Test
@@ -106,4 +108,64 @@ public class PieceTest {
                     p.setRow(OUTBOUNDS_HIGH);},
                 "Piece allowed high row.");
     }
+
+    @Test
+    public void testGetCol(){
+        assertEquals(p.getCol(), 0);
+        p.setCol(1);
+        assertEquals(p.getCol(), 1);
+    }
+
+    @Test
+    public void testGetRow(){
+        assertEquals(p.getRow(), 0);
+        p.setRow(1);
+        assertEquals(p.getRow(), 1);
+    }
+
+    @Test
+    public void testGetOwner(){
+        assertEquals(p.getOwner(), PLAYER);
+    }
+
+    @Test
+    public void testGetSetType(){
+        assertEquals(p.getType(), Piece.Type.SINGLE);
+        p.setType(Piece.Type.KING);
+        assertEquals(p.getType(), Piece.Type.KING);
+        p.setType(Piece.Type.SINGLE);
+        assertEquals(p.getType(), Piece.Type.SINGLE);
+    }
+
+    @Test
+    public void testGetColor(){
+        assertEquals(p.getColor(), PLAYER.getColor());
+    }
+
+    @Test
+    public void testEnemyOf(){
+        Player a = new Player("Testing", Color.WHITE);
+        Player b = new Player("Testing2", Color.RED);
+        Piece aa = new Piece(0,1,a);
+        Piece bb = new Piece(0,2, b);
+        assertFalse(p.enemyOf(bb));
+        assertTrue(p.enemyOf(aa));
+        assertTrue(aa.enemyOf(bb));
+
+    }
+
+    @Test
+    public void testEquals(){
+        Piece x = new Piece(0,1, PLAYER);
+        assertNotEquals(p, x);
+        x.setCol(0);
+        assertEquals(p,x);
+    }
+
+    @Test
+    public void testMisc(){
+        System.out.println(p.toString());
+        assertEquals(p.hashCode(), Objects.hash(PLAYER, Piece.Type.SINGLE, 0, 0));
+    }
+
 }

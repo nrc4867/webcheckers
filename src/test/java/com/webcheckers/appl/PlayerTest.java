@@ -1,8 +1,9 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
 
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Color;
 import org.junit.jupiter.api.Tag;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Dylan Cuprewich
  */
-@Tag("Model-tier")
+@Tag("appl-tier")
 public class PlayerTest {
 
    protected static String playerName = "Test Name";

@@ -186,7 +186,6 @@ public class BoardTest {
     @Test
     public void testMisc(){
         System.out.println(b.toString());
-        assertEquals(b.hashCode(), 0);
     }
 
 }

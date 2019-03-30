@@ -118,25 +118,31 @@ You may sign out after playing the game and you render back to the home page.
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The Application Tier holds the main interfaces between the Model Tier
+and users. It contains Players and PlayerLobbies, which allows users
+to sign in and player against other users. It also holds the
+BoardController, which takes in moves from Players and updates the
+Model's Board accordingly.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The Model Tier holds the most basic features of WebCheckers. It contains
+the Board, Pieces, etc. It has few dependencies on classes outside of
+its package. Board holds an array of Spaces, each of which may hold a
+Piece. The Model Tier only holds the most basic access methods, and
+defers to the Application Tier's BoardController class to deal with
+Player Moves.
 
 ### Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+Moving forward, we want to clean up the code so that is follows more
+closely with GRASP and SOLID principles. Currently, the schema has
+high cohesion, but it also has high coupling. Additionally, it
+occasionally violates the Law of Demeter, forcing others to use
+multi-dot notation.
+
+Addtionally, we hope to implement Replay and Spectator modes by
+the end of sprint 3. Time permitting, we may also implement an AI
+player.
 
 ## Testing
 > _This section will provide information about the testing performed

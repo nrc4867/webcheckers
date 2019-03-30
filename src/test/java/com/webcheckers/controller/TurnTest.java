@@ -29,7 +29,6 @@ public class TurnTest {
     private boolean kinged;
     private boolean jumped;
     private int tn;
-
     private Turn turn2;
 
     @BeforeEach

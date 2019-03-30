@@ -89,6 +89,11 @@ public class BoardTest {
     }
 
     @Test
+    public void testGetBoardId(){
+        assert b.getBoardID() >= 0;
+    }
+
+    @Test
     public void testGetTotalSize() {
         int SIZE = 8;
         assertEquals(Board.getTotalSpaces(), SIZE * SIZE);
@@ -186,6 +191,7 @@ public class BoardTest {
     @Test
     public void testMisc(){
         System.out.println(b.toString());
+        assertEquals(b.hashCode(), b.getBoardID());
     }
 
 }

@@ -112,6 +112,8 @@ public class Board {
 		activeCol = col;
 	}
 
+	public int getBoardID() {return boardID;}
+
 	/** @return Returns the Red player. */
 	public Player getRedPlayer() {return redPlayer;}
 

@@ -3,9 +3,12 @@ package com.webcheckers.model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.appl.Player;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.omg.PortableServer.POA;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -62,6 +65,27 @@ public class MoveTest {
     }
 
     @Test
+    public void testDeltaRadius(){
+        intialize();
+        assertTrue(m.deltaRadius(1));
+
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(2);
+        b.setCell(2);
+        Position c = new Position();
+        c.setRow(3);
+        c.setCell(4);
+        a.setStart(b);
+        a.setEnd(c);
+
+        assertTrue(a.deltaRadius(1));
+        assertTrue(a.deltaRadius(2));
+        assertFalse(a.deltaRadius(3));
+        assertFalse(a.deltaRadius(4));
+    }
+
+    @Test
     public void testGetSetMovement(){
         intialize();
         m.setMovement(Move.MoveType.REGULAR);
@@ -75,6 +99,77 @@ public class MoveTest {
         intialize();
         System.out.println(m.toString());
         assertEquals(m.hashCode(), Objects.hash(s,e));
+    }
+
+    @Test
+    public void testEquals(){
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(3);
+        b.setCell(3);
+        Position c = new Position();
+        c.setRow(4);
+        c.setCell(4);
+        a.setStart(b);
+        a.setEnd(c);
+        intialize();
+        assertNotEquals(m,a);
+        assertEquals(a,a);
+        assertEquals(m,m);
+    }
+
+    @Test
+    public void testConnectedMoves(){
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(2);
+        b.setCell(2);
+        Position c = new Position();
+        c.setRow(4);
+        c.setCell(4);
+        a.setStart(b);
+        a.setEnd(c);
+        intialize();
+        assertTrue(Move.ConnectedMoves(m,a));
+        assertFalse(Move.ConnectedMoves(a,m));
+        b.setCell(6);
+        assertFalse(Move.ConnectedMoves(m,a));
+    }
+
+    @Test
+    public void testConnectedMovesArray(){
+        ArrayList<Move> arr = new ArrayList<>();
+
+        intialize();
+        arr.add(m);
+
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(2);
+        b.setCell(2);
+        Position c = new Position();
+        c.setRow(4);
+        c.setCell(4);
+        a.setStart(b);
+        a.setEnd(c);
+        arr.add(a);
+
+
+        Move x = new Move();
+        Position y= new Position();
+        y.setRow(4);
+        y.setCell(4);
+        Position z = new Position();
+        z.setRow(7);
+        z.setRow(7);
+        x.setStart(y);
+        x.setEnd(z);
+        arr.add(x);
+
+        assertTrue(Move.ConnectedMoves(arr));
+        b.setRow(4);
+        assertFalse(Move.ConnectedMoves(arr));
+
     }
 
 }

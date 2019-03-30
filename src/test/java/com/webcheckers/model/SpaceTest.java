@@ -97,7 +97,10 @@ public class SpaceTest {
 
     @Test
     public void testMisc(){
-        System.out.println(s.toString());
-        assertEquals(s.hashCode(), Objects.hash(0,0));
+        Space a = new Space(0,0);
+        System.out.println(a.toString());
+        a.setPiece(p);
+        System.out.println(a.toString());
+        assertEquals(a.hashCode(), Objects.hash(0,0));
     }
 }

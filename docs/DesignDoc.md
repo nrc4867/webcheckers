@@ -137,7 +137,7 @@ the end of sprint 3. Time permitting, we may also implement an AI
 player.
 
 ## Testing
-This section will provide information about the testing performed
+This section provides information about the testing performed
 and the results of the testing
 
 ### Acceptance Testing

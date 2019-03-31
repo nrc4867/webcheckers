@@ -148,8 +148,5 @@ player.
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+Our strategy for unit testing the code was very straight forward. We decided that the memebers who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
+As our team completed implementing the MVP, out target for the code coverage was atleast 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 93% which was a satisfactory result.

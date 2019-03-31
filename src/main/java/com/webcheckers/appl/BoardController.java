@@ -3,6 +3,7 @@ package com.webcheckers.appl;
 import com.webcheckers.model.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 //
 // Remember, white player is at the top of the board!
@@ -80,12 +81,49 @@ public class BoardController {
      * @return true if the move is valid in the context of moves
      */
     public boolean testMovement(Move move, ArrayList<Move> moves) {
-        final boolean testMove = canMoveTo(move, moves);
-        final boolean testJump = canJumpTo(move, moves);
+        boolean testMove = false;
+        if(!mustJumpThisTurn(moves))
+            testMove = canMoveTo(move, moves);
+        boolean testJump = canJumpTo(move, moves);
 
         if (testMove || testJump) {
             move.setMovement((testMove)? Move.MoveType.REGULAR: Move.MoveType.JUMP);
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * check to see if there is a valid jump for this turn
+     * @param moves the moves made this turn
+     * @return true if there is a valid jump
+     */
+    public boolean mustJumpThisTurn(ArrayList<Move> moves) {
+        Piece piece = getPiece(moves);
+        if(piece != null) {
+            return mustJumpThisTurn(piece, moves);
+        }
+
+        for (Space rowspace[]: board.getSpaces()) {
+            for (Space space: rowspace) {
+                piece = space.getPiece();
+                if(piece != null && board.getActivePlayer().ownsPiece(piece))
+                    mustJumpThisTurn(piece, moves);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks to see if a player must jump this turn
+     * @param piece the piece multi-jumping
+     * @param moves the moves already made
+     * @return true if there are available multi-jumps
+     */
+    private boolean mustJumpThisTurn(Piece piece, ArrayList<Move> moves) {
+        Set<Move> possibleMoves = Move.generateMoves(piece, 2);
+        for (Move move: possibleMoves) {
+            if(canJumpTo(move, moves)) return true;
         }
         return false;
     }
@@ -99,7 +137,7 @@ public class BoardController {
     public boolean canMoveTo(Move move, ArrayList<Move> moves) {
         if(moves.size() != 0) return false; // You cannot make more than one regular move in a round
 
-        Piece piece = board.getPiece(move.getStartRow(), move.getStartCell());
+        Piece piece = getPiece(move, moves);
 
         // Piece must be on the board
         if (piece == null) {
@@ -153,12 +191,7 @@ public class BoardController {
             return false;
         }
 
-        Piece piece;
-        if(moves.size() == 0) { // the first jump in the sequence
-            piece = board.getPiece(move.getStartRow(), move.getStartCell());
-        } else {
-            piece = board.getPiece(moves.get(0).getStartRow(), moves.get(0).getStartCell());
-        }
+        Piece piece = getPiece(move, moves);
         if(piece == null) return false; // the original piece should exist on the board
 
         // make sure the piece is moving in the right direction
@@ -199,6 +232,38 @@ public class BoardController {
 
         return true;
     }
+
+    /**
+     * Get a piece from the board based on the players movement
+     * @param move the move being made
+     * @param moves the moves made this turn
+     * @return a piece if there is not a piece then null
+     */
+    public Piece getPiece(Move move, ArrayList<Move> moves) {
+        if(moves.size() == 0) return getPiece(move);
+        return getPiece(moves);
+    }
+
+    /**
+     * Get a piece from the board based on the players movement
+     * @param move the move being made
+     * @return a piece if there is not a piece then null
+     */
+    public Piece getPiece(Move move) {
+        return board.getPiece(move.getStartRow(), move.getStartCell());
+    }
+
+    /**
+     * Get a piece from the board based on the players movement
+     * @param moves the moves made this turn
+     * @return a piece if there is not a piece then null
+     */
+    public Piece getPiece(ArrayList<Move> moves) {
+        if(moves.size() == 0) return null;
+        return board.getPiece(moves.get(0).getStartRow(), moves.get(0).getStartCell());
+    }
+
+
 
     /**
      *  Get the piece in the middle of a jump move

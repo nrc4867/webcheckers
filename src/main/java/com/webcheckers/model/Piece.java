@@ -1,9 +1,11 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Pieces are moved around by Players. They inhabit {@link Space} on the
@@ -86,7 +88,7 @@ public class Piece implements Serializable{
 	}
 
 	public void setType(Type t) {type = t;}
-
+	public boolean isKing() {return type == Type.KING; }
 
 	// Object =================================================================
 

@@ -3,6 +3,7 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Cleanup;
 import com.webcheckers.model.Color;
+import com.webcheckers.model.Piece;
 
 /**
  * Players play WebCheckers. They should <i>only</i> be created
@@ -88,6 +89,10 @@ public class Player implements Cleanup {
 
 	public boolean checkTurn() {
 		return boardController.isActivePlayer(this);
+	}
+
+	public boolean ownsPiece(Piece piece) {
+		return equals(piece.getOwner());
 	}
 
 	public Player checkResigned() {

@@ -18,6 +18,7 @@ import static spark.Spark.halt;
 
 public class PostSubmitRoute implements Route {
     public static final String SUCCESSFUL_SUBMISSION = "The moves have been submitted";
+    public static final String JUMPS_LEFT = "You have available jumps left.";
     public static final String ERROR = "No moves made";
 
     private final Gson gson;
@@ -37,6 +38,10 @@ public class PostSubmitRoute implements Route {
 
         if(getMoves(httpSession).size() != 0) {
             final BoardController controller = requester.getBoardController();
+
+            if(controller.mustJumpThisTurn(getMoves(httpSession))) {
+                return gson.toJson(Message.error(JUMPS_LEFT));
+            }
 
             controller.movePieces(getMoves(httpSession));
             controller.toggleTurn();

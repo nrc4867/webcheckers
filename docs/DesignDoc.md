@@ -94,6 +94,7 @@ You may sign out after playing the game and you render back to the home page.
 
 
 ### UI Tier
+The UI tier contains classes that allow users make web requests and therefore allows for user interaction. The UI tier is responsible for using model, application, and session data to generate dynamic webpages that respond to changes in the programs state. The UI tier therefore is also responsible for handling of any AJAX calls that a users browser may send. 
 > _Provide a summary of the Server-side UI tier of your architecture.
 > Describe the types of components in the tier and describe their
 > responsibilities.  This should be a narrative description, i.e. it has

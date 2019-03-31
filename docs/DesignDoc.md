@@ -141,12 +141,11 @@ This section provides information about the testing performed
 and the results of the testing
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+Currently there are 5 user stories that have passed all their acceptance
+criteria tests. There are currently 3 user stories that are part of the MVP,
+that have yet to be tested. There hasn't been failures and likewise any concerns.
+
 
 ### Unit Testing and Code Coverage
-Our strategy for unit testing the code was very straight forward. We decided that the memebers who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
+Our strategy for unit testing the code was very straight forward. We decided that the members who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
 As our team completed implementing the MVP, out target for the code coverage was atleast 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 93% which was a satisfactory result.

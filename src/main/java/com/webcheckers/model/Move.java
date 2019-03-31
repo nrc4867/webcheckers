@@ -107,6 +107,13 @@ public class Move implements Serializable {
         return Objects.hash(start, end);
     }
 
+    /**
+     * generate a set of moves around an area
+     * @param row the start row
+     * @param col the start column
+     * @param distance the distance from the start row and column
+     * @return a set all the black tiles the distance away from the start
+     */
     public static Set<Move> generateMoves(int row, int col, int distance) {
         Set<Move> moves = new HashSet<>();
         for (int i = distance; i >= -distance; i--) {

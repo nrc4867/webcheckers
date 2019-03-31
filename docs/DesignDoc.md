@@ -142,8 +142,12 @@ and the results of the testing
 
 ### Acceptance Testing
 Currently there are 5 user stories that have passed all their acceptance
-criteria tests. There are currently 3 user stories that are part of the MVP,
-that have yet to be tested. There hasn't been failures and likewise any concerns.
+criteria tests. This includes sign-in, start a game, move, capture and king
+There are currently 3 user stories that are part of the MVP,
+that have yet to be tested because they have not been fully implemented. 
+These are jump, resign and rematch. The enhancments have not been implemented either
+and thus not been tests.
+There hasn't been any failures and likewise any concerns.
 
 
 ### Unit Testing and Code Coverage

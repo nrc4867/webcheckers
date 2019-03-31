@@ -101,28 +101,13 @@ The UI tier contains classes that allow users make web requests and therefore al
 The UI tier is build by the `Webserver` class when the application starts. When building the `Webserver` maps all the classes in this tier labeled 'Route' to different URLs. All Route classes implement the SparkJava interface `Route` which allows these classes to handle web requests and generate webpages for end-users. 
 
 
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+![POST /validateMove](Validate&#32;Move.png)
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+The UI tier handles events for game play. Above depicts the sequence that is executed when a player asks the server to submit a move for validation. When a player makes a move it must be validated on the server to ensure the move follows the rules of checkers.
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
+![POST /submitTurn](Checkers&#32;Turn.png)
 
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
-
+Above depicts the average expected sequence for any particular checkers turn. When a player takes a turn they are expected to make a number of moves, then submit there turn for validation. The turn is either rejected or the moves are preformed on the board.
 
 ### Application Tier
 The Application Tier holds the main interfaces between the Model Tier

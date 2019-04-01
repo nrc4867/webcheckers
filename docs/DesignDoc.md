@@ -45,6 +45,8 @@ Stories/Epics involved in completion of the MVP:
   * Jump
   * Resign
   * King
+  * Sign-in
+  * Start a Game
   
 ### Roadmap of Enhancements
 * We plan on adding an AI that could play against a user replacing a human opponent.

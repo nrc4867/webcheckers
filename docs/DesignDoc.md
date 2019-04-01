@@ -51,7 +51,6 @@ This section describes the features of the application.
   * We are considering having multiple difficulty levels for the AI, ex. easy, medium, hard.
 * We also plan on adding a Spectator mode where a third user could watch a match occur without
 having the ability to play.
-> _Prvide a list of top-level features in the order you plan to consider them._
 
 
 ## Application Domain

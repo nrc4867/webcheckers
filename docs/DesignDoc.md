@@ -34,7 +34,7 @@ This section describes the features of the application.
 The major features of the application include being able to signin with the name of your choosing, being able to select the player you want to challenge, move your own pieces, capture enemy pieces, beat your opponent, lose to your opponent, and resign to your opponent.
 
 ### Definition of MVP
-The MVP includes every player being sign-in before playing a game and being sign-out when the game is finished, the players must play according to the american rules of checkers, and allowing players to resign at any point to end the game.
+The MVP includes every player being sign-in before playing a game and being sign-out when the game is finished, the players must play according to the American rules of Checkers, and allowing players to resign at any point to end the game.
 
 ### MVP Features
 Stories/Epics involved in completion of the MVP:
@@ -61,7 +61,7 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain-model.png)
 
-The main component of the the domain model is the WebCheckers game. It is built up of smaller entities such as the players and the board. A player represents the user who is playing the game of WebCheckers and the board is the field on which the game is played on. The board is composed of 64 tiles on which the pieces are placed on.  Each player can move one of their 24 pieces per turn, this move must follow the rules. This move can either be moving a piece forward or jumping and capturing an opponent’s piece. The piece can either be a standard piece or an upgraded king which follows a different moving ruleset.
+The main component of the domain model is the WebCheckers game. It is built up of smaller entities such as the players and the board. A player represents the user who is playing the game of WebCheckers and the board is the field on which the game is played on. The board is composed of 64 tiles on which the pieces are placed.  Each player can move one of their 24 pieces per turn, this move must follow the rules. This move can either be moving a piece forward or jumping and capturing an opponent’s piece. The piece can either be a standard piece or an upgraded king which follows a different moving ruleset.
 
 
 ## Architecture and Design
@@ -99,25 +99,25 @@ You may sign out after playing the game and you render back to the home page.
 
 
 ### UI Tier
-The UI tier contains classes that allow users make web requests and therefore allows for user interaction. The UI tier is responsible for using model, application, and session data to generate dynamic webpages that respond to changes in the programs state. The UI tier therefore is also responsible for handling of any AJAX calls that a users browser may send. 
+The UI tier contains classes that allow users to make web requests and therefore allows for user interaction. The UI tier is responsible for using model, application, and session data to generate dynamic webpages that respond to changes in the programs state. The UI tier, therefore, is also responsible for the handling of any AJAX calls that a users browser may send. 
 
 ![UI Tier Generation](UITierGeneration.png)
 
-The UI tier is build by the `Webserver` class when the application starts. When building the `Webserver` maps all the classes in this tier labeled 'Route' to different URLs. All Route classes implement the SparkJava interface `Route` which allows these classes to handle web requests and generate webpages for end-users. 
+The UI tier is built by the `Webserver` class when the application starts. When building the `Webserver` maps all the classes in this tier labeled 'Route' to different URLs. All Route classes implement the SparkJava interface `Route` which allows these classes to handle web requests and generate webpages for end-users. 
 
 
 ![POST /validateMove](Validate&#32;Move.png)
 
-The UI tier handles events for game play. Above depicts the sequence that is executed when a player asks the server to submit a move for validation. When a player makes a move it must be validated on the server to ensure the move follows the rules of checkers.
+The UI tier handles events for gameplay. Above depicts the sequence that is executed when a player asks the server to submit a move for validation. When a player makes a move it must be validated on the server to ensure the move follows the rules of checkers.
 
 ![POST /submitTurn](Checkers&#32;Turn.png)
 
-Above depicts the average expected sequence for any particular checkers turn. When a player takes a turn they are expected to make a number of moves, then submit there turn for validation. The turn is either rejected or the moves are preformed on the board.
+Above depicts the average expected sequence for any particular checkers turn. When a player takes a turn they are expected to make a number of moves, then submit there turn for validation. The turn is either rejected or the moves are performed on the board.
 
 ### Application Tier
 The Application Tier holds the main interfaces between the Model Tier
 and users. It contains Players and PlayerLobbies, which allows users
-to sign in and player against other users. It also holds the
+to sign in and play against other users. It also holds the
 BoardController, which takes in moves from Players and updates the
 Model's Board accordingly.
 
@@ -126,18 +126,18 @@ Model's Board accordingly.
 The Model Tier holds the most basic features of WebCheckers. It contains
 the Board, Pieces, etc. It has few dependencies on classes outside of
 its package. Board holds an array of Spaces, each of which may hold a
-Piece. The Model Tier only holds the most basic access methods, and
+Piece. The Model Tier only holds the most basic access methods and
 defers to the Application Tier's BoardController class to deal with
 Player Moves.
 
 ### Design Improvements
-Moving forward, we want to clean up the code so that is follows more
+Moving forward, we want to clean up the code so that follows more
 closely with GRASP and SOLID principles. Currently, the schema has
 high cohesion, but it also has high coupling. Additionally, it
 occasionally violates the Law of Demeter, forcing others to use
 multi-dot notation.
 
-Addtionally, we hope to implement Replay and Spectator modes by
+Additionally, we hope to implement Replay and Spectator modes by
 the end of sprint 3. Time permitting, we may also implement an AI
 player.
 
@@ -146,18 +146,18 @@ This section provides information about the testing performed
 and the results of the testing
 
 ### Acceptance Testing
-Currently there are 5 user stories that have passed all their acceptance
+Currently, there are 5 user stories that have passed all their acceptance
 criteria tests. This includes sign-in, start a game, move, capture and king
 There are currently 3 user stories that are part of the MVP,
 that have yet to be tested because they have not been fully implemented. 
-These are jump, resign and rematch. The enhancments have not been implemented either
+These are jump, resign and rematch. The enhancements have not been implemented either
 and thus not been tests.
 There hasn't been any failures and likewise any concerns.
 
 
 ### Unit Testing and Code Coverage
 Our strategy for unit testing the code was very straight forward. We decided that the members who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
-As our team completed implementing the MVP, out target for the code coverage was atleast 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 93% which was a satisfactory result.
+As our team completed implementing the MVP, our target for the code coverage was at least 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result.
 
 ### Code Coverage Results
 

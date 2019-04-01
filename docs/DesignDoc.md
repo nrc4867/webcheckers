@@ -3,11 +3,6 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 * Team name: 2185-swen-261-04-d-damns
 * Team members
@@ -42,8 +37,15 @@ The major features of the application include being able to signin with the name
 The MVP includes every player being sign-in before playing a game and being sign-out when the game is finished, the players must play according to the american rules of checkers, and allowing players to resign at any point to end the game.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
-
+Stories/Epics involved in completion of the MVP:
+  * Lose
+  * Win condition
+  * Move
+  * Perform turn
+  * Jump
+  * Resign
+  * King
+  
 ### Roadmap of Enhancements
 * We plan on adding an AI that could play against a user replacing a human opponent.
   * We are considering having multiple difficulty levels for the AI, ex. easy, medium, hard.

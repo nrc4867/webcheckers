@@ -39,7 +39,7 @@ This section describes the features of the application.
 The major features of the application include being able to signin with the name of your choosing, being able to select the player you want to challenge, move your own pieces, capture enemy pieces, beat your opponent, lose to your opponent, and resign to your opponent.
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+The MVP includes every player being sign-in before playing a game and being sign-out when the game is finished, the players must play according to the american rules of checkers, and allowing players to resign at any point to end the game.
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._

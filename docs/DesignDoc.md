@@ -173,6 +173,9 @@ As our team completed implementing the MVP, our target for the code coverage was
 #### UI Tier
 ![UI Tier Code Coverage](ui_coverage.png)
 
+#### Checkersplay  Sub-Tier
+![Checkersplay Sub-Tier Code Coverage](check_coverage.png)
+
 #### Util Tier
 ![Util Tier Code Coverage](util_coverage.png)
 

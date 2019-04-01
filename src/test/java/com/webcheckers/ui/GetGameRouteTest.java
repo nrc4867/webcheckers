@@ -14,7 +14,6 @@ import com.webcheckers.ui.CheckersPlay.PostValidateRoute;
 import com.webcheckers.ui.view.Mode;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Checkers;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

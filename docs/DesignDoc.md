@@ -47,7 +47,11 @@ This section describes the features of the application.
 > _Provide a list of top-level Epics and/or Stories of the MVP._
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+* We plan on adding an AI that could play against a user replacing a human opponent.
+  * We are considering having multiple difficulty levels for the AI, ex. easy, medium, hard.
+* We also plan on adding a Spectator mode where a third user could watch a match occur without
+having the ability to play.
+> _Prvide a list of top-level features in the order you plan to consider them._
 
 
 ## Application Domain

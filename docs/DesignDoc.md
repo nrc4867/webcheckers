@@ -36,6 +36,8 @@ WebCheckers allows users to connect with a server and play against each other at
 
 This section describes the features of the application.
 
+The major features of the application include being able to signin with the name of your choosing, being able to select the player you want to challenge, move your own pieces, capture enemy pieces, beat your opponent, lose to your opponent, and resign to your opponent.
+
 > _In this section you do not need to be exhaustive and list every
 > story.  Focus on top-level features from the Vision document and
 > maybe Epics and critical Stories._

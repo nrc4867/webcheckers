@@ -288,12 +288,22 @@ public class BoardController {
         return board.getPiece(middleRow, middleCol);
     }
 
+    /**
+     * See if a piece should be kinged based on a move
+     * @param move the move to check
+     * @return true if a piece is kinged
+     */
     public boolean shouldKing(Move move) {
         final ArrayList<Move> moves = new ArrayList<>();
         moves.add(move);
         return shouldKing(moves);
     }
 
+    /**
+     * Check if a piece should be kinged based on a series of moves
+     * @param moves the moves to make
+     * @return true if the piece is kinged
+     */
     public boolean shouldKing(ArrayList<Move> moves) {
         Piece piece = getPiece(moves);
 

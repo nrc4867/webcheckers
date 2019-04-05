@@ -288,6 +288,23 @@ public class BoardController {
         return board.getPiece(middleRow, middleCol);
     }
 
+    public boolean shouldKing(Move move) {
+        final ArrayList<Move> moves = new ArrayList<>();
+        moves.add(move);
+        return shouldKing(moves);
+    }
+
+    public boolean shouldKing(ArrayList<Move> moves) {
+        Piece piece = getPiece(moves);
+
+        Move lastMove = moves.get(moves.size() - 1);
+
+        if(piece.isKing()) return false;
+        if(piece.getColor() == Color.WHITE && lastMove.getEndRow() == Board.getSize() - 1) return true;
+        if(piece.getColor() == Color.RED && lastMove.getEndRow() == 0) return true;
+        return false;
+    }
+
     /**
      * Checks if the Piece should be kinged. A Piece is kinged when it
      * reaches the opposite side of the board.
@@ -295,9 +312,7 @@ public class BoardController {
     public boolean shouldKing(Piece p) {
 
         // Piece cannot be kinged twice
-        if (p.getType() == Piece.Type.KING) {
-            return false;
-        }
+        if (p.isKing()) return false;
 
         if (p.getColor() == Color.WHITE && p.getRow() == Board.getSize() - 1) {
             return true;

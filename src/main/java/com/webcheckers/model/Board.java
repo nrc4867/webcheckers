@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.Player;
 
+import java.util.ArrayList;
+
 /**
  * Board model for WebCheckers.
  *
@@ -165,6 +167,21 @@ public class Board {
 			throw new IllegalArgumentException("Out of bounds!");
 		}
 		return spaces[row][col].getPiece() != null;
+	}
+
+	/** @return Returns all pieces belonging to a player. */
+	public ArrayList<Piece> getPlayerPieces(Player player) {
+
+		ArrayList<Piece> pieces = new ArrayList<>();
+
+		for (int r = 0; r < getSize(); r++) {
+			for (int c = 0; c < getSize(); c++) {
+				Piece p = getPiece(r,c);
+				if (p != null && p.getOwner().equals(player)) pieces.add(p);
+			}
+		}
+
+		return pieces;
 	}
 
 	/**

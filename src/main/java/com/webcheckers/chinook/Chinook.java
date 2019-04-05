@@ -11,14 +11,6 @@ import java.util.Set;
 /**
  * Chinook is the AI program, named after Chinook,
  * the original Checkers AI grandmaster.
- *
- * Algorithm:
- *
- *      For each Piece controlled by Chinook:
- *
- *      1. Test a move or jump in a direction
- *      2. If possible, execute, add to score, and go back to 1.
- *      3. If not possible and there are moves lef
  */
 public class Chinook extends Player {
 

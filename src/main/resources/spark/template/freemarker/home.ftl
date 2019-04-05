@@ -47,7 +47,7 @@
         <ul>
             <form action="./game" method="post">
           <#items as user>
-              <li><input type="submit" name="spectate" value="${user}"></li>
+              <li><input type="submit" name="challenge" value="${user}"></li>
           </#items>
             </form>
         </ul>

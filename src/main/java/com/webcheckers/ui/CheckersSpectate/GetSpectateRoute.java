@@ -1,4 +1,12 @@
 package com.webcheckers.ui.CheckersSpectate;
 
-public class GetSpectateRoute {
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+public class GetSpectateRoute implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        return null;
+    }
 }

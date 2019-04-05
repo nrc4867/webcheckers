@@ -30,13 +30,8 @@ public class Chinook extends Player {
 
         BoardController control = getBoardController();
         ArrayList<Move> route = makeMove();
-        for (Move m : route) {
-            if (m.getMovement() == Move.MoveType.JUMP) {
-                control.makeJump(m);
-            }
-            else control.makeMove(m);
-        }
-
+        control.movePieces(route);
+        control.toggleTurn();
 
     }
 

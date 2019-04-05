@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.SessionTimeoutWatchDog;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.PlayerLobby;
@@ -26,23 +25,6 @@ public class PostSignInRoute implements Route {
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-    private final LazySessionWatcher sessionWatcher;
-
-    /**
-     * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
-     *
-     * @param playerLobby the username checker service
-     * @param sessionWatcher an active thread that prunes inactive sessions
-     * @param templateEngine the HTML template rendering engine
-     */
-    public PostSignInRoute(PlayerLobby playerLobby, LazySessionWatcher sessionWatcher, TemplateEngine templateEngine) {
-        Objects.requireNonNull(playerLobby, "PlayerLobby must not be null");
-        Objects.requireNonNull(templateEngine, "TemplateEngine must not be null");
-
-        this.playerLobby = playerLobby;
-        this.templateEngine = templateEngine;
-        this.sessionWatcher = sessionWatcher;
-    }
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
@@ -51,8 +33,14 @@ public class PostSignInRoute implements Route {
      * @param templateEngine the HTML template rendering engine
      */
     public PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
-        this(playerLobby, null, templateEngine);
+        Objects.requireNonNull(playerLobby, "PlayerLobby must not be null");
+        Objects.requireNonNull(templateEngine, "TemplateEngine must not be null");
+
+        this.playerLobby = playerLobby;
+        this.templateEngine = templateEngine;
     }
+
+
 
 
     /**
@@ -82,13 +70,10 @@ public class PostSignInRoute implements Route {
             Player player = playerLobby.reserveName(playerName);
             httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY, player);
             // Kill the player login after a minute of session inactivity. (vis. Browser closes)
-            if(sessionWatcher != null) {
-                sessionWatcher.addSession(httpSession);
-            }
-            else { // remove the session after 10 mins
-                httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
-                httpSession.maxInactiveInterval(1); // not respected by server
-            }
+
+            httpSession.attribute(Attributes.PLAYER_SESSION_KEY, new SessionTimeoutWatchDog(playerLobby, player));
+            httpSession.maxInactiveInterval(5000);            // not respected by server
+
         } catch (SignInException message) {
             mv = error(pageElements, message.getMessage());
             return templateEngine.render(mv);

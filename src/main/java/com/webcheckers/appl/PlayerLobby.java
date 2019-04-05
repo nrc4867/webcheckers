@@ -1,11 +1,8 @@
 package com.webcheckers.appl;
 
 
-import java.util.Collection;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.logging.Logger;
-import java.util.Set;
-import java.util.HashSet;
 
 /**
  * Object to keep track of Players in WebCheckers.
@@ -115,6 +112,28 @@ public class PlayerLobby {
     return players.values();
   }
 
+  /**
+   * @return Get a set of players currently playing checkers
+   */
+  public synchronized Set<String> getPlayersInGame() {
+    HashSet<String> players = new HashSet<>();
+    for (Player player: this.players.values()) {
+      if(player.inGame()) players.add(player.getName());
+    }
+    return players;
+  }
+
+  /**
+   * @return Get a set of players not playing checkers
+   */
+  public synchronized Set<String> getAvailablePlayers() {
+    HashSet<String> players = new HashSet<>();
+    for (Player player: this.players.values()) {
+      if(!player.inGame()) players.add(player.getName());
+    }
+    return players;
+  }
+
   public synchronized boolean containsPlayer(Player player) {
     return containsPlayer(player.getName());
   }
@@ -139,6 +158,7 @@ public class PlayerLobby {
   public synchronized Set<String> names() {
     return new HashSet<>(players.keySet());
   }
+
 
 
 }

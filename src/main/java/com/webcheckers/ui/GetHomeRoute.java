@@ -75,22 +75,20 @@ public class GetHomeRoute implements Route {
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR, TITLE);
-    //display message if selected player is in game.
-    if(current!=null && current.isSelectedPlayerInGame()){
-      vm.put(MESSAGE_ATTR, PLAYER_IN_GAME);
-    }else {
-      // display a user message in the Home page
-      vm.put(MESSAGE_ATTR, WELCOME_MSG);
-    }
+
+    vm.put(MESSAGE_ATTR, WELCOME_MSG);
 
     Set<String> names = new HashSet<>();
+    Set<String> playersInGame = playerLobby.getPlayersInGame();
     //remove player from displaying yourself on lobby
     if(current!=null) {
-      names.addAll(playerLobby.names());
+      names.addAll(playerLobby.getAvailablePlayers());
       names.remove(current.getName());
+      vm.put("ingame", playersInGame.toArray());
     }else{
       int num_players= playerLobby.getPlayers().size();
-      names.add("Number of Players online: "+num_players); //show Number of players online.
+      vm.put("ingame", new String[]{"Number of Players playing checkers: " + playersInGame.size()});
+      names.add("Number of Players online: "+ num_players); //show Number of players online.
     }
     // create the list of players
     vm.put("users", names.toArray());

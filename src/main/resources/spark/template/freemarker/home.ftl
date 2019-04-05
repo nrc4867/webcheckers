@@ -41,8 +41,22 @@
         </ul>
       </#list>
     </div>
-
-  </div>
+    <div class="playerlist">
+      <h2>Spectate</h2>
+      <#list ingame>
+        <ul>
+            <form action="./game" method="post">
+          <#items as user>
+              <li><input type="submit" name="challenge" value="${user}"></li>
+          </#items>
+            </form>
+        </ul>
+      <#else>
+        <ul>
+            <li>No players are playing checkers.</li>
+        </ul>
+      </#list>
+    </div>
 
 </div>
 </body>

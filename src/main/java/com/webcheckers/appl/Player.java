@@ -81,6 +81,7 @@ public class Player implements Cleanup {
 	public boolean checkTurn() {
 		return boardController.isActivePlayer(this);
 	}
+	public void alertTurn() {}
 
 	public boolean ownsPiece(Piece piece) {
 		return equals(piece.getOwner());

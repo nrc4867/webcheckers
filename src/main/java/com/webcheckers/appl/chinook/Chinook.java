@@ -12,9 +12,6 @@ import java.util.ArrayList;
  */
 public class Chinook extends Player {
 
-    /** The board Chinook is playing on. */
-    private Board board;
-
     public Chinook() {
         this("Chinook");
     }

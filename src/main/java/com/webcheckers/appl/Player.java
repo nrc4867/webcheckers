@@ -33,8 +33,6 @@ public class Player implements Cleanup {
 	 */
 	private Color color;
 
-	private boolean selectedPlayerInGame;// is selected player in game?
-
 	// CONSTRUCTORS ===========================================================
 
 	/** Simplified constructor that sets the Player's Color to null. */
@@ -43,7 +41,6 @@ public class Player implements Cleanup {
 	}
 
 	public Player(String name, Color color) {
-		selectedPlayerInGame=false;
 		this.name = name;
 		this.color = color;
 	}
@@ -53,13 +50,6 @@ public class Player implements Cleanup {
 	public String getName() {return name;}
 	public Color getColor() {return color;}
 
-
-	public BoardController getBoardController() {
-		return (boardController != null)?boardController:null;
-	}
-	public void setBoardController(BoardController board) {
-		this.boardController = board;
-	}
 
 	public Board getBoard() {
 		return (boardController != null)?this.boardController.getBoard():null;
@@ -73,14 +63,15 @@ public class Player implements Cleanup {
         this.lobby = lobby;
     }
 
+    public boolean inGame() {return boardController != null;}
+	public BoardController getBoardController() {
+		return boardController;
+	}
+	public void setBoardController(BoardController board) {
+		this.boardController = board;
+	}
+
 	public void setColor(Color c) {this.color = c;}
-
-	// OBJECT =================================================================
-	@Override
-	public int hashCode() {return name.hashCode();}
-
-	@Override
-	public String toString() {return name;}
 
 	public void resign() {
 		if(boardController != null)
@@ -95,15 +86,18 @@ public class Player implements Cleanup {
 		return equals(piece.getOwner());
 	}
 
-	public Player checkResigned() {
-		return boardController.getBoard().getResign();
-	}
-
 	public Player getOpponent() {
 		if(getBoardController() != null)
 			return (color == Color.WHITE)?getBoard().getRedPlayer():getBoard().getWhitePlayer();
 		return null;
 	}
+
+	// OBJECT =================================================================
+	@Override
+	public int hashCode() {return name.hashCode();}
+
+	@Override
+	public String toString() {return name;}
 
 	/**
 	 * Checks the Player's names for equality. Per specifications, no two
@@ -118,22 +112,6 @@ public class Player implements Cleanup {
 		if (!(o instanceof Player)) {return false;}
 		final Player player = (Player) o;
 		return player.name.equals(this.name);
-	}
-
-	/**
-	 * Is the player you selected in game?
-	 * @return true or false
-	 */
-	public boolean isSelectedPlayerInGame() {
-		return selectedPlayerInGame;
-	}
-
-	/**
-	 * Did you select an ingame player ?
-	 * @param value true for yes and false for no
-	 */
-	public void selectInGameOpponent(boolean value){
-		selectedPlayerInGame=value;
 	}
 
     @Override

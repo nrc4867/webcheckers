@@ -65,7 +65,8 @@ public class GetGameRouteTest {
 
         verify(response).redirect(WebServer.HOME_URL);
     }
-    @Test void handle(){
+    @Test
+    void handle(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 

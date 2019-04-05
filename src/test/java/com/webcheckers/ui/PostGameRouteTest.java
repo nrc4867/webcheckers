@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.BoardController;
-import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.appl.Player;
@@ -28,7 +27,6 @@ class PostGameRouteTest {
     private Response response;
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
-    private LazySessionWatcher sessionWatcher;
 
     private Board board;
 

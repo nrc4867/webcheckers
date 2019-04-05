@@ -69,17 +69,28 @@ public class PlayerLobby {
    */
   public synchronized Player reserveName(String name) throws SignInException {
     name = name.trim();
-    Player newPlayer = new Player(name);
+
     if (!validName(name)) {
       throw new SignInException(NAME_INVALID_MESSAGE);
     }
-    if(players.contains(newPlayer)) {
+    if(players.getOrDefault(name, null) != null) {
       throw new SignInException(NAME_TAKEN_MESSAGE);
     }
-    players.put(name, newPlayer);
-    newPlayer.setLobby(this);
+
+    Player newPlayer = new Player(name);
+    addPlayer(newPlayer);
 
     return newPlayer;
+  }
+
+  /**
+   * Add a player to the lobby,
+   * this function does not check to see if the name is already in use!
+   * @param player the player to add
+   */
+  public synchronized void addPlayer(Player player) {
+    players.put(player.getName(), player);
+    player.setLobby(this);
   }
 
 

@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.chinook.Chinook;
 import com.webcheckers.ui.CheckersPlay.*;
 import spark.TemplateEngine;
 
@@ -106,6 +107,8 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLobby = new PlayerLobby(new Hashtable<String, Player>());
+
+    this.playerLobby.addPlayer(new Chinook("Dylan`"));
 
 //    if(DEBUG) {
 //      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);

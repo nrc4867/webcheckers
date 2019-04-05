@@ -1,12 +1,10 @@
-package com.webcheckers.chinook;
+package com.webcheckers.appl.chinook;
 
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 import com.webcheckers.model.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Chinook is the AI program, named after Chinook,

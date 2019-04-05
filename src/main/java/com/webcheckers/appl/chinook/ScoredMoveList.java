@@ -1,8 +1,6 @@
-package com.webcheckers.chinook;
+package com.webcheckers.appl.chinook;
 
-import com.webcheckers.appl.BoardController;
 import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
 
 import java.util.ArrayList;
 

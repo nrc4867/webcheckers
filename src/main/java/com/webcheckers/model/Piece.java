@@ -62,6 +62,7 @@ public class Piece implements Serializable{
 
 	public int getCol() {return col;}
 	public int getRow() {return row;}
+	public Position getPos() {return new Position(row, col);}
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
 	public Color getColor() {return color;}

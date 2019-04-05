@@ -17,6 +17,13 @@ public class Move implements Serializable {
         REGULAR, JUMP
     }
 
+    public Move() {  }
+
+    public Move(Position start, Position end) {
+        setStart(start);
+        setEnd(end);
+    }
+
     public int getStartRow() {
         return start.getRow();
     }

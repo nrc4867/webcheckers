@@ -191,6 +191,7 @@ public class Board {
 
 	public void switchActivePlayer() {
 		activePlayer = (activePlayer == redPlayer) ? whitePlayer : redPlayer;
+		activePlayer.alertTurn();
 	}
 
 

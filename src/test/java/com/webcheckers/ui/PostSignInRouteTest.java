@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.LazySessionWatcher;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.SignInException;
 import com.webcheckers.appl.Player;
@@ -34,7 +33,6 @@ class PostSignInRouteTest {
     private Response response;
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
-    private LazySessionWatcher sessionWatcher;
 
     /**
      * Setup new mock objects for each test.
@@ -49,7 +47,6 @@ class PostSignInRouteTest {
         response = mock(Response.class);
 
         playerLobby = mock(PlayerLobby.class);
-        sessionWatcher = mock(LazySessionWatcher.class);
 
         when(playerLobby.containsPlayer(TAKEN_NAME)).thenReturn(true);
         when(playerLobby.reserveName(CHOSEN_NAME)).thenReturn(mock(Player.class));
@@ -57,7 +54,7 @@ class PostSignInRouteTest {
         when(playerLobby.reserveName(TAKEN_NAME)).thenThrow(new SignInException(PlayerLobby.NAME_TAKEN_MESSAGE));
         when(playerLobby.reserveName(INVALID_NAME)).thenThrow(new SignInException(PlayerLobby.NAME_INVALID_MESSAGE));
 
-        CuT = new PostSignInRoute(playerLobby, sessionWatcher, engine);
+        CuT = new PostSignInRoute(playerLobby, engine);
     }
 
     @Test
@@ -114,14 +111,4 @@ class PostSignInRouteTest {
         testHelper.assertViewName(PostSignInRoute.VIEW_NAME);
     }
 
-    @Test
-    void usingSessionWatchDog() {
-        CuT = new PostSignInRoute(playerLobby, engine);
-
-        // all the other methods should still work without supplying a session watcher
-
-        signInSuccess();
-        signInNameTaken();
-        signInInvalidName();
-    }
 }

@@ -53,7 +53,7 @@ public class GetHomeRouteTest {
 
         Player player1 = mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
-        when(player1.isSelectedPlayerInGame()).thenReturn(false);
+//        when(player1.isSelectedPlayerInGame()).thenReturn(false);
 
         // Invoke the test
         ghr.handle(request, response);
@@ -80,7 +80,7 @@ public class GetHomeRouteTest {
 
         Player player1 = mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
-        when(player1.isSelectedPlayerInGame()).thenReturn(true);
+//        when(player1.isSelectedPlayerInGame()).thenReturn(true);
         // Invoke the test
         ghr.handle(request, response);
 
@@ -88,7 +88,7 @@ public class GetHomeRouteTest {
         //   * model is a non-null Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_ATTR, GetHomeRoute.PLAYER_IN_GAME);
+        testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_ATTR, GetHomeRoute.WELCOME_MSG);
 
     }
 
@@ -116,8 +116,6 @@ public class GetHomeRouteTest {
 
         when(playerLobby.getPlayers()).thenReturn(new ArrayList<Player>());
         ghr.handle(request,response);
-
-
     }
 
 }

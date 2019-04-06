@@ -178,8 +178,8 @@ public class BoardController {
      */
     public boolean canJumpTo(Move move, ArrayList<Move> moves) {
         // Check to make sure that the move connects with the previous moves
-        if(moves.isEmpty() && !Move.ConnectedMoves(moves.get(moves.size() - 1), move)) return false;
-        if(!moves.isEmpty() && moves.get(moves.size() - 1).getMovement() == Move.MoveType.REGULAR) return false;
+        if(!moves.isEmpty() && !Move.ConnectedMoves(moves.get(moves.size() - 1), move)) return false;
+        if(!moves.isEmpty() && moves.get(moves.size() -1).getMovement() == Move.MoveType.REGULAR) return false;
 
         if (!move.deltaRadius(2)) {
             return false;

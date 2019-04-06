@@ -27,6 +27,7 @@ public class Chinook extends Player {
         ArrayList<Move> route = makeMove();
         control.movePieces(route);
         control.toggleTurn();
+        System.out.println(route);
 
     }
 
@@ -80,7 +81,7 @@ public class Chinook extends Player {
      */
     private ScoredMoveList bestRoute(Piece p, ScoredMoveList prev) {
 
-        ScoredMoveList best = new ScoredMoveList();
+        ScoredMoveList best = prev;
 
         // All 8 possible moves
         ArrayList<Move> possible = new ArrayList<>();
@@ -112,17 +113,20 @@ public class Chinook extends Player {
             // Move is valid
             if (control.testMovement(m, prev.getMoves())) {
 
+                System.out.println("Move " + m + " available with score: ");
+
                 // Create a new move list with this move
                 ScoredMoveList temp = new ScoredMoveList(prev.getMoves());
                 temp.addMove(m);
-
-                // Recursively find the best route, starting with this move
-                ScoredMoveList route = bestRoute(p, temp);
+                System.out.println("Temp score: " + temp.getScore());
 
                 // If better than the best, replace it
-                if (route.getScore() > best.getScore()) {
-                    best = route;
+                if (temp.getScore() > best.getScore()) {
+                    return bestRoute(p, temp);
                 }
+
+                else return best;
+
             }
         }
 

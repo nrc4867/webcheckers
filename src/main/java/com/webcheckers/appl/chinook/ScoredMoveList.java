@@ -14,10 +14,10 @@ import java.util.ArrayList;
  */
 public class ScoredMoveList {
 
-    private static final int KING_SCORE = 3;
-    private static final int JUMP_SCORE = 2;
-    private static final int MOVE_SCORE = 1;
-    private static final int EMPTY_SCORE = 0;
+    public static final int KING_SCORE = 3;
+    public static final int JUMP_SCORE = 2;
+    public static final int MOVE_SCORE = 1;
+    public static final int EMPTY_SCORE = 0;
 
     private ArrayList<Move> moves;
     private int score;
@@ -31,7 +31,12 @@ public class ScoredMoveList {
     public ScoredMoveList(ArrayList<Move> moves) {
 
         this.moves = new ArrayList<>();
-        if (moves != null) for (Move m : moves) addMove(m);
+        if (moves != null) {
+            for (Move m : moves) {
+                addMove(m);
+                System.out.println("New score: " + score);
+            }
+        }
     }
 
     /**
@@ -51,6 +56,10 @@ public class ScoredMoveList {
      * @return
      */
     public static int getMoveScore(Move move) {
+
+        if (move.getMovement() == Move.MoveType.REGULAR) {
+            System.out.println("Regular");
+        }
 
         if (move.getMovement() == Move.MoveType.JUMP)
             return JUMP_SCORE;

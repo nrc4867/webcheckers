@@ -121,9 +121,10 @@ public class BoardController {
      * @return true if there are available multi-jumps
      */
     private boolean mustJumpThisTurn(Piece piece, ArrayList<Move> moves) {
-        final int row = (moves.size() != 0)?getLastMove(moves).getEndRow(): piece.getRow();
-        final int col = (moves.size() != 0)?getLastMove(moves).getEndCell(): piece.getCol();
-        Set<Move> possibleMoves = Move.generateMoves(row, col, 2);
+        final int currentRow = (moves.size() != 0)?getLastMove(moves).getEndRow(): piece.getRow();
+        final int currentCol = (moves.size() != 0)?getLastMove(moves).getEndCell(): piece.getCol();
+
+        Set<Move> possibleMoves = Move.generateMoves(currentRow, currentCol, 2);
         for (Move move: possibleMoves) {
             if(canJumpTo(move, moves)) return true;
         }
@@ -201,6 +202,11 @@ public class BoardController {
             return false;
         }
 
+        // Prevent king backtracking
+        if (isBackTracking(move, moves)) {
+            return false;
+        }
+
         // The intermediate space must have a piece of the opposite color
         Piece middle = getMiddlePiece(move);
         if (middle == null) {
@@ -235,6 +241,21 @@ public class BoardController {
         }
 
         return true;
+    }
+
+    /**
+     * Check to see if the move is a backtrack
+     * @param move the move to check
+     * @param moves the moves made this turn
+     * @return true if the move ends where the last move starts
+     */
+    private boolean isBackTracking(Move move, ArrayList<Move> moves) {
+        if (moves.isEmpty()) return false; // cant backtrack if there are no moves
+
+        final int lastRow = getLastMove(moves).getStartRow();
+        final int lastCell = getLastMove(moves).getStartCell();
+
+        return move.getEndCell() == lastCell && move.getEndRow() == lastRow;
     }
 
     /**

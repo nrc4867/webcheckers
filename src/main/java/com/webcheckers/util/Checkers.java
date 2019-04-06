@@ -60,4 +60,10 @@ public abstract class Checkers {
         getMoves(playerSession).clear();
     }
 
+    public static void popMove(Session playerSession) {
+        ArrayList<Move> moves =  getMoves(playerSession);
+        if (moves.size() != 0)
+            moves.remove(moves.size() - 1);
+    }
+
 }

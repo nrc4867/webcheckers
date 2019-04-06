@@ -10,7 +10,7 @@ import spark.Route;
 import spark.Session;
 
 public class PostBackupRoute implements Route {
-    public static final String SUCCESS_BACKUP = "Your moves have been reset.";
+    public static final String SUCCESS_BACKUP = "The last move has been reset.";
 
     private final Gson gson;
 

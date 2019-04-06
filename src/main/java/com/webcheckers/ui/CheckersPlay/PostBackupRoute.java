@@ -3,7 +3,6 @@ package com.webcheckers.ui.CheckersPlay;
 import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
-import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
@@ -28,7 +27,7 @@ public class PostBackupRoute implements Route {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
-        clearMoves(httpSession);
+        popMove(httpSession);
 
         return gson.toJson(Message.info(SUCCESS_BACKUP));
     }

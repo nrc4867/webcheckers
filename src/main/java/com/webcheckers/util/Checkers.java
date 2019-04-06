@@ -60,4 +60,14 @@ public abstract class Checkers {
         getMoves(playerSession).clear();
     }
 
+    /**
+     * Clear only the last move made this turn
+     * @param playerSession the session that has moves
+     */
+    public static void popMove(Session playerSession) {
+        ArrayList<Move> moves =  getMoves(playerSession);
+        if (moves.size() != 0)
+            moves.remove(moves.size() - 1);
+    }
+
 }

@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.CheckersPlay.*;
+import com.webcheckers.ui.CheckersSpectate.PostExitRoute;
+import com.webcheckers.ui.CheckersSpectate.PostSpectatorCheckRoute;
 import spark.TemplateEngine;
 
 
@@ -74,6 +76,12 @@ public class WebServer {
   public static final String SUBMIT_TURN_URL = "/submitTurn";
   public static final String BACKUP_URL = "/backupMove";
   public static final String VALIDATE_MOVE_URL = "/validateMove";
+
+  /**
+   * URL used by players during spectator mode
+   */
+  public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
+  public static final String SPECTATOR_STOP_WATCHING_URL = "/spectator/stopWatching";
 
   //
   // Attributes
@@ -182,7 +190,10 @@ public class WebServer {
     post(SUBMIT_TURN_URL, new PostSubmitRoute(gson));
     post(BACKUP_URL, new PostBackupRoute(gson));
 
-    //
+    // Handles for Spectator AJAX calls
+    post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckRoute());
+    post(SUBMIT_TURN_URL, new PostExitRoute());
+
     LOG.config("WebServer is initialized.");
   }
 

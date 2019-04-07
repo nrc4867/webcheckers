@@ -12,8 +12,6 @@ public class BoardController {
 
     private final Board board;
 
-    private int movesMade = 0;
-
     public BoardController(Board b) {
         this.board = b;
     }
@@ -29,7 +27,6 @@ public class BoardController {
             } else {
                 makeJump(move);
             }
-            movesMade++;
         }
     }
 
@@ -387,16 +384,6 @@ public class BoardController {
     public void toggleTurn() {
         board.switchActivePlayer();
     }
+    
 
-    /**
-     * @return the total number of moves made on the board
-     */
-    public int getMovesMade() {
-        return movesMade;
-    }
-
-    @Override
-    public int hashCode() {
-        return board.hashCode();
-    }
 }

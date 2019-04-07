@@ -5,6 +5,7 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.appl.Player;
 import com.webcheckers.util.Attributes;
+import com.webcheckers.util.Spectators;
 import spark.*;
 import static spark.Spark.halt;
 
@@ -44,6 +45,7 @@ public class PostGameRoute implements Route {
             // the selected player is already in a game
             reqPlayer.setBoardController(selectedPlayer.getBoardController());
             reqPlayer.setColor(selectedPlayer.getColor());
+            Spectators.setTurn(httpSession, selectedPlayer.getBoardController().getMovesMade());
             response.redirect(WebServer.GAME_URL);
             halt();
             return null;

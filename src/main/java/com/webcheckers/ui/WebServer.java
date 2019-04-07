@@ -12,7 +12,6 @@ import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.CheckersPlay.*;
 import com.webcheckers.ui.CheckersSpectate.GetExitRoute;
-import com.webcheckers.ui.CheckersSpectate.GetSpectateRoute;
 import com.webcheckers.ui.CheckersSpectate.PostSpectatorCheckRoute;
 import spark.TemplateEngine;
 
@@ -81,7 +80,7 @@ public class WebServer {
   /**
    * URL used by players during spectator mode
    */
-  public static final String SPECTATOR_GAME_URL = "/spectator/game";
+//  public static final String SPECTATOR_GAME_URL = "/spectator/game";
   public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
   public static final String SPECTATOR_STOP_WATCHING_URL = "/spectator/stopWatching";
 
@@ -193,7 +192,6 @@ public class WebServer {
     post(BACKUP_URL, new PostBackupRoute(gson));
 
     // Handles for Spectator
-    get(SPECTATOR_GAME_URL, new GetSpectateRoute());
     get(SPECTATOR_STOP_WATCHING_URL, new GetExitRoute());
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckRoute(gson));
 

@@ -40,6 +40,23 @@ public class Move implements Serializable {
         return end.getCell();
     }
 
+    /** @return Returns the position jumped over, or null if not a jump. */
+    public Position getJumpedPosition() {
+        if (movement == MoveType.REGULAR) return null;
+        else return new Position(
+                (getStartRow()+getEndRow())/2,
+                (getStartCell()+getEndCell())/2);
+    }
+
+
+    /** @return Return true both jumped over the same position. */
+    public boolean sameJumpedPosition(Move other) {
+        if (getJumpedPosition() == null) return false;
+        if (other.getJumpedPosition() == null) return false;
+        return this.getJumpedPosition().equals(other.getJumpedPosition());
+    }
+
+
     public void setStart(Position start) {
         this.start = start;
     }

@@ -179,8 +179,11 @@ public class BoardController {
     public boolean canJumpTo(Move move, ArrayList<Move> moves) {
         // Check to make sure that the move connects with the previous moves
         if(!moves.isEmpty() && !Move.ConnectedMoves(moves.get(moves.size() - 1), move)) return false;
+
+        // Cannot jump if the previous move was a not a jump
         if(!moves.isEmpty() && moves.get(moves.size() -1).getMovement() == Move.MoveType.REGULAR) return false;
 
+        // Must jump diagonally 2 spaces
         if (!move.deltaRadius(2)) {
             return false;
         }
@@ -204,9 +207,11 @@ public class BoardController {
         }
 
         // Prevent king backtracking
+        /*
         if (isBackTracking(move, moves)) {
             return false;
         }
+        */
 
         // The intermediate space must have a piece of the opposite color
         Piece middle = getMiddlePiece(move);
@@ -218,10 +223,12 @@ public class BoardController {
         }
 
         // Do not allow the piece to jump over the same tile twice
-        Position middlePos = getMiddlePosition(move);
+        System.out.println(move + " jumping over " + move.getJumpedPosition());
         for (Move m : moves) {
-            Position prevMiddle = getMiddlePosition(move);
-            if (middlePos.equals(prevMiddle)) return false;
+            if (move.sameJumpedPosition(m)) {
+                System.out.println("Cannot, rejumps " + m);
+                return false;
+            }
         }
 
         return true;
@@ -262,6 +269,8 @@ public class BoardController {
 
         final int lastRow = getLastMove(moves).getStartRow();
         final int lastCell = getLastMove(moves).getStartCell();
+
+        System.out.println("Backtracking: "+(move.getEndCell() == lastCell && move.getEndRow() == lastRow));
 
         return move.getEndCell() == lastCell && move.getEndRow() == lastRow;
     }
@@ -324,9 +333,11 @@ public class BoardController {
      */
     public Position getMiddlePosition(Move move) {
         if (move.getMovement() == Move.MoveType.REGULAR) return null;
-        else return new Position (
+        Position middle = new Position (
                 move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2),
                 move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2));
+        System.out.println(middle);
+        return middle;
     }
 
     /**

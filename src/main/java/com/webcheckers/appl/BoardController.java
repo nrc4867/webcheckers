@@ -15,7 +15,7 @@ public class BoardController {
     public BoardController(Board b) {
         this.board = b;
     }
-    
+
     /**
      * Move pieces on the board
      * @param moves a set of moves in order that they should be made, the moves have already been tested as valid
@@ -217,6 +217,13 @@ public class BoardController {
             return false;
         }
 
+        // Do not allow the piece to jump over the same tile twice
+        Position middlePos = getMiddlePosition(move);
+        for (Move m : moves) {
+            Position prevMiddle = getMiddlePosition(move);
+            if (middlePos.equals(prevMiddle)) return false;
+        }
+
         return true;
     }
 
@@ -295,8 +302,8 @@ public class BoardController {
      * @return the last move made or null
      */
     public Move getLastMove(ArrayList<Move> moves) {
-       if(moves.size() == 0) return null;
-       return moves.get(moves.size() - 1);
+        if(moves.size() == 0) return null;
+        return moves.get(moves.size() - 1);
     }
 
     /**
@@ -308,6 +315,18 @@ public class BoardController {
         int middleRow = move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2);
         int middleCol = move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2);
         return board.getPiece(middleRow, middleCol);
+    }
+
+
+    /**
+     *  Returns the Position in between the move's start and end
+     *  positions. If the move was not a jump, returns null.
+     */
+    public Position getMiddlePosition(Move move) {
+        if (move.getMovement() == Move.MoveType.REGULAR) return null;
+        else return new Position (
+                move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2),
+                move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2));
     }
 
     /**
@@ -384,6 +403,6 @@ public class BoardController {
     public void toggleTurn() {
         board.switchActivePlayer();
     }
-    
+
 
 }

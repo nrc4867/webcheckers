@@ -93,6 +93,8 @@ public class BoardController {
         boolean testJump = canJumpTo(move, moves);
         System.out.println("BoardController.testMovement(): ending jump testing");
 
+        System.out.println("testMove " + testMove + ", testJump " + testJump);
+
         if (testMove || testJump) {
             move.setMovement((testMove)? Move.MoveType.REGULAR: Move.MoveType.JUMP);
             return true;
@@ -208,14 +210,19 @@ public class BoardController {
 
         // Destination must be empty
         if (board.hasPiece(move.getEndRow(), move.getEndCell())) {
+            System.out.println("Destination not empty");
             return false;
         }
 
         Piece piece = getPiece(move, moves);
-        if(piece == null) return false; // the original piece should exist on the board
+        if(piece == null) {
+            System.out.println("Piece doesn't exist");
+            return false; // the original piece should exist on the board
+        }
 
         // make sure the piece is moving in the right direction
         if (!allowedDirection(piece, move, moves)) {
+            System.out.println("Not allowed direction");
             return false;
         }
 
@@ -229,9 +236,11 @@ public class BoardController {
         // The intermediate space must have a piece of the opposite color
         Piece middle = getMiddlePiece(move);
         if (middle == null) {
+            System.out.println("Middle piece null");
             return false;
         }
         if (!piece.enemyOf(middle)) {
+            System.out.println("Middle piece same team");
             return false;
         }
 

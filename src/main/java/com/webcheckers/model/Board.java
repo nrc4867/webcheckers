@@ -173,6 +173,10 @@ public class Board {
 		return spaces[row][col].getPiece() != null;
 	}
 
+	public boolean hasPiece(Position p) {
+		return hasPiece(p.getRow(), p.getCell());
+	}
+
 	/** @return Returns all pieces belonging to a player. */
 	public ArrayList<Piece> getPlayerPieces(Player player) {
 

@@ -208,8 +208,20 @@ public class BoardController {
             return false;
         }
 
-        // Destination must be empty
-        if (board.hasPiece(move.getEndRow(), move.getEndCell())) {
+        // Do not allow the piece to jump over the same tile twice
+        System.out.println(move + " jumping over " + move.getJumpedPosition());
+        for (Move m : moves) {
+            if (move.sameJumpedPosition(m)) {
+                System.out.println("Cannot, rejumps " + m);
+                return false;
+            }
+        }
+
+        // Destination must be empty, but ignore if its a previously
+        // jumped-from position. The previous check will prevent
+        // backtracking
+        if (board.hasPiece(move.getEnd())
+        &&  !reenters(move, moves)) {
             System.out.println("Destination not empty");
             return false;
         }
@@ -242,15 +254,6 @@ public class BoardController {
         if (!piece.enemyOf(middle)) {
             System.out.println("Middle piece same team");
             return false;
-        }
-
-        // Do not allow the piece to jump over the same tile twice
-        System.out.println(move + " jumping over " + move.getJumpedPosition());
-        for (Move m : moves) {
-            if (move.sameJumpedPosition(m)) {
-                System.out.println("Cannot, rejumps " + m);
-                return false;
-            }
         }
 
         return true;
@@ -414,6 +417,22 @@ public class BoardController {
     public void resign(Player player) {
         board.setResign(player);
     }
+
+
+    /**
+     * Given a move and list of moves, check to see if
+     * the end position of the given move exists as the start
+     * position of another move.
+     */
+    private boolean reenters(Move move, ArrayList<Move> prev)
+    {
+        Position end = move.getEnd();
+        for (Move m : prev) {
+            if (m.getStart().equals(end)) return true;
+        }
+        return false;
+    }
+
 
     /**
      * Toggle the active player

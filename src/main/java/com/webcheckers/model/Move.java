@@ -17,7 +17,7 @@ public class Move implements Serializable {
         REGULAR, JUMP
     }
 
-    public Move() {  }
+    public Move() {this(null, null);}
 
     public Move(Position start, Position end) {
         setStart(start);
@@ -27,7 +27,6 @@ public class Move implements Serializable {
     public int getStartRow() {
         return start.getRow();
     }
-
     public int getEndRow() {
         return end.getRow();
     }
@@ -35,9 +34,18 @@ public class Move implements Serializable {
     public int getStartCell() {
         return start.getCell();
     }
-
     public int getEndCell() {
         return end.getCell();
+    }
+
+    public Position getStart() {return start;}
+    public Position getEnd() {return end;}
+
+    public void setStart(Position start) {
+        this.start = start;
+    }
+    public void setEnd(Position end) {
+        this.end = end;
     }
 
     /** @return Returns the position jumped over, or null if not a jump. */
@@ -48,8 +56,7 @@ public class Move implements Serializable {
                 (getStartCell()+getEndCell())/2);
     }
 
-
-    /** @return Return true both jumped over the same position. */
+    /** @return Return true if both jumped over the same position. */
     public boolean sameJumpedPosition(Move other) {
         if (getJumpedPosition() == null) return false;
         if (other.getJumpedPosition() == null) return false;
@@ -57,24 +64,12 @@ public class Move implements Serializable {
     }
 
 
-    public void setStart(Position start) {
-        this.start = start;
-    }
-
-    public void setEnd(Position end) {
-        this.end = end;
-    }
-
-    /**
-     * @return the change in row position
-     */
+    /** @return the change in row position */
     public int rowDelta() {
         return getEndRow() - getStartRow();
     }
 
-    /**
-     * @return the change in column position
-     */
+    /** @return the change in column position */
     public int cellDelta() {
         return getEndCell() - getStartCell();
     }
@@ -86,7 +81,6 @@ public class Move implements Serializable {
     public void setMovement(MoveType movement) {
         this.movement = movement;
     }
-
     public MoveType getMovement() {
         return movement;
     }
@@ -116,7 +110,7 @@ public class Move implements Serializable {
 
     @Override
     public String toString() {
-        return "Move: " + start.toString() + " " + end.toString() + " " + String.valueOf((movement != null)?movement:"");
+        return "Move: " + start.toString() + " " + end.toString() + " " + movement;
     }
 
     @Override

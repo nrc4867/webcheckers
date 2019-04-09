@@ -36,27 +36,28 @@ public class BoardController {
      * @return the move was completed
      */
     public boolean makeMove(Move move) {
-        Piece moved = board.getPiece(move.getStartRow(), move.getStartCell());
+        Piece moved = board.getPiece(move.getStart());
         if(moved == null) return false;
-        board.setPiece(null, move.getStartRow(), move.getStartCell());
+        board.setPiece(null, move.getStart());
 
         moved.setCol(move.getEndCell());
         moved.setRow(move.getEndRow());
         king(moved);
-        board.setPiece(moved, move.getEndRow(), move.getEndCell());
+        board.setPiece(moved, move.getEnd());
 
         return true;
     }
 
     /**
-     * make a jump move by removing a piece on the board while moving, the move has previously been tested as valid
+     * make a jump move by removing a piece on the board while moving,
+     * the move has previously been tested as valid
      * @param jump the jump to make
      * @return the jump was completed
      */
     public boolean makeJump(Move jump) {
         if(!makeMove(jump)) return false;
-        Piece middle = getMiddlePiece(jump);
-        board.setPiece(null, middle.getRow(), middle.getCol());
+        Piece middle = board.getPiece(jump.getJumpedPosition());
+        board.setPiece(null, middle.getPos());
         return true;
     }
 
@@ -81,10 +82,16 @@ public class BoardController {
      * @return true if the move is valid in the context of moves
      */
     public boolean testMovement(Move move, ArrayList<Move> moves) {
+        System.out.println("BoardController.testMovement(): Move: " + move);
         boolean testMove = false;
-        if(!mustJumpThisTurn(moves))
+        if(!mustJumpThisTurn(moves)) {
+            System.out.println("BoardController.testMovement(): doesn't need to jump!");
             testMove = canMoveTo(move, moves);
+        }
+
+        System.out.println("BoardController.testMovement(): testing jump");
         boolean testJump = canJumpTo(move, moves);
+        System.out.println("BoardController.testMovement(): ending jump testing");
 
         if (testMove || testJump) {
             move.setMovement((testMove)? Move.MoveType.REGULAR: Move.MoveType.JUMP);
@@ -126,7 +133,10 @@ public class BoardController {
 
         Set<Move> possibleMoves = Move.generateMoves(currentRow, currentCol, 2);
         for (Move move: possibleMoves) {
-            if(canJumpTo(move, moves)) return true;
+            if(canJumpTo(move, moves)) {
+                System.out.println("BoardController.mustJumpThisTurn(): valid jump: "+move);
+                return true;
+            }
         }
         return false;
     }
@@ -177,6 +187,9 @@ public class BoardController {
      * @return true if the move is valid in the context of moves
      */
     public boolean canJumpTo(Move move, ArrayList<Move> moves) {
+
+        System.out.println("BoardController.canJumpTo(): Move: " + move);
+
         // Check to make sure that the move connects with the previous moves
         if(!moves.isEmpty() && !Move.ConnectedMoves(moves.get(moves.size() - 1), move)) return false;
 
@@ -321,24 +334,9 @@ public class BoardController {
      * @return the piece in the middle of the jump, if there is no piece then null
      */
     public Piece getMiddlePiece(Move move) {
-        int middleRow = move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2);
-        int middleCol = move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2);
-        return board.getPiece(middleRow, middleCol);
+        return board.getPiece(move.getJumpedPosition());
     }
 
-
-    /**
-     *  Returns the Position in between the move's start and end
-     *  positions. If the move was not a jump, returns null.
-     */
-    public Position getMiddlePosition(Move move) {
-        if (move.getMovement() == Move.MoveType.REGULAR) return null;
-        Position middle = new Position (
-                move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2),
-                move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2));
-        System.out.println(middle);
-        return middle;
-    }
 
     /**
      * See if a piece should be kinged based on a move

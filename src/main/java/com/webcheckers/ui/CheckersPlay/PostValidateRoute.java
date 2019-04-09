@@ -42,11 +42,16 @@ public class PostValidateRoute implements Route {
 
         final String dataStr  = decode(request.body().substring(11), StandardCharsets.UTF_8.name());
         final Move move = gson.fromJson(dataStr, Move.class);
+        System.out.println("GSON'D MOVE: " + move);
 
         if(controller.testMovement(move, getMoves(httpSession))) {
+
+            System.out.println("Tested move: " + move);
             getMoves(httpSession).add(move);
             return gson.toJson(Message.info(VALID_MOVE));
         }
+
+        System.out.println("Invalid move: " + move);
         return gson.toJson(Message.error(INVALID_MOVE));
     }
 

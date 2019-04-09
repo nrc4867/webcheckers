@@ -140,6 +140,10 @@ public class Board {
 	/** @return Returns the Piece at the index, or NULL. */
 	public Piece getPiece(int r, int c) {return spaces[r][c].getPiece();}
 
+	/** @return Returns the Piece at the index, or NULL. */
+	public Piece getPiece(Position p) {return getPiece(p.getRow(),p.getCell());}
+
+
 	/** @return Returns if the given coordinates are in bounds. */
 	public boolean inBounds(int r, int c) {
 		return c >= 0 && c < SIZE && r >= 0 && r < SIZE;
@@ -197,6 +201,10 @@ public class Board {
 	 */
 	public void setResign(Player player) {
 		this.resign = player;
+	}
+
+	public void setPiece(Piece p, Position pos) {
+		setPiece(p, pos.getRow(), pos.getCell());
 	}
 
 	public void setPiece(Piece p, int row, int col) {

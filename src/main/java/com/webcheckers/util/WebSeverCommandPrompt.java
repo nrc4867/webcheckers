@@ -217,16 +217,16 @@ public class WebSeverCommandPrompt extends Thread {
 
             switch (input[j].toLowerCase()) {
                 case RED:
-                    piece = new Piece(j, row, redPlayer, Piece.Type.SINGLE);
+                    piece = new Piece(row, j, redPlayer, Piece.Type.SINGLE);
                     break;
                 case WHITE:
-                    piece = new Piece(j, row, whitePlayer, Piece.Type.SINGLE);
+                    piece = new Piece(row, j, whitePlayer, Piece.Type.SINGLE);
                     break;
                 case RED_KING:
-                    piece = new Piece(j, row, redPlayer, Piece.Type.KING);
+                    piece = new Piece(row, j, redPlayer, Piece.Type.KING);
                     break;
                 case WHITE_KING:
-                    piece = new Piece(j, row, whitePlayer, Piece.Type.KING);
+                    piece = new Piece(row, j, whitePlayer, Piece.Type.KING);
                     break;
             }
 

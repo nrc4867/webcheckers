@@ -169,9 +169,9 @@ public class Board {
 
 	/** @return If a jump, return the piece jumped over, otherwise null. */
 	public Piece getMiddlePiece(Move move) {
-		if (move.getMovement() != Move.MoveType.JUMP) return null;
-		else return getPiece(move.getJumpedPosition());
+		return getPiece(move.getJumpedPosition());
 	}
+
 
 	/** @return Returns if the given coordinates are in bounds. */
 	public boolean inBounds(int r, int c) {

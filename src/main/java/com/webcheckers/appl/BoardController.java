@@ -103,14 +103,16 @@ public class BoardController {
      */
     public boolean mustJumpThisTurn(ArrayList<Move> moves) {
         Piece piece = board.getPiece(moves);
+        Player activePlayer = board.getActivePlayer();
+
         if(piece != null) {
             return mustJumpThisTurn(piece, moves);
         }
 
-        for (Space rowspace[]: board.getSpaces()) {
+        for (Space[] rowspace: board.getSpaces()) {
             for (Space space: rowspace) {
                 piece = space.getPiece();
-                if(piece != null && board.getActivePlayer().ownsPiece(piece))
+                if(piece != null && activePlayer.ownsPiece(piece))
                     if(mustJumpThisTurn(piece, moves)) return true;
             }
         }
@@ -124,10 +126,10 @@ public class BoardController {
      * @return true if there are available multi-jumps
      */
     private boolean mustJumpThisTurn(Piece piece, ArrayList<Move> moves) {
-        final int currentRow = (moves.size() != 0)?getLastMove(moves).getEndRow(): piece.getRow();
-        final int currentCol = (moves.size() != 0)?getLastMove(moves).getEndCell(): piece.getCol();
 
-        Set<Move> possibleMoves = Move.generateMoves(currentRow, currentCol, 2);
+        final Position current = piece.getCurrentPosition(moves);
+
+        Set<Move> possibleMoves = Move.generateMoves(current, 2);
         for (Move move: possibleMoves) {
             if(canJumpTo(move, moves)) {
                 return true;
@@ -210,7 +212,7 @@ public class BoardController {
         // jumped-from position. The previous check will prevent
         // backtracking
         if (board.hasPiece(move.getEnd())
-        &&  !reenters(move, moves)) {
+        &&  !move.reenters(moves)) {
             return false;
         }
 
@@ -244,30 +246,20 @@ public class BoardController {
      */
     private boolean allowedDirection(Piece piece, Move move, ArrayList<Move> moves) {
         // The Piece can't jump north if it's white and single (#me)
-        int currentRow = (moves.size() != 0)? getLastMove(moves).getEndRow():piece.getRow();
+        Position current = piece.getCurrentPosition(moves);
 
         if (piece.getColor() == Color.WHITE && !piece.isKing()
-                &&  move.getEndRow() < currentRow) {
+                &&  move.getEndRow() < current.getRow()) {
             return false;
         }
 
         // The Piece can't jump south if it's red and single
         if (piece.getColor() == Color.RED && !piece.isKing()
-                &&  move.getEndRow() > currentRow) {
+                &&  move.getEndRow() > current.getRow()) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * get the last move made this turn
-     * @param moves the list of moves
-     * @return the last move made or null
-     */
-    public Move getLastMove(ArrayList<Move> moves) {
-        if(moves.size() == 0) return null;
-        return moves.get(moves.size() - 1);
     }
 
     /**
@@ -337,21 +329,6 @@ public class BoardController {
      */
     public void resign(Player player) {
         board.setResign(player);
-    }
-
-
-    /**
-     * Given a move and list of moves, check to see if
-     * the end position of the given move exists as the start
-     * position of another move.
-     */
-    private boolean reenters(Move move, ArrayList<Move> prev)
-    {
-        Position end = move.getEnd();
-        for (Move m : prev) {
-            if (m.getStart().equals(end)) return true;
-        }
-        return false;
     }
 
 

@@ -108,6 +108,25 @@ public class Move implements Serializable {
         return true;
     }
 
+    /**
+     * Given a list of moves, check to see if
+     * the end position of the given move exists as the start
+     * position of another move.
+     */
+    public boolean reenters(ArrayList<Move> prev)
+    {
+        for (Move m : prev) {
+            if (m.getStart().equals(getEnd())) return true;
+        }
+        return false;
+    }
+
+    /** @return Return the last move in the given list. */
+    public static Move getLast(ArrayList<Move> moves) {
+        if (moves.isEmpty()) return null;
+        else return moves.get(moves.size()-1);
+    }
+
     @Override
     public String toString() {
         return "Move: " + start.toString() + " " + end.toString() + " " + movement;
@@ -145,6 +164,10 @@ public class Move implements Serializable {
             }
         }
         return moves;
+    }
+
+    public static Set<Move> generateMoves(Position p, int dist) {
+        return generateMoves(p.getRow(), p.getCell(), dist);
     }
 }
 

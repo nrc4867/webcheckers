@@ -4,6 +4,7 @@ import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
@@ -66,6 +67,18 @@ public class Piece implements Serializable{
 	public Player getOwner() {return owner;}
 	public Type getType() {return type;}
 	public Color getColor() {return color;}
+
+
+	/**
+	 * Gets the piece's current position on the board, taking previous
+	 * moves into account.
+	 * @param prev Previous moves.
+	 * @return The current position of the Piece.
+	 */
+	public Position getCurrentPosition(ArrayList<Move> prev) {
+		if (prev.isEmpty()) return getPos();
+		else return Move.getLast(prev).getEnd();
+	}
 
 	/**
 	 * Checks if two pieces are enemies

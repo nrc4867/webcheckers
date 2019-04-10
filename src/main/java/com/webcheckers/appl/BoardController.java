@@ -82,18 +82,12 @@ public class BoardController {
      * @return true if the move is valid in the context of moves
      */
     public boolean testMovement(Move move, ArrayList<Move> moves) {
-        System.out.println("BoardController.testMovement(): Move: " + move);
         boolean testMove = false;
         if(!mustJumpThisTurn(moves)) {
-            System.out.println("BoardController.testMovement(): doesn't need to jump!");
             testMove = canMoveTo(move, moves);
         }
 
-        System.out.println("BoardController.testMovement(): testing jump");
         boolean testJump = canJumpTo(move, moves);
-        System.out.println("BoardController.testMovement(): ending jump testing");
-
-        System.out.println("testMove " + testMove + ", testJump " + testJump);
 
         if (testMove || testJump) {
             move.setMovement((testMove)? Move.MoveType.REGULAR: Move.MoveType.JUMP);
@@ -136,7 +130,6 @@ public class BoardController {
         Set<Move> possibleMoves = Move.generateMoves(currentRow, currentCol, 2);
         for (Move move: possibleMoves) {
             if(canJumpTo(move, moves)) {
-                System.out.println("BoardController.mustJumpThisTurn(): valid jump: "+move);
                 return true;
             }
         }
@@ -190,8 +183,6 @@ public class BoardController {
      */
     public boolean canJumpTo(Move move, ArrayList<Move> moves) {
 
-        System.out.println("BoardController.canJumpTo(): Move: " + move);
-
         // Check to make sure that the move connects with the previous moves
         if(!moves.isEmpty() && !Move.ConnectedMoves(moves.get(moves.size() - 1), move)) return false;
 
@@ -209,10 +200,8 @@ public class BoardController {
         }
 
         // Do not allow the piece to jump over the same tile twice
-        System.out.println(move + " jumping over " + move.getJumpedPosition());
         for (Move m : moves) {
             if (move.sameJumpedPosition(m)) {
-                System.out.println("Cannot, rejumps " + m);
                 return false;
             }
         }
@@ -222,19 +211,16 @@ public class BoardController {
         // backtracking
         if (board.hasPiece(move.getEnd())
         &&  !reenters(move, moves)) {
-            System.out.println("Destination not empty");
             return false;
         }
 
         Piece piece = getPiece(move, moves);
         if(piece == null) {
-            System.out.println("Piece doesn't exist");
             return false; // the original piece should exist on the board
         }
 
         // make sure the piece is moving in the right direction
         if (!allowedDirection(piece, move, moves)) {
-            System.out.println("Not allowed direction");
             return false;
         }
 
@@ -248,11 +234,9 @@ public class BoardController {
         // The intermediate space must have a piece of the opposite color
         Piece middle = getMiddlePiece(move);
         if (middle == null) {
-            System.out.println("Middle piece null");
             return false;
         }
         if (!piece.enemyOf(middle)) {
-            System.out.println("Middle piece same team");
             return false;
         }
 
@@ -294,8 +278,6 @@ public class BoardController {
 
         final int lastRow = getLastMove(moves).getStartRow();
         final int lastCell = getLastMove(moves).getStartCell();
-
-        System.out.println("Backtracking: "+(move.getEndCell() == lastCell && move.getEndRow() == lastRow));
 
         return move.getEndCell() == lastCell && move.getEndRow() == lastRow;
     }

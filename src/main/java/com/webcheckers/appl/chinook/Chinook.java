@@ -112,13 +112,10 @@ public class Chinook extends Player {
 
             // Move is valid
             if (control.testMovement(m, prev.getMoves())) {
-
-                System.out.println("Move " + m + " available with score: ");
-
+                
                 // Create a new move list with this move
                 ScoredMoveList temp = new ScoredMoveList(prev.getMoves());
                 temp.addMove(m);
-                System.out.println("Temp score: " + temp.getScore());
 
                 // If better than the best, replace it
                 if (temp.getScore() > best.getScore()) {

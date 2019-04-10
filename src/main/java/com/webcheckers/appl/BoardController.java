@@ -102,7 +102,7 @@ public class BoardController {
      * @return true if there is a valid jump
      */
     public boolean mustJumpThisTurn(ArrayList<Move> moves) {
-        Piece piece = getPiece(moves);
+        Piece piece = board.getPiece(moves);
         if(piece != null) {
             return mustJumpThisTurn(piece, moves);
         }
@@ -145,7 +145,7 @@ public class BoardController {
     public boolean canMoveTo(Move move, ArrayList<Move> moves) {
         if(moves.size() != 0) return false; // You cannot make more than one regular move in a round
 
-        Piece piece = getPiece(move, moves);
+        Piece piece = board.getPiece(move, moves);
 
         // Piece must be on the board
         if (piece == null) {
@@ -214,7 +214,7 @@ public class BoardController {
             return false;
         }
 
-        Piece piece = getPiece(move, moves);
+        Piece piece = board.getPiece(move, moves);
         if(piece == null) {
             return false; // the original piece should exist on the board
         }
@@ -224,15 +224,8 @@ public class BoardController {
             return false;
         }
 
-        // Prevent king backtracking
-        /*
-        if (isBackTracking(move, moves)) {
-            return false;
-        }
-        */
-
         // The intermediate space must have a piece of the opposite color
-        Piece middle = getMiddlePiece(move);
+        Piece middle = board.getMiddlePiece(move);
         if (middle == null) {
             return false;
         }
@@ -268,51 +261,6 @@ public class BoardController {
     }
 
     /**
-     * Check to see if the move is a backtrack
-     * @param move the move to check
-     * @param moves the moves made this turn
-     * @return true if the move ends where the last move starts
-     */
-    private boolean isBackTracking(Move move, ArrayList<Move> moves) {
-        if (moves.isEmpty()) return false; // cant backtrack if there are no moves
-
-        final int lastRow = getLastMove(moves).getStartRow();
-        final int lastCell = getLastMove(moves).getStartCell();
-
-        return move.getEndCell() == lastCell && move.getEndRow() == lastRow;
-    }
-
-    /**
-     * Get a piece from the board based on the players movement
-     * @param move the move being made
-     * @param moves the moves made this turn
-     * @return a piece if there is not a piece then null
-     */
-    public Piece getPiece(Move move, ArrayList<Move> moves) {
-        if(moves.size() == 0) return getPiece(move);
-        return getPiece(moves);
-    }
-
-    /**
-     * Get a piece from the board based on the players movement
-     * @param move the move being made
-     * @return a piece if there is not a piece then null
-     */
-    public Piece getPiece(Move move) {
-        return board.getPiece(move.getStartRow(), move.getStartCell());
-    }
-
-    /**
-     * Get a piece from the board based on the players movement
-     * @param moves the moves made this turn
-     * @return a piece if there is not a piece then null
-     */
-    public Piece getPiece(ArrayList<Move> moves) {
-        if(moves.size() == 0) return null;
-        return board.getPiece(moves.get(0).getStartRow(), moves.get(0).getStartCell());
-    }
-
-    /**
      * get the last move made this turn
      * @param moves the list of moves
      * @return the last move made or null
@@ -321,16 +269,6 @@ public class BoardController {
         if(moves.size() == 0) return null;
         return moves.get(moves.size() - 1);
     }
-
-    /**
-     *  Get the piece in the middle of a jump move
-     * @param move the move
-     * @return the piece in the middle of the jump, if there is no piece then null
-     */
-    public Piece getMiddlePiece(Move move) {
-        return board.getPiece(move.getJumpedPosition());
-    }
-
 
     /**
      * See if a piece should be kinged based on a move
@@ -349,7 +287,7 @@ public class BoardController {
      * @return true if the piece is kinged
      */
     public boolean shouldKing(ArrayList<Move> moves) {
-        Piece piece = getPiece(moves);
+        Piece piece = board.getPiece(moves);
 
         Move lastMove = moves.get(moves.size() - 1);
 
@@ -388,6 +326,7 @@ public class BoardController {
      * @param player the player to check
      * @return true if player is active
      */
+    @Deprecated
     public boolean isActivePlayer(Player player) {
         return player.equals(board.getActivePlayer());
     }

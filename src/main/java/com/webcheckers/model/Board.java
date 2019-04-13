@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.appl.Player;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Board model for WebCheckers.
@@ -25,8 +26,7 @@ public class Board {
 	private Player whitePlayer;
 	private Space[][] spaces;
 	private Player activePlayer;
-	// The player who resigned from the game
-	private Player resign;
+	private ModeOptions mode;
 	private int activeRow;
 	private int activeCol;
 	private final int boardID;
@@ -221,19 +221,12 @@ public class Board {
 		return pieces;
 	}
 
-	/**
-	 * @return the player who resigned from the game
-	 */
-	public Player getResign() {
-		return resign;
+	public void setPlayMode(ModeOptions mode) {
+		this.mode = mode;
 	}
 
-	/**
-	 * Set the player who resigned from the game
-	 * @param player the player who resigned
-	 */
-	public void setResign(Player player) {
-		this.resign = player;
+	public Map<String, Object> getModeOptions() {
+		return mode.getOptions();
 	}
 
 	public void setPiece(Piece p, Position pos) {

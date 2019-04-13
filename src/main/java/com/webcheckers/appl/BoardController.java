@@ -342,7 +342,7 @@ public class BoardController {
      * @param player the player to resign
      */
     public void resign(Player player) {
-        board.setResign(player);
+        board.setPlayMode(ModeOptions.resign(player));
     }
 
 

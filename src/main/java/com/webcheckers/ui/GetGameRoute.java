@@ -2,6 +2,8 @@ package com.webcheckers.ui;
 
 import static com.webcheckers.util.Checkers.clearMoves;
 import static com.webcheckers.util.Checkers.getPlayer;
+
+import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.model.*;
 import com.webcheckers.ui.view.*;
@@ -40,6 +42,7 @@ public class GetGameRoute implements Route {
     static final String VIEW_NAME = "game.ftl";
 
     private final TemplateEngine templateEngine;
+    private final Gson gson;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -47,7 +50,7 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final TemplateEngine templateEngine) {
+    public GetGameRoute(final TemplateEngine templateEngine, final Gson gson) {
 
 //        /************************** TEST CODE *******************************/
 //        Board b = new Board(new Player("red"), new Player("white"));
@@ -55,6 +58,7 @@ public class GetGameRoute implements Route {
 //        /*********************** END TEST CODE ******************************/
 
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        this.gson = Objects.requireNonNull(gson, "Gson is required");
         //
         LOG.config("GetGameRoute is initialized.");
     }
@@ -92,7 +96,7 @@ public class GetGameRoute implements Route {
         vm.put(TITLE, GAME);
         vm.put(CURRENT_USER, board.getActivePlayer());
         vm.put(VIEW_MODE, Mode.PLAY);
-        vm.put(MODE_OPTIONS, new ArrayList<>());
+        vm.put(MODE_OPTIONS, gson.toJson(board.getModeOptions()));
         vm.put(RED_PLAYER, board.getRedPlayer());
         vm.put(WHITE_PLAYER, board.getWhitePlayer());
         vm.put(ACTIVE_COLOR, board.getActiveColor());

@@ -19,6 +19,12 @@ public class Player implements Cleanup {
 	 * The boardController the player is currently viewing
 	 */
 	private BoardController boardController = null;
+
+	/**
+	 * The board the player is currently playing on
+	 */
+	private Board board = null;
+
     /**
      * The lobby the player is currently part of
      */
@@ -52,7 +58,7 @@ public class Player implements Cleanup {
 
 
 	public Board getBoard() {
-		return (boardController != null)?this.boardController.getBoard():null;
+		return board;
 	}
 
     public PlayerLobby getLobby() {
@@ -67,8 +73,12 @@ public class Player implements Cleanup {
 	public BoardController getBoardController() {
 		return boardController;
 	}
+	public void removeBoardController() {
+		boardController = null;
+	}
 	public void setBoardController(BoardController board) {
 		this.boardController = board;
+		this.board = boardController.getBoard();
 	}
 
 	public void setColor(Color c) {this.color = c;}

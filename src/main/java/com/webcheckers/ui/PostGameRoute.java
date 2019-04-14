@@ -40,14 +40,14 @@ public class PostGameRoute implements Route {
             return null;
         }
 
-        if(selectedPlayer.getBoard() != null) {
+        if(selectedPlayer.getBoardController() != null) {
             // the selected player is already in a game
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }
 
-        if(reqPlayer.getBoard() == null) {
+        if(reqPlayer.getBoardController() == null) {
             final BoardController boardController = new BoardController(new Board(reqPlayer, selectedPlayer));
             reqPlayer.setBoardController(boardController);
             selectedPlayer.setBoardController(boardController);

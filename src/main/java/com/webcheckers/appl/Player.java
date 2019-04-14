@@ -89,7 +89,7 @@ public class Player implements Cleanup {
 	}
 
 	public boolean checkTurn() {
-		return boardController.isActivePlayer(this);
+		return board != null && board.isActivePlayer(this);
 	}
 	public void alertTurn() {}
 

@@ -4,6 +4,7 @@ import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Board;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -44,6 +45,8 @@ public class PostSubmitRoute implements Route {
             }
 
             controller.movePieces(getMoves(httpSession));
+            Board board = controller.getBoard();
+            board.setPlayMode(CreateModeOptions.createOptions(controller));
             controller.toggleTurn();
 
             clearMoves(httpSession);

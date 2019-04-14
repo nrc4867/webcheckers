@@ -1,12 +1,15 @@
 package com.webcheckers.model;
 
 import com.webcheckers.appl.Player;
-import com.webcheckers.ui.view.Mode;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
+/**
+ * Stores a boards mode options
+ *
+ * @author Nicholas Chieppa
+ */
 public class ModeOptions {
 
     private static final ModeOptions gameActive = new ModeOptions(false, "");

@@ -2,7 +2,9 @@ package com.webcheckers.ui.CheckersPlay;
 
 import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Board;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -30,6 +32,10 @@ public class PostResignRoute implements Route {
         if (!playerInGame(requester)) {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
+
+        Board board = requester.getBoard();
+        if (board.isActivePlayer(requester)) // switch the active player to force a page reload
+            board.switchActivePlayer();
 
         requester.resign();
         requester.getOpponent().removeBoardController();

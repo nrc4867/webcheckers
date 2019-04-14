@@ -163,8 +163,8 @@ public class WebSeverCommandPrompt extends Thread {
         }
 
         board.setSpaces(spaces);
-        redPlayer.setBoardController(new BoardController(board));
-        whitePlayer.setBoardController(new BoardController(board));
+        redPlayer.setBoard(board);
+        whitePlayer.setBoard(board);
         System.out.println(LOAD_MESSAGE);
     }
 
@@ -204,8 +204,8 @@ public class WebSeverCommandPrompt extends Thread {
         }
 
         board.setSpaces(spaces);
-        redPlayer.setBoardController(new BoardController(board));
-        whitePlayer.setBoardController(new BoardController(board));
+        redPlayer.setBoard(board);
+        whitePlayer.setBoard(board);
         System.out.println(LOAD_MESSAGE);
     }
 

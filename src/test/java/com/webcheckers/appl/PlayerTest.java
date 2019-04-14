@@ -144,7 +144,7 @@ public class PlayerTest {
 
       playerBoard = mock(BoardController.class);
 
-      player1.setBoardController(playerBoard);
+      player1.setBoard(playerBoard.getBoard());
       player1.getBoard();
 
       verify(playerBoard, times(1)).getBoard();

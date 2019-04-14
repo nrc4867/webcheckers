@@ -38,8 +38,8 @@ public class PostResignRoute implements Route {
             board.switchActivePlayer();
 
         requester.resign();
-        requester.getOpponent().removeBoardController();
-        requester.setBoardController(null);
+        requester.getOpponent().enableExit();
+        requester.removeBoard();
 
         return gson.toJson(Message.info(resign));
     }

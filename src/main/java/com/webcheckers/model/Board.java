@@ -223,6 +223,7 @@ public class Board {
 	}
 
 	public void setPlayMode(ModeOptions mode) {
+		if(mode == null) return;
 		this.mode = mode;
 	}
 

@@ -33,7 +33,7 @@ public class PostSubmitRoute implements Route {
         final Session httpSession = request.session();
         Player requester = getPlayer(httpSession);
 
-        if (!playerInGame(requester)) {
+        if (!playerHasBoard(requester)) {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
@@ -45,9 +45,9 @@ public class PostSubmitRoute implements Route {
             }
 
             controller.movePieces(getMoves(httpSession));
-            Board board = controller.getBoard();
+            Board board = requester.getBoard();
             board.setPlayMode(CreateModeOptions.createOptions(controller));
-            controller.toggleTurn();
+            board.switchActivePlayer();
 
             clearMoves(httpSession);
             return gson.toJson(Message.info(SUCCESSFUL_SUBMISSION));

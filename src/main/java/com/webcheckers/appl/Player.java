@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Cleanup;
-import com.webcheckers.model.Color;
-import com.webcheckers.model.Piece;
+import com.webcheckers.model.*;
 
 /**
  * Players play WebCheckers. They should <i>only</i> be created
@@ -15,10 +12,8 @@ import com.webcheckers.model.Piece;
 public class Player implements Cleanup {
 
 	private final String name;
-	/**
-	 * The boardController the player is currently viewing
-	 */
-	private BoardController boardController = null;
+
+	private boolean playerInGame;
 
 	/**
 	 * The board the player is currently playing on
@@ -69,23 +64,28 @@ public class Player implements Cleanup {
         this.lobby = lobby;
     }
 
-    public boolean inGame() {return boardController != null;}
+    public boolean inGame() {return playerInGame;}
 	public BoardController getBoardController() {
-		return boardController;
+		return new BoardController(board);
 	}
-	public void removeBoardController() {
-		boardController = null;
+	public void removeBoard() {
+		playerInGame = false;
+		board = null;
 	}
-	public void setBoardController(BoardController controller) {
-		this.boardController = controller;
-		this.board = (controller == null)?null:boardController.getBoard();
+	public void setBoard(Board board) {
+		this.board = board;
+		this.playerInGame = board != null;
+	}
+	public void enableExit() {
+		playerInGame = false;
 	}
 
 	public void setColor(Color c) {this.color = c;}
 
 	public void resign() {
-		if(boardController != null)
-			boardController.resign(this);
+		if(board != null) {
+			board.setPlayMode(ModeOptions.resign(this));
+		}
 	}
 
 	public boolean checkTurn() {

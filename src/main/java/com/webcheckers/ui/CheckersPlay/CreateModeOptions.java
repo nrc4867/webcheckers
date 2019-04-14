@@ -15,11 +15,11 @@ public class CreateModeOptions {
         Board board = controller.getBoard();
         switch (controller.getGameState()){
             case WHITE_WON:
-//                return ModeOptions.won(board.getWhitePlayer());
+                return ModeOptions.won(board.getWhitePlayer());
             case RED_WON:
-//                return ModeOptions.won(board.getRedPlayer());
+                return ModeOptions.won(board.getRedPlayer());
             default:
-                return ModeOptions.gameActive();
+                return null;
         }
     }
 }

@@ -79,7 +79,7 @@ public class PostValidateRouteTest {
         Player player2 = new Player("p2");
         Board b = new Board(player1,player2);
         BoardController bc = new BoardController(b);
-        player1.setBoardController(bc);
+        player1.setBoard(bc.getBoard());
 
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
 
@@ -114,7 +114,7 @@ public class PostValidateRouteTest {
         Player player2 = new Player("p2");
         Board b = new Board(player1,player2);
         BoardController bc = new BoardController(b);
-        player1.setBoardController(bc);
+        player1.setBoard(bc.getBoard());
         Move m1= new Move();
         Position start=new Position();
         start.setRow(5);

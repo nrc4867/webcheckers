@@ -28,7 +28,16 @@ public abstract class Checkers {
      * @return true if the player is playing a game
      */
     public static boolean playerInGame(Player player) {
-        return (player != null) && player.getBoardController() != null;
+        return (player != null) && player.inGame();
+    }
+
+    /**
+     * See if the player has a board independently if they are playing a game
+     * @param player the player
+     * @return true if the player is playing a game
+     */
+    public static boolean playerHasBoard(Player player) {
+        return (player != null) && player.getBoard() != null;
     }
 
     /**

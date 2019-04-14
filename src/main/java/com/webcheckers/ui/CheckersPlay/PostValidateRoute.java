@@ -34,7 +34,7 @@ public class PostValidateRoute implements Route {
         final Session httpSession = request.session();
         final Player requester = httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
-        if (!playerInGame(requester)) {
+        if (!playerHasBoard(requester)) {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 

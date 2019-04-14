@@ -1,6 +1,7 @@
 package com.webcheckers.util;
 
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import spark.Session;
 
@@ -77,6 +78,21 @@ public abstract class Checkers {
         ArrayList<Move> moves =  getMoves(playerSession);
         if (moves.size() != 0)
             moves.remove(moves.size() - 1);
+    }
+
+    /**
+     * Gracefully remove both players from a game
+     * @param player the player requesting removal
+     */
+    public static void resign(Player player) {
+        if (!playerInGame(player)) return;
+        Board board = player.getBoard();
+        if (board.isActivePlayer(player)) // switch the active player to force a page reload
+            board.switchActivePlayer();
+
+        player.resign();
+        player.getOpponent().enableExit();
+        player.removeBoard();
     }
 
 }

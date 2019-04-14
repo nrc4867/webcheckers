@@ -33,13 +33,7 @@ public class PostResignRoute implements Route {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
-        Board board = requester.getBoard();
-        if (board.isActivePlayer(requester)) // switch the active player to force a page reload
-            board.switchActivePlayer();
-
-        requester.resign();
-        requester.getOpponent().enableExit();
-        requester.removeBoard();
+        resign(requester);
 
         return gson.toJson(Message.info(resign));
     }

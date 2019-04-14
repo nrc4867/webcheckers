@@ -4,7 +4,9 @@ import java.util.Objects;
 
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.CheckersPlay.PostResignRoute;
 import com.webcheckers.util.Attributes;
+import com.webcheckers.util.Checkers;
 import com.webcheckers.util.Message;
 
 import spark.Request;
@@ -41,6 +43,9 @@ public class PostSignOutRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session httpSession = request.session();
+
+        Checkers.resign(Checkers.getPlayer(httpSession)); // remove a player from a game before they finish signing out
+
         if (httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY) != null) { 
             if(!(httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY) instanceof Player)) return null;
             lobby.removePlayer((Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY)); // remove player from lobby

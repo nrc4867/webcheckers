@@ -90,7 +90,7 @@ class PostGameRouteTest {
      */
     @Test
     public void selectionInGame() {
-        when(player2.getBoard()).thenReturn(board);
+        when(player2.inGame()).thenReturn(true);
 
         try {
             CuT.handle(request, response);

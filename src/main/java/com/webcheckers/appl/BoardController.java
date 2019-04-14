@@ -380,7 +380,8 @@ public class BoardController {
                     return GameState.INPROGRESS;
 
                 // Piece can move
-                Set<Move> possible = Move.generateMoves(piece.getPos(), 1);
+                Set<Move> possible = piece.getPossibleMoves();
+
                 for (Move m : possible) {
                     if (canMoveTo(m, new ArrayList<>())) {
                         return GameState.INPROGRESS;

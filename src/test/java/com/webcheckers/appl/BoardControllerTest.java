@@ -349,4 +349,9 @@ public class BoardControllerTest {
 
     }
 
+    @Test
+    public void inProgressTest() {
+        assertEquals(GameState.INPROGRESS, boardController.getGameState());
+    }
+
 }

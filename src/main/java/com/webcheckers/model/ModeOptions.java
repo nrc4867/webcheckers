@@ -17,8 +17,8 @@ public class ModeOptions {
     /**
      * Map attribute keys
      */
-    static final String GAME_OVER_STATE = "";
-    static final String GAME_OVER_REASON = "";
+    static final String GAME_OVER_STATE = "isGameOver";
+    static final String GAME_OVER_REASON = "gameOverMessage";
 
     private final HashMap<String, Object> modeOptions = new HashMap<>();
 

@@ -34,7 +34,7 @@ public class GetGameRoute implements Route {
     static final String GAME = "GAME!";
     static final String CURRENT_USER = "currentUser";
     static final String VIEW_MODE = "viewMode";
-    static final String MODE_OPTIONS = "modeOptions";
+    static final String MODE_OPTIONS = "modeOptionsAsJSON";
     static final String RED_PLAYER = "redPlayer";
     static final String WHITE_PLAYER = "whitePlayer";
     static final String ACTIVE_COLOR = "activeColor";

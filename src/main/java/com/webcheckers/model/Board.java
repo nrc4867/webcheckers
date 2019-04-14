@@ -225,6 +225,8 @@ public class Board {
 	public void setPlayMode(ModeOptions mode) {
 		if(mode == null) return;
 		this.mode = mode;
+		whitePlayer.enableExit();
+		redPlayer.enableExit();
 	}
 
 	public Map<String, Object> getModeOptions() {

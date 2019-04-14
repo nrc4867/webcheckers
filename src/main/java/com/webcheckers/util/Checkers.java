@@ -91,7 +91,6 @@ public abstract class Checkers {
             board.switchActivePlayer();
 
         player.resign();
-        player.getOpponent().enableExit();
         player.removeBoard();
     }
 

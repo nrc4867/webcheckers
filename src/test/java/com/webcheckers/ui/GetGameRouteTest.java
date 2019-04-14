@@ -5,6 +5,7 @@ import static com.webcheckers.util.Checkers.getMoves;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
@@ -49,7 +50,7 @@ public class GetGameRouteTest {
         playerLobby = mock(PlayerLobby.class);
 
 
-        ghr= new GetGameRoute(engine);
+        ghr= new GetGameRoute(engine, mock(Gson.class));
     }
     @Test
     public void boardNull(){

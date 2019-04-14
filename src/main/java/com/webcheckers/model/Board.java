@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.appl.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -226,7 +227,7 @@ public class Board {
 	}
 
 	public Map<String, Object> getModeOptions() {
-		return mode.getOptions();
+		return (mode != null)?mode.getOptions():new HashMap<>();
 	}
 
 	public void setPiece(Piece p, Position pos) {

@@ -24,7 +24,7 @@ public class ModeOptions {
 
     private ModeOptions(final boolean isGameOver, final String reason) {
         modeOptions.put(GAME_OVER_STATE, isGameOver);
-        modeOptions.put(GAME_OVER_REASON, isGameOver);
+        modeOptions.put(GAME_OVER_REASON, reason);
     }
 
     public Map<String, Object> getOptions() {

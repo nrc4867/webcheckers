@@ -76,9 +76,9 @@ public class Player implements Cleanup {
 	public void removeBoardController() {
 		boardController = null;
 	}
-	public void setBoardController(BoardController board) {
-		this.boardController = board;
-		this.board = boardController.getBoard();
+	public void setBoardController(BoardController controller) {
+		this.boardController = controller;
+		this.board = (controller == null)?null:boardController.getBoard();
 	}
 
 	public void setColor(Color c) {this.color = c;}

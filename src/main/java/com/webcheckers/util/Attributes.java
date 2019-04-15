@@ -22,4 +22,9 @@ public class Attributes {
      * This key stores the session watch dog that is created on player sign in
      */
     public static final String PLAYER_SESSION_KEY = "sessionWatcher";
+
+    /**
+     * This key stores a int corresponding to the last move a spectator saw
+     */
+    public static final String SPECTATOR_TURN_KEY = "spectateTurn";
 }

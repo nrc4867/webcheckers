@@ -89,12 +89,15 @@ public class GetGameRoute implements Route {
             return null;
         }
 
+        Mode mode = (board.isPlaying(reqPlayer))?Mode.PLAY:Mode.SPECTATOR;
+
         LOG.finer("GetGameRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(TITLE, GAME);
         vm.put(CURRENT_USER, board.getActivePlayer());
+
         vm.put(VIEW_MODE, Mode.PLAY);
         vm.put(MODE_OPTIONS, gson.toJson(board.getModeOptions()));
         vm.put(RED_PLAYER, board.getRedPlayer());

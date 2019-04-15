@@ -123,6 +123,15 @@ public class Board {
 	/** @return Returns the White player. */
 	public Player getWhitePlayer() {return whitePlayer;}
 
+	/**
+	 * See if a player is playing on this board
+	 * @param player the player to check
+	 * @return true if the player is white or red
+	 */
+	public boolean isPlaying(Player player) {
+		return (player.equals(whitePlayer) || player.equals(redPlayer));
+	}
+
 	/** @return Returns the active player. */
 	public Player getActivePlayer() {return activePlayer;}
 

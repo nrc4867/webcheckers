@@ -31,6 +31,7 @@ public class Board {
 	private int activeRow;
 	private int activeCol;
 	private final int boardID;
+	private int turn = 0;
 
 	// CONSTRUCTORS ===========================================================
 
@@ -202,6 +203,14 @@ public class Board {
 	/** @return Returns the active piece. */
 	public Piece getActivePiece() {
 		return getActiveSpace().getPiece();
+	}
+
+	public int getTurn() {
+		return turn;
+	}
+
+	public void incrementTurn() {
+		turn++;
 	}
 
 	/** @return Returns whether the given square is holding a piece. */

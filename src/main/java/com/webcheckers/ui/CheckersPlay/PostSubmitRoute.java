@@ -47,6 +47,7 @@ public class PostSubmitRoute implements Route {
             controller.movePieces(getMoves(httpSession));
             Board board = requester.getBoard();
             board.setPlayMode(CreateModeOptions.createOptions(controller));
+            board.incrementTurn();
             board.switchActivePlayer();
 
             clearMoves(httpSession);

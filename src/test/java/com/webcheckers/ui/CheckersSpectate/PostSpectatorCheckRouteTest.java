@@ -81,9 +81,9 @@ public class PostSpectatorCheckRouteTest {
     public void handleNotNullTest() throws Exception {
         player1 = mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
-        BoardController b= mock(BoardController.class);
-        when(player1.getBoardController()).thenReturn(b);
-        when(b.getMovesMade()).thenReturn(2);
+        Board b= mock(Board.class);
+        when(player1.getBoard()).thenReturn(b);
+        when(b.getTurn()).thenReturn(2);
 
         String json;
         json = (String) pscr.handle(request,response);

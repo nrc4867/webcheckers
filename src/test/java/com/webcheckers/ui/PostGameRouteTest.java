@@ -91,11 +91,14 @@ class PostGameRouteTest {
     @Test
     public void selectionInGame() {
         when(player2.inGame()).thenReturn(true);
+        Board b = mock(Board.class);
+        when(player2.getBoard()).thenReturn(b);
+        when(b.getTurn()).thenReturn(0);
 
         try {
             CuT.handle(request, response);
         } catch (HaltException e) {
-            verify(response).redirect(WebServer.HOME_URL);
+            verify(response).redirect(WebServer.GAME_URL);
         }
     }
 

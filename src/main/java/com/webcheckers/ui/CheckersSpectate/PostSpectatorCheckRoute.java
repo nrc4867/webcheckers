@@ -5,6 +5,7 @@ import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 import static com.webcheckers.util.Checkers.getPlayer;
 
+import com.webcheckers.model.Board;
 import com.webcheckers.util.Message;
 import com.webcheckers.util.Spectators;
 import spark.Request;
@@ -31,10 +32,10 @@ public class PostSpectatorCheckRoute implements Route {
             return gson.toJson(FALSE);
         }
 
-        BoardController controller = player.getBoardController();
+        Board board = player.getBoard();
 
-        if (Spectators.getTurn(httpSession) < controller.getMovesMade()) {
-            Spectators.setTurn(httpSession, controller.getMovesMade());
+        if (Spectators.getTurn(httpSession) < board.getTurn()) {
+            Spectators.setTurn(httpSession, board.getTurn());
             return gson.toJson(TRUE);
         }
 

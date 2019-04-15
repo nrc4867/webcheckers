@@ -17,7 +17,7 @@ public class Move implements Serializable {
         REGULAR, JUMP
     }
 
-    public Move() {  }
+    public Move() {this(null, null);}
 
     public Move(Position start, Position end) {
         setStart(start);
@@ -27,7 +27,6 @@ public class Move implements Serializable {
     public int getStartRow() {
         return start.getRow();
     }
-
     public int getEndRow() {
         return end.getRow();
     }
@@ -35,29 +34,42 @@ public class Move implements Serializable {
     public int getStartCell() {
         return start.getCell();
     }
-
     public int getEndCell() {
         return end.getCell();
     }
 
+    public Position getStart() {return start;}
+    public Position getEnd() {return end;}
+
     public void setStart(Position start) {
         this.start = start;
     }
-
     public void setEnd(Position end) {
         this.end = end;
     }
 
-    /**
-     * @return the change in row position
-     */
+    /** @return Returns the position jumped over, or null if not a jump. */
+    public Position getJumpedPosition() {
+        if (movement == MoveType.REGULAR) return null;
+        else return new Position(
+                (getStartRow()+getEndRow())/2,
+                (getStartCell()+getEndCell())/2);
+    }
+
+    /** @return Return true if both jumped over the same position. */
+    public boolean sameJumpedPosition(Move other) {
+        if (getJumpedPosition() == null) return false;
+        if (other.getJumpedPosition() == null) return false;
+        return this.getJumpedPosition().equals(other.getJumpedPosition());
+    }
+
+
+    /** @return the change in row position */
     public int rowDelta() {
         return getEndRow() - getStartRow();
     }
 
-    /**
-     * @return the change in column position
-     */
+    /** @return the change in column position */
     public int cellDelta() {
         return getEndCell() - getStartCell();
     }
@@ -69,7 +81,6 @@ public class Move implements Serializable {
     public void setMovement(MoveType movement) {
         this.movement = movement;
     }
-
     public MoveType getMovement() {
         return movement;
     }
@@ -97,9 +108,28 @@ public class Move implements Serializable {
         return true;
     }
 
+    /**
+     * Given a list of moves, check to see if
+     * the end position of the given move exists as the start
+     * position of another move.
+     */
+    public boolean reenters(ArrayList<Move> prev)
+    {
+        for (Move m : prev) {
+            if (m.getStart().equals(getEnd())) return true;
+        }
+        return false;
+    }
+
+    /** @return Return the last move in the given list. */
+    public static Move getLast(ArrayList<Move> moves) {
+        if (moves.isEmpty()) return null;
+        else return moves.get(moves.size()-1);
+    }
+
     @Override
     public String toString() {
-        return "Move: " + start.toString() + " " + end.toString() + " " + String.valueOf((movement != null)?movement:"");
+        return "Move: " + start.toString() + " " + end.toString() + " " + movement;
     }
 
     @Override
@@ -134,6 +164,10 @@ public class Move implements Serializable {
             }
         }
         return moves;
+    }
+
+    public static Set<Move> generateMoves(Position p, int dist) {
+        return generateMoves(p.getRow(), p.getCell(), dist);
     }
 }
 

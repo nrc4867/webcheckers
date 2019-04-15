@@ -57,10 +57,6 @@ public class ScoredMoveList {
      */
     public static int getMoveScore(Move move) {
 
-        if (move.getMovement() == Move.MoveType.REGULAR) {
-            System.out.println("Regular");
-        }
-
         if (move.getMovement() == Move.MoveType.JUMP)
             return JUMP_SCORE;
 

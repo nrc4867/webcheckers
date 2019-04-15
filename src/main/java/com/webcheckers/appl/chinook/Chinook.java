@@ -85,7 +85,7 @@ public class Chinook extends Player {
 
         // All 8 possible moves
         ArrayList<Move> possible = new ArrayList<>();
-        Position START = p.getPos();
+        Position START = p.getCurrentPosition(prev.getMoves());
         int sRow = START.getRow();
         int sCol = START.getCell();
         Move NE_REG = new Move(START, new Position(sRow-1, sCol+1));
@@ -113,12 +113,9 @@ public class Chinook extends Player {
             // Move is valid
             if (control.testMovement(m, prev.getMoves())) {
 
-                System.out.println("Move " + m + " available with score: ");
-
                 // Create a new move list with this move
                 ScoredMoveList temp = new ScoredMoveList(prev.getMoves());
                 temp.addMove(m);
-                System.out.println("Temp score: " + temp.getScore());
 
                 // If better than the best, replace it
                 if (temp.getScore() > best.getScore()) {

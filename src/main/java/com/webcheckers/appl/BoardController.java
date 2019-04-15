@@ -17,7 +17,7 @@ public class BoardController {
     public BoardController(Board b) {
         this.board = b;
     }
-    
+
     /**
      * Move pieces on the board
      * @param moves a set of moves in order that they should be made, the moves have already been tested as valid
@@ -39,27 +39,28 @@ public class BoardController {
      * @return the move was completed
      */
     public boolean makeMove(Move move) {
-        Piece moved = board.getPiece(move.getStartRow(), move.getStartCell());
+        Piece moved = board.getPiece(move.getStart());
         if(moved == null) return false;
-        board.setPiece(null, move.getStartRow(), move.getStartCell());
+        board.setPiece(null, move.getStart());
 
         moved.setCol(move.getEndCell());
         moved.setRow(move.getEndRow());
         king(moved);
-        board.setPiece(moved, move.getEndRow(), move.getEndCell());
+        board.setPiece(moved, move.getEnd());
 
         return true;
     }
 
     /**
-     * make a jump move by removing a piece on the board while moving, the move has previously been tested as valid
+     * make a jump move by removing a piece on the board while moving,
+     * the move has previously been tested as valid
      * @param jump the jump to make
      * @return the jump was completed
      */
     public boolean makeJump(Move jump) {
         if(!makeMove(jump)) return false;
-        Piece middle = getMiddlePiece(jump);
-        board.setPiece(null, middle.getRow(), middle.getCol());
+        Piece middle = board.getPiece(jump.getJumpedPosition());
+        board.setPiece(null, middle.getPos());
         return true;
     }
 
@@ -85,8 +86,10 @@ public class BoardController {
      */
     public boolean testMovement(Move move, ArrayList<Move> moves) {
         boolean testMove = false;
-        if(!mustJumpThisTurn(moves))
+        if(!mustJumpThisTurn(moves)) {
             testMove = canMoveTo(move, moves);
+        }
+
         boolean testJump = canJumpTo(move, moves);
 
         if (testMove || testJump) {
@@ -102,15 +105,17 @@ public class BoardController {
      * @return true if there is a valid jump
      */
     public boolean mustJumpThisTurn(ArrayList<Move> moves) {
-        Piece piece = getPiece(moves);
+        Piece piece = board.getPiece(moves);
+        Player activePlayer = board.getActivePlayer();
+
         if(piece != null) {
             return mustJumpThisTurn(piece, moves);
         }
 
-        for (Space rowspace[]: board.getSpaces()) {
+        for (Space[] rowspace: board.getSpaces()) {
             for (Space space: rowspace) {
                 piece = space.getPiece();
-                if(piece != null && board.getActivePlayer().ownsPiece(piece))
+                if(piece != null && activePlayer.ownsPiece(piece))
                     if(mustJumpThisTurn(piece, moves)) return true;
             }
         }
@@ -124,12 +129,14 @@ public class BoardController {
      * @return true if there are available multi-jumps
      */
     private boolean mustJumpThisTurn(Piece piece, ArrayList<Move> moves) {
-        final int currentRow = (moves.size() != 0)?getLastMove(moves).getEndRow(): piece.getRow();
-        final int currentCol = (moves.size() != 0)?getLastMove(moves).getEndCell(): piece.getCol();
 
-        Set<Move> possibleMoves = Move.generateMoves(currentRow, currentCol, 2);
+        final Position current = piece.getCurrentPosition(moves);
+
+        Set<Move> possibleMoves = Move.generateMoves(current, 2);
         for (Move move: possibleMoves) {
-            if(canJumpTo(move, moves)) return true;
+            if(canJumpTo(move, moves)) {
+                return true;
+            }
         }
         return false;
     }
@@ -143,7 +150,7 @@ public class BoardController {
     public boolean canMoveTo(Move move, ArrayList<Move> moves) {
         if(moves.size() != 0) return false; // You cannot make more than one regular move in a round
 
-        Piece piece = getPiece(move, moves);
+        Piece piece = board.getPiece(move, moves);
 
         // Piece must be on the board
         if (piece == null) {
@@ -180,10 +187,14 @@ public class BoardController {
      * @return true if the move is valid in the context of moves
      */
     public boolean canJumpTo(Move move, ArrayList<Move> moves) {
+
         // Check to make sure that the move connects with the previous moves
         if(!moves.isEmpty() && !Move.ConnectedMoves(moves.get(moves.size() - 1), move)) return false;
+
+        // Cannot jump if the previous move was a not a jump
         if(!moves.isEmpty() && moves.get(moves.size() -1).getMovement() == Move.MoveType.REGULAR) return false;
 
+        // Must jump diagonally 2 spaces
         if (!move.deltaRadius(2)) {
             return false;
         }
@@ -193,26 +204,33 @@ public class BoardController {
             return false;
         }
 
-        // Destination must be empty
-        if (board.hasPiece(move.getEndRow(), move.getEndCell())) {
+        // Do not allow the piece to jump over the same tile twice
+        for (Move m : moves) {
+            if (move.sameJumpedPosition(m)) {
+                return false;
+            }
+        }
+
+        // Destination must be empty, but ignore if its a previously
+        // jumped-from position. The previous check will prevent
+        // backtracking
+        if (board.hasPiece(move.getEnd())
+        &&  !move.reenters(moves)) {
             return false;
         }
 
-        Piece piece = getPiece(move, moves);
-        if(piece == null) return false; // the original piece should exist on the board
+        Piece piece = board.getPiece(move, moves);
+        if(piece == null) {
+            return false; // the original piece should exist on the board
+        }
 
         // make sure the piece is moving in the right direction
         if (!allowedDirection(piece, move, moves)) {
             return false;
         }
 
-        // Prevent king backtracking
-        if (isBackTracking(move, moves)) {
-            return false;
-        }
-
         // The intermediate space must have a piece of the opposite color
-        Piece middle = getMiddlePiece(move);
+        Piece middle = board.getMiddlePiece(move);
         if (middle == null) {
             return false;
         }
@@ -231,86 +249,20 @@ public class BoardController {
      */
     private boolean allowedDirection(Piece piece, Move move, ArrayList<Move> moves) {
         // The Piece can't jump north if it's white and single (#me)
-        int currentRow = (moves.size() != 0)? getLastMove(moves).getEndRow():piece.getRow();
+        Position current = piece.getCurrentPosition(moves);
 
         if (piece.getColor() == Color.WHITE && !piece.isKing()
-                &&  move.getEndRow() < currentRow) {
+                &&  move.getEndRow() < current.getRow()) {
             return false;
         }
 
         // The Piece can't jump south if it's red and single
         if (piece.getColor() == Color.RED && !piece.isKing()
-                &&  move.getEndRow() > currentRow) {
+                &&  move.getEndRow() > current.getRow()) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Check to see if the move is a backtrack
-     * @param move the move to check
-     * @param moves the moves made this turn
-     * @return true if the move ends where the last move starts
-     */
-    private boolean isBackTracking(Move move, ArrayList<Move> moves) {
-        if (moves.isEmpty()) return false; // cant backtrack if there are no moves
-
-        final int lastRow = getLastMove(moves).getStartRow();
-        final int lastCell = getLastMove(moves).getStartCell();
-
-        return move.getEndCell() == lastCell && move.getEndRow() == lastRow;
-    }
-
-    /**
-     * Get a piece from the board based on the players movement
-     * @param move the move being made
-     * @param moves the moves made this turn
-     * @return a piece if there is not a piece then null
-     */
-    public Piece getPiece(Move move, ArrayList<Move> moves) {
-        if(moves.size() == 0) return getPiece(move);
-        return getPiece(moves);
-    }
-
-    /**
-     * Get a piece from the board based on the players movement
-     * @param move the move being made
-     * @return a piece if there is not a piece then null
-     */
-    public Piece getPiece(Move move) {
-        return board.getPiece(move.getStartRow(), move.getStartCell());
-    }
-
-    /**
-     * Get a piece from the board based on the players movement
-     * @param moves the moves made this turn
-     * @return a piece if there is not a piece then null
-     */
-    public Piece getPiece(ArrayList<Move> moves) {
-        if(moves.size() == 0) return null;
-        return board.getPiece(moves.get(0).getStartRow(), moves.get(0).getStartCell());
-    }
-
-    /**
-     * get the last move made this turn
-     * @param moves the list of moves
-     * @return the last move made or null
-     */
-    public Move getLastMove(ArrayList<Move> moves) {
-       if(moves.size() == 0) return null;
-       return moves.get(moves.size() - 1);
-    }
-
-    /**
-     *  Get the piece in the middle of a jump move
-     * @param move the move
-     * @return the piece in the middle of the jump, if there is no piece then null
-     */
-    public Piece getMiddlePiece(Move move) {
-        int middleRow = move.getStartRow() - ((move.getStartRow() - move.getEndRow())/2);
-        int middleCol = move.getStartCell() - ((move.getStartCell() - move.getEndCell())/2);
-        return board.getPiece(middleRow, middleCol);
     }
 
     /**
@@ -330,7 +282,7 @@ public class BoardController {
      * @return true if the piece is kinged
      */
     public boolean shouldKing(ArrayList<Move> moves) {
-        Piece piece = getPiece(moves);
+        Piece piece = board.getPiece(moves);
 
         Move lastMove = moves.get(moves.size() - 1);
 
@@ -369,6 +321,7 @@ public class BoardController {
      * @param player the player to check
      * @return true if player is active
      */
+    @Deprecated
     public boolean isActivePlayer(Player player) {
         return player.equals(board.getActivePlayer());
     }
@@ -380,6 +333,7 @@ public class BoardController {
     public void resign(Player player) {
         board.setResign(player);
     }
+
 
     /**
      * Toggle the active player

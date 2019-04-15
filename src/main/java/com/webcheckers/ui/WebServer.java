@@ -119,10 +119,10 @@ public class WebServer {
 
     this.playerLobby.addPlayer(new Chinook("Dylan`"));
 
-//    if(DEBUG) {
-//      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
-//      cmd.start();
-//    }
+    if(DEBUG) {
+      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
+      cmd.start();
+    }
 
   }
 

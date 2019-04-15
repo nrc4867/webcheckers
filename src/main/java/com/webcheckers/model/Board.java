@@ -134,6 +134,11 @@ public class Board {
 	/** @return Returns the active player. */
 	public Player getActivePlayer() {return activePlayer;}
 
+	/** @return True if given player is active player. */
+	public boolean isActivePlayer(Player p) {
+		return p.equals(getActivePlayer());
+	}
+
 	/** @return Returns the color of the active player. */
 	public Color getActiveColor() {return getActivePlayer().getColor();}
 
@@ -148,6 +153,34 @@ public class Board {
 
 	/** @return Returns the Piece at the index, or NULL. */
 	public Piece getPiece(int r, int c) {return spaces[r][c].getPiece();}
+
+	/** @return Returns the Piece at the index, or NULL. */
+	public Piece getPiece(Position p) {return getPiece(p.getRow(),p.getCell());}
+
+	/** @return Returns the <i>moving</i> piece (start position). */
+	public Piece getPiece(Move m) {return getPiece(m.getStart());}
+
+	/** @return Returns the <i>first</i> move's piece. */
+	public Piece getPiece(ArrayList<Move> m) {
+		if (m.isEmpty()) return null;
+		else return getPiece(m.get(0));
+	}
+
+	/**
+	 * Given a current move and a list of previous moves, get their
+	 * starting piece. If the previous moves list is not empty,
+	 * return getPiece(ArrayList), otherwise return getPiece(Move).
+	 */
+	public Piece getPiece(Move move, ArrayList<Move> prev) {
+		if (prev.isEmpty()) return getPiece(move);
+		else return getPiece(prev);
+	}
+
+	/** @return If a jump, return the piece jumped over, otherwise null. */
+	public Piece getMiddlePiece(Move move) {
+		return getPiece(move.getJumpedPosition());
+	}
+
 
 	/** @return Returns if the given coordinates are in bounds. */
 	public boolean inBounds(int r, int c) {
@@ -178,6 +211,10 @@ public class Board {
 		return spaces[row][col].getPiece() != null;
 	}
 
+	public boolean hasPiece(Position p) {
+		return hasPiece(p.getRow(), p.getCell());
+	}
+
 	/** @return Returns all pieces belonging to a player. */
 	public ArrayList<Piece> getPlayerPieces(Player player) {
 
@@ -206,6 +243,10 @@ public class Board {
 	 */
 	public void setResign(Player player) {
 		this.resign = player;
+	}
+
+	public void setPiece(Piece p, Position pos) {
+		setPiece(p, pos.getRow(), pos.getCell());
 	}
 
 	public void setPiece(Piece p, int row, int col) {

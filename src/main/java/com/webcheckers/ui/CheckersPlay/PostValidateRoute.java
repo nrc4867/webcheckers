@@ -44,9 +44,11 @@ public class PostValidateRoute implements Route {
         final Move move = gson.fromJson(dataStr, Move.class);
 
         if(controller.testMovement(move, getMoves(httpSession))) {
+
             getMoves(httpSession).add(move);
             return gson.toJson(Message.info(VALID_MOVE));
         }
+
         return gson.toJson(Message.error(INVALID_MOVE));
     }
 

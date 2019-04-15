@@ -19,7 +19,7 @@ public class GetExitRoute implements Route {
         Session httpSession = request.session();
         Player player = getPlayer(httpSession);
         if (player != null)
-            player.setBoardController(null);
+            player.removeBoard();
         response.redirect(WebServer.HOME_URL);
         halt();
         return null;

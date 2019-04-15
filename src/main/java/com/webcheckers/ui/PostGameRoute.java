@@ -43,7 +43,7 @@ public class PostGameRoute implements Route {
 
         if(selectedPlayer.inGame()) {
             // the selected player is already in a game
-            reqPlayer.setBoardController(selectedPlayer.getBoardController());
+            reqPlayer.setBoard(selectedPlayer.getBoard());
             reqPlayer.setColor(selectedPlayer.getColor());
             Spectators.setTurn(httpSession, selectedPlayer.getBoardController().getMovesMade());
             response.redirect(WebServer.GAME_URL);

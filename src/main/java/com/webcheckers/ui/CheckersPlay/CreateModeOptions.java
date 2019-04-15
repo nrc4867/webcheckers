@@ -13,6 +13,7 @@ public class CreateModeOptions {
 
     static ModeOptions createOptions(BoardController controller) {
         Board board = controller.getBoard();
+        System.out.println("Game state: " + controller.getGameState());
         switch (controller.getGameState()){
             case WHITE_WON:
                 return ModeOptions.won(board.getWhitePlayer());

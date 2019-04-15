@@ -213,6 +213,20 @@ public class Board {
 		turn++;
 	}
 
+	/** @return Returns whether the player has <i>any</i> pieces. */
+	public boolean hasPiece(Player p) {
+
+		for (Space[] rows : spaces) {
+			for (Space col : rows) {
+				Piece piece = col.getPiece();
+				if (piece != null && piece.getOwner().equals(p))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
 	/** @return Returns whether the given square is holding a piece. */
 	public boolean hasPiece(int row, int col) {
 		if (!inBounds(row, col)){

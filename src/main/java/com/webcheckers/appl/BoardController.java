@@ -363,6 +363,13 @@ public class BoardController {
      */
     public GameState getGameState() {
 
+        // Check if any pieces exist
+        if (!board.hasPiece(board.getRedPlayer()))
+            return GameState.WHITE_WON;
+
+        if (!board.hasPiece(board.getWhitePlayer()))
+            return GameState.RED_WON;
+
         // Iterate through every space on the board
         for (Space[] rowspace : board.getSpaces()) {
             for (Space space : rowspace) {
@@ -375,14 +382,17 @@ public class BoardController {
                 if (!board.getActivePlayer().ownsPiece(piece)) continue;
 
                 // Piece can jump
-                if (mustJumpThisTurn(piece, new ArrayList<>()))
+                if (mustJumpThisTurn(piece, new ArrayList<>())) {
+                    System.out.println("Has jumps");
                     return GameState.INPROGRESS;
+                }
 
                 // Piece can move
                 Set<Move> possible = piece.getPossibleMoves();
 
                 for (Move m : possible) {
                     if (canMoveTo(m, new ArrayList<>())) {
+                        System.out.println("Has moves");
                         return GameState.INPROGRESS;
                     }
                 }

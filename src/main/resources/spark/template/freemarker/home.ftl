@@ -57,7 +57,22 @@
         </ul>
       </#list>
     </div>
-
+      <div class="replayList">
+          <h2>Replay</h2>
+      <#list pastgames>
+        <ul>
+            <form action="./replay" method="post">
+          <#items as game>
+              <li><input type="submit" name="replay" value="${game}"></li>
+          </#items>
+            </form>
+        </ul>
+      <#else>
+        <ul>
+            <li>No games are available for replay.</li>
+        </ul>
+      </#list>
+      </div>
 </div>
 </body>
 

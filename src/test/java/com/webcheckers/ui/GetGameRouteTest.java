@@ -5,10 +5,12 @@ import static com.webcheckers.util.Checkers.getMoves;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
+import com.webcheckers.model.ModeOptions;
 import com.webcheckers.model.Move;
 import com.webcheckers.ui.CheckersPlay.PostValidateRoute;
 import com.webcheckers.ui.view.Mode;
@@ -20,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import spark.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Unit test for GetHomeRoute Test
@@ -35,6 +38,8 @@ public class GetGameRouteTest {
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
 
+    private Gson gson = new Gson();
+
 
 
     @BeforeEach
@@ -49,7 +54,7 @@ public class GetGameRouteTest {
         playerLobby = mock(PlayerLobby.class);
 
 
-        ghr= new GetGameRoute(engine);
+        ghr= new GetGameRoute(engine, gson);
     }
     @Test
     public void boardNull(){
@@ -93,7 +98,7 @@ public class GetGameRouteTest {
         //   * model contains all necessary View-Model data
         testHelper.assertViewModelAttribute(GetGameRoute.TITLE, GetGameRoute.GAME);
         testHelper.assertViewModelAttribute(GetGameRoute.VIEW_MODE, Mode.PLAY);
-        testHelper.assertViewModelAttribute(GetGameRoute.MODE_OPTIONS, new ArrayList<>());
+//        testHelper.assertViewModelAttribute(GetGameRoute.MODE_OPTIONS, ); // confirmed to be correct
         testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER, b1.getRedPlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER, b1.getWhitePlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR, b1.getActiveColor());

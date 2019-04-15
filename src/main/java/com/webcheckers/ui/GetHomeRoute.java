@@ -66,7 +66,7 @@ public class GetHomeRoute implements Route {
     // get current session player
     Player current = (Player) httpSession.attribute(Attributes.PLAYER_SIGNIN_KEY);
 
-    if(current != null && current.getBoard() != null) {
+    if(current != null && current.inGame()) {
       response.redirect(WebServer.GAME_URL);
       return null;
     }

@@ -2,7 +2,9 @@ package com.webcheckers.ui.CheckersPlay;
 
 import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
+import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Board;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -31,9 +33,7 @@ public class PostResignRoute implements Route {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
-        requester.resign();
-        requester.getOpponent().setBoardController(null);
-        requester.setBoardController(null);
+        resign(requester);
 
         return gson.toJson(Message.info(resign));
     }

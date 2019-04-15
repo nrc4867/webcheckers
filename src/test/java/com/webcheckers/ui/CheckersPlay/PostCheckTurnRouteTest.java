@@ -73,7 +73,7 @@ public class PostCheckTurnRouteTest {
         player1 = mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
         String json=null;
-        when(player1.getBoardController()).thenReturn(mock(BoardController.class));
+        when(player1.getBoard()).thenReturn(mock(Board.class));
 
         when(getMoves(session)).thenReturn(new ArrayList<>());
 

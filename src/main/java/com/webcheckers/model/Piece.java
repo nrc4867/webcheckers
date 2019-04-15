@@ -5,6 +5,7 @@ import com.webcheckers.appl.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -78,6 +79,28 @@ public class Piece implements Serializable{
 	public Position getCurrentPosition(ArrayList<Move> prev) {
 		if (prev.isEmpty()) return getPos();
 		else return Move.getLast(prev).getEnd();
+	}
+
+	/**
+	 * Generate possible moves in the four directions.
+	 * @return The spaces immediately diagonal of p.
+	 */
+	public Set<Move> getPossibleMoves() {
+
+		Set<Move> moves = new HashSet<>();
+		Position p = this.getPos();
+
+		Position NE = new Position(p.getRow()-1, p.getCell()+1);
+		Position SE = new Position(p.getRow()+1,p.getCell()+1);
+		Position SW = new Position(p.getRow()+1,p.getCell()-1);
+		Position NW = new Position(p.getRow()-1, p.getCell()-1);
+
+		moves.add(new Move(p, NE));
+		moves.add(new Move(p, SE));
+		moves.add(new Move(p, SW));
+		moves.add(new Move(p, NW));
+
+		return moves;
 	}
 
 	/**

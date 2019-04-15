@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Cleanup;
-import com.webcheckers.model.Color;
-import com.webcheckers.model.Piece;
+import com.webcheckers.model.*;
 
 /**
  * Players play WebCheckers. They should <i>only</i> be created
@@ -15,10 +12,14 @@ import com.webcheckers.model.Piece;
 public class Player implements Cleanup {
 
 	private final String name;
+
+	private boolean playerInGame;
+
 	/**
-	 * The boardController the player is currently viewing
+	 * The board the player is currently playing on
 	 */
-	private BoardController boardController = null;
+	private Board board = null;
+
     /**
      * The lobby the player is currently part of
      */
@@ -52,7 +53,7 @@ public class Player implements Cleanup {
 
 
 	public Board getBoard() {
-		return (boardController != null)?this.boardController.getBoard():null;
+		return board;
 	}
 
     public PlayerLobby getLobby() {
@@ -63,23 +64,32 @@ public class Player implements Cleanup {
         this.lobby = lobby;
     }
 
-    public boolean inGame() {return boardController != null;}
+    public boolean inGame() {return playerInGame;}
 	public BoardController getBoardController() {
-		return boardController;
+		return new BoardController(board);
 	}
-	public void setBoardController(BoardController board) {
-		this.boardController = board;
+	public void removeBoard() {
+		playerInGame = false;
+		board = null;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
+		this.playerInGame = board != null;
+	}
+	public void enableExit() {
+		playerInGame = false;
 	}
 
 	public void setColor(Color c) {this.color = c;}
 
 	public void resign() {
-		if(boardController != null)
-			boardController.resign(this);
+		if(board != null) {
+			board.setPlayMode(ModeOptions.resign(this));
+		}
 	}
 
 	public boolean checkTurn() {
-		return boardController.isActivePlayer(this);
+		return board != null && board.isActivePlayer(this);
 	}
 	public void alertTurn() {}
 

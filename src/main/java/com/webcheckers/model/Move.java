@@ -153,6 +153,7 @@ public class Move implements Serializable {
      */
     public static Set<Move> generateMoves(int row, int col, int distance) {
         Set<Move> moves = new HashSet<>();
+
         for (int i = distance; i >= -distance; i--) {
             for (int j = distance; j >= -distance; j--) {
                 if(i % 2 == 0 && j % 2 == 0) {

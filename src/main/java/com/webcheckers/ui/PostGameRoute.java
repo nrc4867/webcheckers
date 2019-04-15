@@ -41,7 +41,7 @@ public class PostGameRoute implements Route {
             return null;
         }
 
-        if(selectedPlayer.getBoard() != null) {
+        if(selectedPlayer.inGame()) {
             // the selected player is already in a game
             reqPlayer.setBoardController(selectedPlayer.getBoardController());
             reqPlayer.setColor(selectedPlayer.getColor());
@@ -51,10 +51,10 @@ public class PostGameRoute implements Route {
             return null;
         }
 
-        if(reqPlayer.getBoard() == null) {
-            final BoardController boardController = new BoardController(new Board(reqPlayer, selectedPlayer));
-            reqPlayer.setBoardController(boardController);
-            selectedPlayer.setBoardController(boardController);
+        if(!reqPlayer.inGame()) {
+            Board board = new Board(reqPlayer, selectedPlayer);
+            reqPlayer.setBoard(board);
+            selectedPlayer.setBoard(board);
             response.redirect(WebServer.GAME_URL);
         } else {
             // the player challenged someone while still playing a game

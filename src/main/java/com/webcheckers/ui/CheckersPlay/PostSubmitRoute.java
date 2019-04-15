@@ -4,6 +4,7 @@ import static com.webcheckers.util.Checkers.*;
 import com.google.gson.Gson;
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Board;
 import com.webcheckers.util.Attributes;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -32,7 +33,7 @@ public class PostSubmitRoute implements Route {
         final Session httpSession = request.session();
         Player requester = getPlayer(httpSession);
 
-        if (!playerInGame(requester)) {
+        if (!playerHasBoard(requester)) {
             return gson.toJson(Message.error(PostCheckTurnRoute.NO_GAME));
         }
 
@@ -44,7 +45,9 @@ public class PostSubmitRoute implements Route {
             }
 
             controller.movePieces(getMoves(httpSession));
-            controller.toggleTurn();
+            Board board = requester.getBoard();
+            board.setPlayMode(CreateModeOptions.createOptions(controller));
+            board.switchActivePlayer();
 
             clearMoves(httpSession);
             return gson.toJson(Message.info(SUCCESSFUL_SUBMISSION));

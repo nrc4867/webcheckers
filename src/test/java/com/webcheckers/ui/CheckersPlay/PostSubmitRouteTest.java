@@ -75,7 +75,7 @@ public class PostSubmitRouteTest {
         Player player2 = new Player("p2");
         Board b = new Board(player1,player2);
         BoardController bc = new BoardController(b);
-        player1.setBoardController(bc);
+        player1.setBoard(bc.getBoard());
 
         Move m1= new Move();
         m1.setMovement(Move.MoveType.REGULAR);
@@ -109,7 +109,7 @@ public class PostSubmitRouteTest {
         Player player2 = new Player("p2");
         Board b = new Board(player1,player2);
         BoardController bc = new BoardController(b);
-        player1.setBoardController(bc);
+        player1.setBoard(bc.getBoard());
 
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
         ArrayList<Move> moves = new ArrayList<>();

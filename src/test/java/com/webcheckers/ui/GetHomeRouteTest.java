@@ -98,9 +98,8 @@ public class GetHomeRouteTest {
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         Player player1 = mock(Player.class);
         when(session.attribute(Attributes.PLAYER_SIGNIN_KEY)).thenReturn(player1);
-        Board b = new Board(new Player("p1"),new Player("p2"));
 
-        when(player1.getBoard()).thenReturn(b);
+        when(player1.inGame()).thenReturn(true);
         // Invoke the test
         ghr.handle(request, response);
 

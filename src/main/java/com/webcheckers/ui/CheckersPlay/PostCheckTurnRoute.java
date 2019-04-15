@@ -30,7 +30,7 @@ public class PostCheckTurnRoute implements Route {
         final Session httpSession = request.session();
         Player requester = getPlayer(httpSession);
 
-        if (!playerInGame(requester)) {
+        if (!playerHasBoard(requester)) {
             return gson.toJson(Message.error(NO_GAME));
         }
 

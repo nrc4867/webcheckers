@@ -13,11 +13,6 @@ public class Attributes {
     public static final String PLAYER_SIGNIN_KEY = "playerSignin";
 
     /**
-     * This key stores a BoardController on the HTTP Session
-     */
-    public static final String PLAYER_BOARD_KEY = "playerBoard";
-
-    /**
      * This key stores the players current moves,
      * Move objects are stored in an ArrayList
      */

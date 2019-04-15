@@ -171,13 +171,13 @@ public class BoardTest {
     }
 
 
-    @Test
-    public void testResign(){
-        b.setResign(r);
-        assertEquals(b.getResign(), r);
-        b.setResign(w);
-        assertEquals(b.getResign(), w);
-    }
+//    @Test
+//    public void testResign(){
+//        b.setResign(r);
+//        assertEquals(b.getResign(), r);
+//        b.setResign(w);
+//        assertEquals(b.getResign(), w);
+//    }
 
     @Test
     public void testEquals(){

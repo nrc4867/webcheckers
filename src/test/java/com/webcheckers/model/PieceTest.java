@@ -156,10 +156,26 @@ public class PieceTest {
 
     @Test
     public void testEquals(){
-        Piece x = new Piece(0,1, PLAYER);
-        assertNotEquals(p, x);
-        x.setCol(0);
+        assertNotEquals(p, PLAYER);
+
+        Piece x = new Piece(0,0, PLAYER, Piece.Type.SINGLE);
         assertEquals(p,x);
+
+        x.setType(Piece.Type.KING);
+        assertNotEquals(p,x);
+        x.setType(Piece.Type.SINGLE);
+
+        x.setCol(1);
+        assertNotEquals(p,x);
+        x.setCol(0);
+
+        x.setRow(1);
+        assertNotEquals(p,x);
+
+        Player n = new Player("t");
+        Piece y = new Piece(0,0, n, Piece.Type.SINGLE);
+        assertNotEquals(p,y);
+
     }
 
     @Test

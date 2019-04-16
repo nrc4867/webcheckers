@@ -171,13 +171,6 @@ public class BoardTest {
     }
 
     @Test
-    public void testGetIncrementTurn(){
-        assertEquals(b.getTurn(), 0);
-        b.incrementTurn();
-        assertEquals(b.getTurn(), 1);
-    }
-
-    @Test
     public void testGetModeOptions(){
         b.setPlayMode(ModeOptions.gameActive());
         assertEquals(b.getModeOptions(), ModeOptions.gameActive().getOptions());
@@ -202,18 +195,9 @@ public class BoardTest {
     }
 
 
-//    @Test
-//    public void testResign(){
-//        b.setResign(r);
-//        assertEquals(b.getResign(), r);
-//        b.setResign(w);
-//        assertEquals(b.getResign(), w);
-//    }
-
     @Test
     public void testEquals(){
         Board a = new Board(r,w);
-
         assertNotEquals(b, r);
         assertNotEquals(a,b);
         assertEquals(a,a);

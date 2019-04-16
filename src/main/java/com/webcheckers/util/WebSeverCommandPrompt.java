@@ -1,6 +1,5 @@
 package com.webcheckers.util;
 
-import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
@@ -128,7 +127,7 @@ public class WebSeverCommandPrompt extends Thread {
             return;
         }
 
-        board.switchActivePlayer();
+        board.nextTurn();
         System.out.println(TOGGLE_MESSAGE);
     }
 

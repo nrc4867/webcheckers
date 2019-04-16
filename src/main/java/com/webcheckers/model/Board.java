@@ -23,14 +23,40 @@ public class Board {
 	///
 	/// Attributes
 	///
+
+	/**
+	 * The id of the board is created in the order of board creation
+	 */
+	private final int boardID;
+
 	private Player redPlayer;
 	private Player whitePlayer;
+
+	/**
+	 * The spaces that make up the board
+	 */
 	private Space[][] spaces;
+	/**
+	 * The previous boards by turn
+	 */
+	private HashMap<Integer, Space[][]> previousBoards;
+
+	/**
+	 * The player moving this turn
+	 */
 	private Player activePlayer;
+
+	/**
+	 * a boards mode for mode options as json, setting this option currently designates a board as complete
+	 */
 	private ModeOptions mode;
+
 	private int activeRow;
 	private int activeCol;
-	private final int boardID;
+
+	/**
+	 * What turn the board is currently on
+	 */
 	private int turn = 0;
 
 	// CONSTRUCTORS ===========================================================
@@ -209,10 +235,6 @@ public class Board {
 		return turn;
 	}
 
-	public void incrementTurn() {
-		turn++;
-	}
-
 	/** @return Returns whether the player has <i>any</i> pieces. */
 	public boolean hasPiece(Player p) {
 
@@ -276,9 +298,17 @@ public class Board {
 		spaces[row][col].setPiece(p);
 	}
 
-	public void switchActivePlayer() {
+	public void nextTurn() {
 		activePlayer = (activePlayer == redPlayer) ? whitePlayer : redPlayer;
 		activePlayer.alertTurn();
+
+		Space[][] spaces = new Space[SIZE][SIZE];
+		for (int i = 0; i < spaces.length; i++)
+			spaces[i] = this.spaces[i].clone();
+
+		previousBoards.put(turn, spaces);
+
+		turn++;
 	}
 
 

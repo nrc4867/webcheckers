@@ -140,9 +140,9 @@ public class BoardTest {
 
     @Test
     public void testSwitchActivePlayer(){
-        b.switchActivePlayer();
+        b.nextTurn();
         assertEquals(b.getActivePlayer(), w);
-        b.switchActivePlayer();
+        b.nextTurn();
         assertEquals(b.getActivePlayer(), r);
     }
 

@@ -296,7 +296,7 @@ public class Board {
 	}
 
 	public Map<String, Object> getModeOptions() {
-		return (mode != null)?mode.getOptions():new HashMap<>();
+		return (mode != null)?mode.getOptions():ModeOptions.gameActive().getOptions();
 	}
 
 	public void setPiece(Piece p, Position pos) {

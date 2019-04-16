@@ -13,8 +13,7 @@ import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.chinook.Chinook;
 import com.webcheckers.ui.CheckersPlay.*;
-import com.webcheckers.ui.CheckersReplay.GetReplayRoute;
-import com.webcheckers.ui.CheckersReplay.PostReplayRoute;
+import com.webcheckers.ui.CheckersReplay.*;
 import com.webcheckers.ui.CheckersSpectate.GetExitRoute;
 import com.webcheckers.ui.CheckersSpectate.PostSpectatorCheckRoute;
 import com.webcheckers.util.WebSeverCommandPrompt;
@@ -215,7 +214,10 @@ public class WebServer {
 
     //Handles for replay
     post(REPLAY_START, new PostReplayRoute(boardList));
-    post(REPLAY_GAME, new GetReplayRoute(templateEngine));
+    get(REPLAY_GAME, new GetReplayRoute(templateEngine, gson));
+    post(REPLAY_NEXT, new PostNextTurnRoute(gson));
+    post(REPLAY_PREVIOUS, new PostPreviousTurnRoute(gson));
+    get(REPLAY_STOP, new GetStopWatchingRoute());
 
     LOG.config("WebServer is initialized.");
   }

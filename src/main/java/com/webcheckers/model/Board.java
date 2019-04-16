@@ -243,6 +243,8 @@ public class Board {
      */
 	public Board getBoardByTurn(int turn) {
 	    Board board = new Board(redPlayer, whitePlayer, true);
+	    totalBoards --; // Don't need to increment
+
 	    board.setSpaces(previousBoards.getOrDefault(turn, previousBoards.get(0)));
 	    return board;
 	}
@@ -318,10 +320,23 @@ public class Board {
 		saveBoard();
 	}
 
+	/**
+	 * Copy a board and store it
+	 */
 	private void saveBoard() {
 		Space[][] spaces = new Space[SIZE][SIZE];
-		for (int i = 0; i < spaces.length; i++)
-			spaces[i] = this.spaces[i].clone();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+
+				spaces[i][j] = new Space(i, j);
+				try {
+					Piece piece = this.spaces[i][j].getPiece();
+					spaces[i][j].setPiece((Piece) piece.clone());
+				}catch (NullPointerException | CloneNotSupportedException e) {}
+
+			}
+		}
+
 
 		previousBoards.put(turn, spaces);
 	}
@@ -331,7 +346,7 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "Game: " + boardID + ": " + redPlayer + " vs. " + whitePlayer;
+		return "Game: " + (boardID + 1) + ": " + redPlayer + " vs. " + whitePlayer;
 	}
 
 	@Override

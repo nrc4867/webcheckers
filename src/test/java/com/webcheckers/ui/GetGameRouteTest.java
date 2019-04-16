@@ -97,8 +97,6 @@ public class GetGameRouteTest {
         testHelper.assertViewModelIsaMap();
         //   * model contains all necessary View-Model data
         testHelper.assertViewModelAttribute(GetGameRoute.TITLE, GetGameRoute.GAME);
-        testHelper.assertViewModelAttribute(GetGameRoute.VIEW_MODE, Mode.PLAY);
-//        testHelper.assertViewModelAttribute(GetGameRoute.MODE_OPTIONS, ); // confirmed to be correct
         testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER, b1.getRedPlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER, b1.getWhitePlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR, b1.getActiveColor());

@@ -59,13 +59,13 @@ public class GetReplayRoute implements Route {
         Player current = (Spectators.getTurn(httpsSession) % 2 == 0)?
                 board.getRedPlayer():board.getWhitePlayer();
 
-        vm.put(CURRENT_USER, current);
-        vm.put(VIEW_MODE, Mode.PLAY);
+        vm.put(CURRENT_USER, player);
+        vm.put(VIEW_MODE, Mode.REPLAY);
         ReplayModeOptions options = ReplayModeOptions.createOptions(board, Spectators.getTurn(httpsSession));
         vm.put(MODE_OPTIONS, gson.toJson(options.getOptions()));
         vm.put(RED_PLAYER, board.getRedPlayer());
         vm.put(WHITE_PLAYER, board.getWhitePlayer());
-        vm.put(ACTIVE_COLOR, board.getActiveColor());
+        vm.put(ACTIVE_COLOR, current);
 
         vm.put("board", new BoardView(board.getBoardByTurn(Spectators.getTurn(httpsSession)), false));
 

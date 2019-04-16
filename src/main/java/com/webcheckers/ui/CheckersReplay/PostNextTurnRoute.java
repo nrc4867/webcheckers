@@ -33,6 +33,6 @@ public class PostNextTurnRoute implements Route {
         }
 
         Spectators.setTurn(session, Spectators.getTurn(session) + 1);
-        return SUCCESS;
+        return gson.toJson(SUCCESS);
     }
 }

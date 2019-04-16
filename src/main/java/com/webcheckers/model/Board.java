@@ -39,7 +39,7 @@ public class Board {
 	/**
 	 * The previous boards by turn
 	 */
-	private HashMap<Integer, Space[][]> previousBoards;
+	private HashMap<Integer, Space[][]> previousBoards = new HashMap<>();
 
 	/**
 	 * The player moving this turn
@@ -331,7 +331,7 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "Game: " + totalBoards + ": " + redPlayer + " vs. " + whitePlayer;
+		return "Game: " + boardID + ": " + redPlayer + " vs. " + whitePlayer;
 	}
 
 	@Override

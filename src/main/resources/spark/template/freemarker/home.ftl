@@ -62,9 +62,9 @@
       <#list pastgames>
         <ul>
             <form action="./replay" method="post">
-          <#items as game>
-              <li><input type="submit" name="replay" value="${game}"></li>
-          </#items>
+              <#items as game>
+                  <li><input type="submit" name="replay" value="${game}"></li>
+              </#items>
             </form>
         </ul>
       <#else>

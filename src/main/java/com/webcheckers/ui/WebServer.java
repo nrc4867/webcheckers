@@ -13,6 +13,8 @@ import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.chinook.Chinook;
 import com.webcheckers.ui.CheckersPlay.*;
+import com.webcheckers.ui.CheckersReplay.GetReplayRoute;
+import com.webcheckers.ui.CheckersReplay.PostReplayRoute;
 import com.webcheckers.ui.CheckersSpectate.GetExitRoute;
 import com.webcheckers.ui.CheckersSpectate.PostSpectatorCheckRoute;
 import com.webcheckers.util.WebSeverCommandPrompt;
@@ -86,6 +88,15 @@ public class WebServer {
 //  public static final String SPECTATOR_GAME_URL = "/spectator/game";
   public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
   public static final String SPECTATOR_STOP_WATCHING_URL = "/spectator/stopWatching";
+
+  /**
+   * URL used by players during replay mode
+   */
+  public static final String REPLAY_START = "/replay";
+  public static final String REPLAY_GAME = "/replay/game";
+  public static final String REPLAY_STOP = "/replay/stopWatching";
+  public static final String REPLAY_NEXT = "/replay/nextTurn";
+  public static final String REPLAY_PREVIOUS = "/replay/previousTurn";
 
   //
   // Attributes
@@ -202,6 +213,9 @@ public class WebServer {
     get(SPECTATOR_STOP_WATCHING_URL, new GetExitRoute());
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckRoute(gson));
 
+    //Handles for replay
+    post(REPLAY_START, new PostReplayRoute(boardList));
+    post(REPLAY_GAME, new GetReplayRoute(templateEngine));
 
     LOG.config("WebServer is initialized.");
   }

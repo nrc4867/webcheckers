@@ -350,7 +350,7 @@ public class BoardController {
      * Toggle the active player
      */
     public void toggleTurn() {
-        board.switchActivePlayer();
+        board.nextTurn();
     }
 
     /**

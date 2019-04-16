@@ -88,7 +88,7 @@ public abstract class Checkers {
         if (!playerInGame(player)) return;
         Board board = player.getBoard();
         if (board.isActivePlayer(player)) // switch the active player to force a page reload
-            board.switchActivePlayer();
+            board.nextTurn();
 
         player.resign();
         player.removeBoard();

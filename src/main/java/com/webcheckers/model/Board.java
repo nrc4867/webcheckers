@@ -314,10 +314,10 @@ public class Board {
 
 	public void nextTurn() {
 		activePlayer = (activePlayer == redPlayer) ? whitePlayer : redPlayer;
-		activePlayer.alertTurn();
 
 		turn++;
 		saveBoard();
+		activePlayer.alertTurn();
 	}
 
 	/**

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import java.util.*;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.BoardList;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.Player;
 import com.webcheckers.util.NavBar;
@@ -32,6 +33,7 @@ public class GetHomeRoute implements Route {
   static final Message PLAYER_IN_GAME = Message.info("Selected Player is already in Game.");
 
   private final TemplateEngine templateEngine;
+  private final BoardList boardList;
   private final PlayerLobby playerLobby;
 
 
@@ -43,9 +45,10 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final BoardList boardList, final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     this.playerLobby = Objects.requireNonNull(playerLobby, "PlayerLobby is required");
+    this.boardList = Objects.requireNonNull(boardList, "Boardlist is required");
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -80,14 +83,16 @@ public class GetHomeRoute implements Route {
 
     Set<String> names = new HashSet<>();
     Set<String> playersInGame = playerLobby.getPlayersInGame();
-    //remove player from displaying yourself on lobby
-    if(current!=null) {
+
+    if(current != null) {
       names.addAll(playerLobby.getAvailablePlayers());
-      names.remove(current.getName());
+      names.remove(current.getName()); //remove player from displaying yourself on lobby
       vm.put("ingame", playersInGame.toArray());
+      vm.put("pastgames", boardList.getBoardsCreated());
     }else{
       int num_players= playerLobby.getPlayers().size();
       vm.put("ingame", new String[]{"Number of Players playing checkers: " + playersInGame.size()});
+      vm.put("pastgames", new String[]{"You must sign in to re-watch past games"});
       names.add("Number of Players online: "+ num_players); //show Number of players online.
     }
     // create the list of players

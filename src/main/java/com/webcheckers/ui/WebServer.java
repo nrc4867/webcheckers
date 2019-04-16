@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.BoardList;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.chinook.Chinook;
@@ -91,6 +92,7 @@ public class WebServer {
   //
 
   private final PlayerLobby playerLobby;
+  private final BoardList boardList;
   private final TemplateEngine templateEngine;
   private final Gson gson;
 
@@ -115,6 +117,7 @@ public class WebServer {
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
+    this.boardList = new BoardList();
     this.gson = gson;
     this.playerLobby = new PlayerLobby(new Hashtable<String, Player>());
 
@@ -179,14 +182,14 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the CheckersPlay game Home page.
-    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+    get(HOME_URL, new GetHomeRoute(playerLobby, boardList, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
     get(GAME_URL, new GetGameRoute(templateEngine, gson));
-    post(GAME_URL, new PostGameRoute(playerLobby));
+    post(GAME_URL, new PostGameRoute(playerLobby, boardList));
 
     // Handles for Play state AJAX calls
     post(CHECK_TURN_URL, new PostCheckTurnRoute(gson));

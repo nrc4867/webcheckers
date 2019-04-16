@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.BoardController;
+import com.webcheckers.appl.BoardList;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.appl.Player;
@@ -27,6 +28,7 @@ class PostGameRouteTest {
     private Response response;
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
+    private BoardList boardList;
 
     private Board board;
 
@@ -54,7 +56,9 @@ class PostGameRouteTest {
         player2 = mock(Player.class);
         when(playerLobby.getPlayer(request.queryParams(PostGameRoute.CHALLENGE_PARAM))).thenReturn(player2);
 
-        CuT = new PostGameRoute(playerLobby);
+        boardList = mock(BoardList.class);
+
+        CuT = new PostGameRoute(playerLobby, boardList);
     }
 
     /**

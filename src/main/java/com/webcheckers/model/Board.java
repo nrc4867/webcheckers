@@ -286,41 +286,7 @@ public class Board {
 
 	@Override
 	public String toString() {
-
-		StringBuilder builder = new StringBuilder();
-
-		builder.append("  ");
-
-		for (int col = 0; col < SIZE; col++) {
-			builder.append(col);
-		}
-
-		builder.append("\n");
-
-		for (int row = 0; row < SIZE; row++) {
-
-			builder.append(row + " ");
-
-			for (int col = 0; col < SIZE; col++) {
-
-				if (row%2 == col%2)
-					builder.append("\u001B[47m");
-
-				if (spaces[row][col].getPiece() == null) {
-					builder.append(" \u001B[0m");
-				}
-				else if (spaces[row][col].getPiece().getColor() == Color.RED) {
-					builder.append("\u001B[31m"+'R'+ "\u001B[0m");
-				}
-				else if (spaces[row][col].getPiece().getColor() == Color.WHITE) {
-					builder.append("\u001B[37m"+'W'+ "\u001B[0m");
-				}
-			}
-
-			builder.append("\n");
-		}
-
-		return builder.toString();
+		return "Game: " + totalBoards + ": " + redPlayer + " vs. " + whitePlayer;
 	}
 
 	@Override

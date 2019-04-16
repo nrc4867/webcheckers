@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.BoardController;
+import com.webcheckers.appl.BoardList;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.appl.Player;
@@ -19,11 +20,13 @@ import java.util.Objects;
 public class PostGameRoute implements Route {
 
     private final PlayerLobby playerLobby;
+    private final BoardList boardList;
 
     public static final String CHALLENGE_PARAM = "challenge";
 
-    public PostGameRoute(final PlayerLobby playerLobby) {
+    public PostGameRoute(final PlayerLobby playerLobby, final  BoardList boardList) {
         this.playerLobby = Objects.requireNonNull(playerLobby, "Playerlobby must be set");
+        this.boardList = Objects.requireNonNull(boardList, "Boardlist must be set");
     }
 
     @Override
@@ -52,7 +55,7 @@ public class PostGameRoute implements Route {
         }
 
         if(!reqPlayer.inGame()) {
-            Board board = new Board(reqPlayer, selectedPlayer);
+            Board board = boardList.createBoard(reqPlayer, selectedPlayer);
             reqPlayer.setBoard(board);
             selectedPlayer.setBoard(board);
             response.redirect(WebServer.GAME_URL);

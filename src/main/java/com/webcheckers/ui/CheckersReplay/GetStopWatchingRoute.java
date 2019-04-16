@@ -20,9 +20,9 @@ public class GetStopWatchingRoute implements Route {
 
         if (Checkers.playerHasBoard(player)) {
             Board board = player.getBoard();
-            boolean gameActive = (boolean) board.getModeOptions().get(ModeOptions.GAME_OVER_STATE);
+            boolean gameEnded = (boolean) board.getModeOptions().get(ModeOptions.GAME_OVER_STATE);
 
-            if (!board.isPlaying(player) || !gameActive) // prevent players from leaving by coming to this url
+            if (!board.isPlaying(player) || gameEnded) // prevent players from leaving by coming to this url
                 player.enableExit();
         }
 

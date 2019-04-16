@@ -170,12 +170,12 @@ public class BoardTest {
 
     }
 
-    @Test
-    public void testGetIncrementTurn(){
-        assertEquals(b.getTurn(), 0);
-        b.incrementTurn();
-        assertEquals(b.getTurn(), 1);
-    }
+//    @Test
+//    public void testGetIncrementTurn(){
+//        assertEquals(b.getTurn(), 0);
+////        b.incrementTurn();
+//        assertEquals(b.getTurn(), 1);
+//    }
 
     @Test
     public void testGetModeOptions(){

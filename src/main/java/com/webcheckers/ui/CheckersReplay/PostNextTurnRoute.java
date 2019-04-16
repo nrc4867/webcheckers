@@ -29,7 +29,7 @@ public class PostNextTurnRoute implements Route {
 
 
         if (!Checkers.playerHasBoard(player)) {
-            return ERROR;
+            return gson.toJson(ERROR);
         }
 
         Spectators.setTurn(session, Spectators.getTurn(session) + 1);

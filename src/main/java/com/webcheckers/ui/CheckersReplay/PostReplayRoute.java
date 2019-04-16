@@ -5,6 +5,7 @@ import com.webcheckers.appl.Player;
 import com.webcheckers.model.Board;
 import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Checkers;
+import com.webcheckers.util.Spectators;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -44,6 +45,7 @@ public class PostReplayRoute implements Route{
         }
 
         requester.setBoard(board);
+        Spectators.setTurn(httpsSession, 0);
 
         response.redirect(WebServer.REPLAY_GAME);
         halt();

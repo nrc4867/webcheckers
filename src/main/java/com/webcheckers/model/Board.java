@@ -236,6 +236,17 @@ public class Board {
 		return turn;
 	}
 
+    /**
+     * Get a board by the turn it was created at
+     * @param turn the turn to see the board at, should be a value 0 <= turn < turn
+     * @return a previous board, or the 0 turn board if the turn count is invalid
+     */
+	public Board getBoardByTurn(int turn) {
+	    Board board = new Board(redPlayer, whitePlayer, true);
+	    board.setSpaces(previousBoards.getOrDefault(turn, previousBoards.get(0)));
+	    return board;
+	}
+
 	/** @return Returns whether the player has <i>any</i> pieces. */
 	public boolean hasPiece(Player p) {
 

@@ -8,10 +8,12 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.BoardList;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.chinook.Chinook;
 import com.webcheckers.ui.CheckersPlay.*;
+import com.webcheckers.ui.CheckersReplay.*;
 import com.webcheckers.ui.CheckersSpectate.GetExitRoute;
 import com.webcheckers.ui.CheckersSpectate.PostSpectatorCheckRoute;
 import com.webcheckers.util.WebSeverCommandPrompt;
@@ -86,11 +88,21 @@ public class WebServer {
   public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
   public static final String SPECTATOR_STOP_WATCHING_URL = "/spectator/stopWatching";
 
+  /**
+   * URL used by players during replay mode
+   */
+  public static final String REPLAY_START = "/replay";
+  public static final String REPLAY_GAME = "/replay/game";
+  public static final String REPLAY_STOP = "/replay/stopWatching";
+  public static final String REPLAY_NEXT = "/replay/nextTurn";
+  public static final String REPLAY_PREVIOUS = "/replay/previousTurn";
+
   //
   // Attributes
   //
 
   private final PlayerLobby playerLobby;
+  private final BoardList boardList;
   private final TemplateEngine templateEngine;
   private final Gson gson;
 
@@ -115,6 +127,7 @@ public class WebServer {
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
+    this.boardList = new BoardList();
     this.gson = gson;
     this.playerLobby = new PlayerLobby(new Hashtable<String, Player>());
 
@@ -179,14 +192,14 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the CheckersPlay game Home page.
-    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+    get(HOME_URL, new GetHomeRoute(playerLobby, boardList, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
     get(GAME_URL, new GetGameRoute(templateEngine, gson));
-    post(GAME_URL, new PostGameRoute(playerLobby));
+    post(GAME_URL, new PostGameRoute(playerLobby, boardList));
 
     // Handles for Play state AJAX calls
     post(CHECK_TURN_URL, new PostCheckTurnRoute(gson));
@@ -199,6 +212,12 @@ public class WebServer {
     get(SPECTATOR_STOP_WATCHING_URL, new GetExitRoute());
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckRoute(gson));
 
+    //Handles for replay
+    post(REPLAY_START, new PostReplayRoute(boardList));
+    get(REPLAY_GAME, new GetReplayRoute(templateEngine, gson));
+    post(REPLAY_NEXT, new PostNextTurnRoute(gson));
+    post(REPLAY_PREVIOUS, new PostPreviousTurnRoute(gson));
+    get(REPLAY_STOP, new GetStopWatchingRoute());
 
     LOG.config("WebServer is initialized.");
   }

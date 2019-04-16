@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import com.webcheckers.appl.BoardList;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
@@ -41,9 +42,9 @@ public class GetHomeRouteTest {
         engine = mock(TemplateEngine.class);
 
         playerLobby = mock(PlayerLobby.class);
+        BoardList bl = mock(BoardList.class);
 
-
-        ghr= new GetHomeRoute(playerLobby,engine);
+        ghr= new GetHomeRoute(playerLobby,bl,engine);
     }
 
     @Test

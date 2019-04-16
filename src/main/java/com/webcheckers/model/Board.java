@@ -23,14 +23,40 @@ public class Board {
 	///
 	/// Attributes
 	///
+
+	/**
+	 * The id of the board is created in the order of board creation
+	 */
+	private final int boardID;
+
 	private Player redPlayer;
 	private Player whitePlayer;
+
+	/**
+	 * The spaces that make up the board
+	 */
 	private Space[][] spaces;
+	/**
+	 * The previous boards by turn
+	 */
+	private HashMap<Integer, Space[][]> previousBoards = new HashMap<>();
+
+	/**
+	 * The player moving this turn
+	 */
 	private Player activePlayer;
+
+	/**
+	 * a boards mode for mode options as json, setting this option currently designates a board as complete
+	 */
 	private ModeOptions mode;
+
 	private int activeRow;
 	private int activeCol;
-	private final int boardID;
+
+	/**
+	 * What turn the board is currently on
+	 */
 	private int turn = 0;
 
 	// CONSTRUCTORS ===========================================================
@@ -71,6 +97,7 @@ public class Board {
 		}
 
 		if (!empty) initialize();
+		saveBoard();
 	}
 
 	// ACCESSORS ==============================================================
@@ -209,8 +236,17 @@ public class Board {
 		return turn;
 	}
 
-	public void incrementTurn() {
-		turn++;
+    /**
+     * Get a board by the turn it was created at
+     * @param turn the turn to see the board at, should be a value 0 <= turn < turn
+     * @return a previous board, or the 0 turn board if the turn count is invalid
+     */
+	public Board getBoardByTurn(int turn) {
+	    Board board = new Board(redPlayer, whitePlayer, true);
+	    totalBoards --; // Don't need to increment
+
+	    board.setSpaces(previousBoards.getOrDefault(turn, previousBoards.get(0)));
+	    return board;
 	}
 
 	/** @return Returns whether the player has <i>any</i> pieces. */
@@ -262,7 +298,7 @@ public class Board {
 	}
 
 	public Map<String, Object> getModeOptions() {
-		return (mode != null)?mode.getOptions():new HashMap<>();
+		return (mode != null)?mode.getOptions():ModeOptions.gameActive().getOptions();
 	}
 
 	public void setPiece(Piece p, Position pos) {
@@ -276,9 +312,33 @@ public class Board {
 		spaces[row][col].setPiece(p);
 	}
 
-	public void switchActivePlayer() {
+	public void nextTurn() {
 		activePlayer = (activePlayer == redPlayer) ? whitePlayer : redPlayer;
+
+		turn++;
+		saveBoard();
 		activePlayer.alertTurn();
+	}
+
+	/**
+	 * Copy a board and store it
+	 */
+	private void saveBoard() {
+		Space[][] spaces = new Space[SIZE][SIZE];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+
+				spaces[i][j] = new Space(i, j);
+				try {
+					Piece piece = this.spaces[i][j].getPiece();
+					spaces[i][j].setPiece((Piece) piece.clone());
+				}catch (NullPointerException | CloneNotSupportedException e) {}
+
+			}
+		}
+
+
+		previousBoards.put(turn, spaces);
 	}
 
 
@@ -286,41 +346,7 @@ public class Board {
 
 	@Override
 	public String toString() {
-
-		StringBuilder builder = new StringBuilder();
-
-		builder.append("  ");
-
-		for (int col = 0; col < SIZE; col++) {
-			builder.append(col);
-		}
-
-		builder.append("\n");
-
-		for (int row = 0; row < SIZE; row++) {
-
-			builder.append(row + " ");
-
-			for (int col = 0; col < SIZE; col++) {
-
-				if (row%2 == col%2)
-					builder.append("\u001B[47m");
-
-				if (spaces[row][col].getPiece() == null) {
-					builder.append(" \u001B[0m");
-				}
-				else if (spaces[row][col].getPiece().getColor() == Color.RED) {
-					builder.append("\u001B[31m"+'R'+ "\u001B[0m");
-				}
-				else if (spaces[row][col].getPiece().getColor() == Color.WHITE) {
-					builder.append("\u001B[37m"+'W'+ "\u001B[0m");
-				}
-			}
-
-			builder.append("\n");
-		}
-
-		return builder.toString();
+		return "Game: " + (boardID + 1) + ": " + redPlayer + " vs. " + whitePlayer;
 	}
 
 	@Override

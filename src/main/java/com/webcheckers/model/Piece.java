@@ -157,4 +157,9 @@ public class Piece implements Serializable{
 			owner.toString(), type.name(), col, row
 		);
 	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return new Piece(row, col, owner, type);
+	}
 }

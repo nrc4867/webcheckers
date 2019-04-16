@@ -97,6 +97,7 @@ public class Board {
 		}
 
 		if (!empty) initialize();
+		saveBoard();
 	}
 
 	// ACCESSORS ==============================================================
@@ -302,13 +303,16 @@ public class Board {
 		activePlayer = (activePlayer == redPlayer) ? whitePlayer : redPlayer;
 		activePlayer.alertTurn();
 
+		turn++;
+		saveBoard();
+	}
+
+	private void saveBoard() {
 		Space[][] spaces = new Space[SIZE][SIZE];
 		for (int i = 0; i < spaces.length; i++)
 			spaces[i] = this.spaces[i].clone();
 
 		previousBoards.put(turn, spaces);
-
-		turn++;
 	}
 
 

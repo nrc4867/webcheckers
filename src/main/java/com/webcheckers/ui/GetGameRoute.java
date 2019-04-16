@@ -98,7 +98,7 @@ public class GetGameRoute implements Route {
         vm.put(TITLE, GAME);
         vm.put(CURRENT_USER, board.getActivePlayer());
 
-        vm.put(VIEW_MODE, Mode.PLAY);
+        vm.put(VIEW_MODE, mode);
         vm.put(MODE_OPTIONS, gson.toJson(board.getModeOptions()));
         vm.put(RED_PLAYER, board.getRedPlayer());
         vm.put(WHITE_PLAYER, board.getWhitePlayer());

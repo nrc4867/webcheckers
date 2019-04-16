@@ -14,7 +14,6 @@ import com.webcheckers.appl.chinook.Chinook;
 import com.webcheckers.ui.CheckersPlay.*;
 import com.webcheckers.ui.CheckersSpectate.GetExitRoute;
 import com.webcheckers.ui.CheckersSpectate.PostSpectatorCheckRoute;
-import com.webcheckers.util.WebSeverCommandPrompt;
 import spark.TemplateEngine;
 
 
@@ -120,10 +119,10 @@ public class WebServer {
 
     this.playerLobby.addPlayer(new Chinook("Dylan`"));
 
-    if(DEBUG) {
-      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
-      cmd.start();
-    }
+//    if(DEBUG) {
+//      WebSeverCommandPrompt cmd = new WebSeverCommandPrompt(playerLobby);
+//      cmd.start();
+//    }
 
   }
 

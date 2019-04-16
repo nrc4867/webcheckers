@@ -99,5 +99,10 @@ Setup the Environment
       assertEquals(players.keySet(), playerLobby.names());
    }
 
-
+   @Test
+   public void finalTest(){
+      playerLobby.getAvailablePlayers();
+      playerLobby.getPlayersInGame();
+      assertNull(playerLobby.getPlayer(null));
+   }
 }

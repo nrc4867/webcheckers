@@ -123,6 +123,15 @@ public class BoardTest {
     }
 
     @Test
+    public void testIsPlaying(){
+        assertTrue(b.isPlaying(w));
+        assertTrue(b.isPlaying(r));
+        Player f = new Player("testing");
+        assertFalse(b.isPlaying(f));
+    }
+
+
+    @Test
     public void testInBounds(){
         // Both inbound
         assertTrue(b.inBounds(0,0));
@@ -154,6 +163,28 @@ public class BoardTest {
         assertThrows(IllegalArgumentException.class , () ->{b.hasPiece(9, 9);});
         assertFalse(b.hasPiece(0,0));
         assertTrue(b.hasPiece(0,1));
+        Player f = new Player("testing");
+        assertTrue(b.hasPiece(r));
+        assertTrue(b.hasPiece(w));
+        assertFalse(b.hasPiece(f));
+
+    }
+
+    @Test
+    public void testGetIncrementTurn(){
+        assertEquals(b.getTurn(), 0);
+        b.incrementTurn();
+        assertEquals(b.getTurn(), 1);
+    }
+
+    @Test
+    public void testGetModeOptions(){
+        b.setPlayMode(ModeOptions.gameActive());
+        assertEquals(b.getModeOptions(), ModeOptions.gameActive().getOptions());
+        b.setPlayMode(ModeOptions.resign(r));
+        assertEquals(b.getModeOptions(), ModeOptions.resign(r).getOptions());
+        b.setPlayMode(ModeOptions.won(w));
+        assertEquals(b.getModeOptions(), ModeOptions.won(w).getOptions());
     }
 
     @Test
@@ -183,6 +214,7 @@ public class BoardTest {
     public void testEquals(){
         Board a = new Board(r,w);
 
+        assertNotEquals(b, r);
         assertNotEquals(a,b);
         assertEquals(a,a);
         assertEquals(b,b);

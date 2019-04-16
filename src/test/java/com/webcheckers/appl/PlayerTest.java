@@ -3,9 +3,11 @@ package com.webcheckers.appl;
 import com.webcheckers.appl.BoardController;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
 import org.junit.jupiter.api.Tag;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -62,17 +64,6 @@ public class PlayerTest {
       assertEquals(playerTest1, playerTest2);
    }
 
-   @Test
-   public void isSelectedPlayer1InGame_test(){
-//      assertFalse(playerTest1.isSelectedPlayerInGame());
-   }
-
-   @Test
-   public void isSelectedPlayer2InGame_test(){
-//      assertFalse(playerTest2.isSelectedPlayerInGame());
-
-
-   }
 
    @Test
    public void hashCode_test(){
@@ -82,9 +73,10 @@ public class PlayerTest {
 
    @Test
    public void cleanup_test(){
-
-
-      //playerLobby.containsPlayer(playerTest1);
+      playerLobby = mock(PlayerLobby.class);
+      playerTest1.setLobby(playerLobby);
+      playerTest1.cleanup();
+      assertFalse(playerLobby.containsPlayer(playerTest1));
    }
 
    /**
@@ -110,6 +102,19 @@ public class PlayerTest {
 
    }
 
+   @Test
+   public void checkTurn_test(){
+      assertFalse(playerTest2.checkTurn());
+      playerTest1.setBoard(null);
+      assertFalse(playerTest1.checkTurn());
+   }
+
+   @Test
+   public void getOpponent_test(){
+      playerTest1.setBoard(mock(Board.class));
+      assertNull(playerTest1.getOpponent());
+   }
+
    /**
     * SETTERS
     */
@@ -126,17 +131,6 @@ public class PlayerTest {
       assertEquals(colorWhite, player2.getColor());
    }
 
-   @Test
-   public void selectInGameOpponent_test(){
-      Player player1 = new Player(playerName);
-      Player player2 = new Player(playerName, colorRed);
-
-//      player1.selectInGameOpponent(true);
-//      player2.selectInGameOpponent(true);
-//
-//      assertTrue(player1.isSelectedPlayerInGame());
-//      assertTrue(player2.isSelectedPlayerInGame());
-   }
 
    @Test
    public void setBoard_test(){

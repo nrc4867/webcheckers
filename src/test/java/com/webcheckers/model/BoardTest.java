@@ -24,6 +24,12 @@ public class BoardTest {
     }
 
     @Test
+    public void testConstructor(){
+        Board board = new Board(r,w,false);
+        assertNotNull(board.getSpaces());
+    }
+
+    @Test
     public void testPieces(){
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> b.getPiece(9, 9));
         assertNull(b.getPiece(0,0));
@@ -86,6 +92,26 @@ public class BoardTest {
         }
         b.setSpaces(spaces);
         assertEquals(b.getSpaces(), spaces);
+
+        spaces = new Space[SIZE][SIZE+1];
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE+1; col++) {
+                spaces[row][col] = new Space(0,0);
+            }
+        }
+        b.setSpaces(spaces);
+        assertNotEquals(b.getSpaces(), spaces);
+
+        spaces = new Space[SIZE+1][SIZE];
+        for (int row = 0; row < SIZE+1; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                spaces[row][col] = new Space(0,0);
+            }
+        }
+        b.setSpaces(spaces);
+        assertNotEquals(b.getSpaces(), spaces);
+
+
     }
 
     @Test
@@ -110,6 +136,12 @@ public class BoardTest {
     @Test
     public void testSetActiveSpace(){
         assertThrows(IllegalArgumentException.class , () ->{b.setActiveSpace(-1, -1);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setActiveSpace(0, -1);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setActiveSpace(-1, 0);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setActiveSpace(100, 100);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setActiveSpace(0, 100);});
+        assertThrows(IllegalArgumentException.class , () ->{b.setActiveSpace(100, 0);});
+
         b.setActiveSpace(0,0);
         assertEquals(b.getActiveSpace(), b.getSpaces()[0][0]);
     }
@@ -167,18 +199,17 @@ public class BoardTest {
         assertTrue(b.hasPiece(r));
         assertTrue(b.hasPiece(w));
         assertFalse(b.hasPiece(f));
-
     }
 
     @Test
-    public void testGetIncrementTurn(){
-        assertEquals(b.getTurn(), 0);
-        b.incrementTurn();
-        assertEquals(b.getTurn(), 1);
+    public void testGetBoardByTurn(){
+        assertNotNull(b.getBoardByTurn(0));
     }
 
     @Test
     public void testGetModeOptions(){
+        b.setPlayMode(null);
+        assertEquals(b.getModeOptions(), ModeOptions.gameActive().getOptions());
         b.setPlayMode(ModeOptions.gameActive());
         assertEquals(b.getModeOptions(), ModeOptions.gameActive().getOptions());
         b.setPlayMode(ModeOptions.resign(r));
@@ -202,18 +233,9 @@ public class BoardTest {
     }
 
 
-//    @Test
-//    public void testResign(){
-//        b.setResign(r);
-//        assertEquals(b.getResign(), r);
-//        b.setResign(w);
-//        assertEquals(b.getResign(), w);
-//    }
-
     @Test
     public void testEquals(){
         Board a = new Board(r,w);
-
         assertNotEquals(b, r);
         assertNotEquals(a,b);
         assertEquals(a,a);

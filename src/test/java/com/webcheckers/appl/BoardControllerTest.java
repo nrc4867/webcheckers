@@ -1,8 +1,10 @@
 package com.webcheckers.appl;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.webcheckers.model.*;
+import com.webcheckers.ui.view.Mode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -300,6 +302,7 @@ public class BoardControllerTest {
         assertFalse(boardController.canJumpTo(m3,moves));
 
 
+
     }
 
 
@@ -440,6 +443,36 @@ public class BoardControllerTest {
         boardController.getBoard().setActivePlayer(player2);
         assertEquals(GameState.RED_WON,boardController.getGameState());
 
+    }
+    @Test
+    public void noRED(){
+        int SIZE=8;
+        for (int i = 0; i < 8; i+=2) {
+            boardController.getBoard().getSpaces()[SIZE - 3][i].setPiece(null);
+        }
+        for (int i = 1; i < 8; i+=2) {
+            boardController.getBoard().getSpaces()[SIZE-2][i].setPiece(null);
+        }
+        for (int i = 0; i < 8; i+=2) {
+            boardController.getBoard().getSpaces()[SIZE-1][i].setPiece(null);
+        }
+
+        assertEquals(GameState.WHITE_WON,boardController.getGameState());
+    }
+
+    @Test
+    public void noWhite(){
+        int SIZE=8;
+        for (int i = 1; i < SIZE; i+=2) {
+            boardController.getBoard().getSpaces()[0][i].setPiece(null);
+        }
+        for (int i = 0; i < SIZE; i+=2) {
+            boardController.getBoard().getSpaces()[1][i].setPiece(null);
+        }
+        for (int i = 1; i < SIZE; i+=2) {
+            boardController.getBoard().getSpaces()[2][i].setPiece(null);
+        }
+        assertEquals(GameState.RED_WON,boardController.getGameState());
     }
 
 }

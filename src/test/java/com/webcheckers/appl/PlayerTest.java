@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 /**
  * A test class for the Player class.
  *
- * @author Dylan Cuprewich
+ * @author Dylan Cuprewich & Suwamik Paul
  */
 @Tag("appl-tier")
 public class PlayerTest {

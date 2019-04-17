@@ -93,6 +93,34 @@ public class MoveTest {
     }
 
     @Test
+    public void testGetJumpedPosition(){
+        intialize();
+        m.setMovement(Move.MoveType.REGULAR);
+        assertNull(m.getJumpedPosition());
+    }
+
+    @Test
+    public void testSameJumpedPosition(){
+        intialize();
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(1);
+        b.setCell(1);
+        Position c = new Position();
+        c.setRow(2);
+        c.setCell(2);
+        a.setStart(b);
+        a.setEnd(c);
+
+        m.setMovement(Move.MoveType.REGULAR);
+        assertFalse(m.sameJumpedPosition(a));
+
+        m.setMovement(Move.MoveType.JUMP);
+        a.setMovement(Move.MoveType.REGULAR);
+        assertFalse(m.sameJumpedPosition(a));
+    }
+
+    @Test
     public void testMisc(){
         intialize();
         System.out.println(m.toString());
@@ -103,16 +131,29 @@ public class MoveTest {
     public void testEquals(){
         Move a = new Move();
         Position b = new Position();
-        b.setRow(3);
-        b.setCell(3);
+        b.setRow(1);
+        b.setCell(1);
         Position c = new Position();
-        c.setRow(4);
-        c.setCell(4);
+        c.setRow(2);
+        c.setCell(2);
         a.setStart(b);
         a.setEnd(c);
         intialize();
+        assertNotEquals(m, s);
+        assertEquals(m,a);
+
+        c.setRow(3);
+        a.setEnd(c);
         assertNotEquals(m,a);
-        assertEquals(a,a);
+
+        b.setRow(4);
+        a.setStart(b);
+        assertNotEquals(m,a);
+
+        c.setRow(2);
+        a.setEnd(c);
+        assertNotEquals(m,a);
+
         assertEquals(m,m);
     }
 
@@ -137,9 +178,11 @@ public class MoveTest {
     @Test
     public void testConnectedMovesArray(){
         ArrayList<Move> arr = new ArrayList<>();
+        assertTrue(Move.ConnectedMoves(arr));
 
         intialize();
         arr.add(m);
+        assertTrue(Move.ConnectedMoves(arr));
 
         Move a = new Move();
         Position b = new Position();
@@ -168,6 +211,42 @@ public class MoveTest {
         b.setRow(4);
         assertFalse(Move.ConnectedMoves(arr));
 
+    }
+
+    @Test
+    public void testReenters(){
+        ArrayList<Move> arr = new ArrayList<>();
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(2);
+        b.setCell(2);
+        Position c = new Position();
+        c.setRow(2);
+        c.setCell(2);
+        a.setStart(b);
+        a.setEnd(c);
+        arr.add(a);
+
+        assertTrue(a.reenters(arr));
+    }
+
+    @Test
+    public void testGetLast(){
+        ArrayList<Move> arr = new ArrayList<>();
+        assertNull(Move.getLast(arr));
+
+        Move a = new Move();
+        Position b = new Position();
+        b.setRow(2);
+        b.setCell(2);
+        Position c = new Position();
+        c.setRow(2);
+        c.setCell(2);
+        a.setStart(b);
+        a.setEnd(c);
+        arr.add(a);
+
+        assertEquals(a, Move.getLast(arr));
     }
 
 }

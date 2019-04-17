@@ -96,6 +96,20 @@ public class SpaceTest {
     }
 
     @Test
+    public void TestEquals(){
+        assertNotEquals(s, p);
+        assertEquals(s,s);
+        Space a = new Space(0,0);
+        assertEquals(s,a);
+        Space b = new Space(0,1);
+        assertNotEquals(s,b);
+        Space c = new Space(1,0);
+        assertNotEquals(s,c);
+        Space d = new Space(1,1);
+        assertNotEquals(s,d);
+    }
+
+    @Test
     public void testMisc(){
         Space a = new Space(0,0);
         System.out.println(a.toString());

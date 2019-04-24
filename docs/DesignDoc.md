@@ -114,13 +114,12 @@ The UI tier is built by the `Webserver` class when the application starts. When 
 ![POST /validateMove](pics/Validate&#32;Move.png)
 =======
 #### Generation
-![UI Tier Generation](UITierGeneration.png)
+![UI Tier Generation](pics/UITierGeneration.png)
 
 The UI tier is built by the `Webserver` class when the application starts. When building the `Webserver` maps all the classes in this tier labeled 'Route' to different URLs. All Route classes implement the SparkJava interface `Route` which allows these classes to handle web requests and generate webpages for end-users. 
 
 #### Play Mode
-![POST /validateMove](Validate&#32;Move.png)
->>>>>>> ff35cfd6edfd29b49e48e630c13007107bea3fa9
+![POST /validateMove](pics/Validate&#32;Move.png)
 
 The UI tier handles events for gameplay. Above depicts the sequence that is executed when a player asks the server to submit a move for validation. When a player makes a move it must be validated on the server to ensure the move follows the rules of checkers.
 
@@ -190,6 +189,7 @@ The recommendation for most of the methods outside of the BoardController class 
 
 #### Overall Tiers
 ![Overall Tier Code Coverage](pics/overall_coverage.png)
+
 #### Application Tier
 ![Application Tier Code Coverage](pics/appl_coverage.png)
 

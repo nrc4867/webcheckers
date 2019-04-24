@@ -162,13 +162,8 @@ This section provides information about the testing performed
 and the results of the testing
 
 ### Acceptance Testing
-Currently, there are 5 user stories that have passed all their acceptance
-criteria tests. This includes sign-in, start a game, move, capture and king
-There are currently 3 user stories that are part of the MVP,
-that have yet to be tested because they have not been fully implemented. 
-These are jump, resign and rematch. The enhancements have not been implemented either
-and thus not been tests.
-There hasn't been any failures and likewise any concerns.
+During sprint 3, we conducted a cross testing with other students. They tested the user stories of what havd been implemented. Once we had completed the MVP and enhancments were completed, we conducted our own testing to determine if our project worked properly.
+During the cross testing, the other students discovered an error in regards to the player list not updating for all players who were signed in. We fix the problem after learning of its existence. During the course of our testing, we did not encounter any errors in our user stories.
 
 
 ### Unit Testing and Code Coverage

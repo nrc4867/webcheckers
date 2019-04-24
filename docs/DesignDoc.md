@@ -189,12 +189,7 @@ The recommendation for most of the methods outside of the BoardController class 
 ### Code Coverage Results
 
 #### Overall Tiers
-<<<<<<< HEAD
 ![Overall Tier Code Coverage](pics/overall_coverage.png)
-
-=======
-![Overall Tier Code Coverage](overall_coverage.png)
->>>>>>> ff35cfd6edfd29b49e48e630c13007107bea3fa9
 #### Application Tier
 ![Application Tier Code Coverage](pics/appl_coverage.png)
 

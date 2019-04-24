@@ -97,7 +97,10 @@ with the WebCheckers application.
 When you connect to the server, you first render to the home page. This Home page displays the players that are online in the lobby. You will have the option to sign in. When you click the sign in button, you render to the sign in page. 
 In the sign in page, you are prompted to enter a username to join other players in the home page. If you enter a valid username, you are rendered back to the home page. If it an invalid name, you are prompted to enter the name again.
 Once you are signed in and waiting in the home page, if you are challenged or if you challenge another player and they accept, you are sent to the game.
-You may sign out after playing the game and you render back to the home page.
+If you want to play against the AI, you can simply click on the AI and play against it.
+If you want to spectate a game, simply clicking on the player under the "spectate" header will put you under spectate mode.
+And finally, you can click on a game under the "replay" header to watch the replay.
+You may sign out after playing a game and you render back to the home page.
 
 
 ### UI Tier
@@ -159,7 +162,9 @@ There hasn't been any failures and likewise any concerns.
 
 ### Unit Testing and Code Coverage
 Our strategy for unit testing the code was very straight forward. We decided that the members who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
-As our team completed implementing the MVP, our target for the code coverage was at least 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result.
+The code coverage target for our initial MVP was atleast 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result. 
+After we finished all our enhancements, we had re-test few components of our code. Our target for the final project was 95% code coverage and we were able to accomplish it. We are very proud of what we were able to achieve.
+
 
 ### Code Metrics 
 

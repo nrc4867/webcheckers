@@ -159,6 +159,11 @@ There hasn't been any failures and likewise any concerns.
 Our strategy for unit testing the code was very straight forward. We decided that the members who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
 As our team completed implementing the MVP, our target for the code coverage was at least 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result.
 
+### Code Metrics 
+
+WIP
+
+
 ### Code Coverage Results
 
 #### Overall Tiers

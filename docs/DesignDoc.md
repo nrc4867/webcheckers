@@ -61,7 +61,7 @@ watch- next move, previous move.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model.png)
+![The WebCheckers Domain Model](pics/domain-model.png)
 
 The main component of the domain model is the WebCheckers game. It is built up of smaller entities such as the players and the board. A player represents the user who is playing the game of WebCheckers and the board is the field on which the game is played on. The board is composed of 64 tiles on which the pieces are placed.  Each player can move one of their 24 pieces per turn, this move must follow the rules. This move can either be moving a piece forward or jumping and capturing an opponent’s piece. The piece can either be a standard piece or an upgraded king which follows a different moving ruleset.
 
@@ -74,7 +74,7 @@ This section describes the application architecture.
 
 The following Tiers/Layers model shows a high-level view of the webapp's architecture.
 
-![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
+![The Tiers & Layers of the Architecture](pics/architecture-tiers-and-layers.png)
 
 As a web application, the user interacts with the system using a
 browser.  The client-side of the UI is composed of HTML pages with
@@ -92,7 +92,7 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface.png)
+![The WebCheckers Web Interface Statechart](pics/web-interface.png)
 
 When you connect to the server, you first render to the home page. This Home page displays the players that are online in the lobby. You will have the option to sign in. When you click the sign in button, you render to the sign in page. 
 In the sign in page, you are prompted to enter a username to join other players in the home page. If you enter a valid username, you are rendered back to the home page. If it an invalid name, you are prompted to enter the name again.
@@ -106,16 +106,16 @@ You may sign out after playing a game and you render back to the home page.
 ### UI Tier
 The UI tier contains classes that allow users to make web requests and therefore allows for user interaction. The UI tier is responsible for using model, application, and session data to generate dynamic webpages that respond to changes in the programs state. The UI tier, therefore, is also responsible for the handling of any AJAX calls that a users browser may send. 
 
-![UI Tier Generation](UITierGeneration.png)
+![UI Tier Generation](pics/UITierGeneration.png)
 
 The UI tier is built by the `Webserver` class when the application starts. When building the `Webserver` maps all the classes in this tier labeled 'Route' to different URLs. All Route classes implement the SparkJava interface `Route` which allows these classes to handle web requests and generate webpages for end-users. 
 
 
-![POST /validateMove](Validate&#32;Move.png)
+![POST /validateMove](pics/Validate&#32;Move.png)
 
 The UI tier handles events for gameplay. Above depicts the sequence that is executed when a player asks the server to submit a move for validation. When a player makes a move it must be validated on the server to ensure the move follows the rules of checkers.
 
-![POST /submitTurn](Checkers&#32;Turn.png)
+![POST /submitTurn](pics/Checkers&#32;Turn.png)
 
 Above depicts the average expected sequence for any particular checkers turn. When a player takes a turn they are expected to make a number of moves, then submit there turn for validation. The turn is either rejected or the moves are performed on the board.
 
@@ -174,22 +174,22 @@ WIP
 ### Code Coverage Results
 
 #### Overall Tiers
-![Overall Tier Code Coverage](overall_coverage.png)
+![Overall Tier Code Coverage](pics/overall_coverage.png)
 
 #### Application Tier
-![Application Tier Code Coverage](appl_coverage.png)
+![Application Tier Code Coverage](pics/appl_coverage.png)
 
 #### Model Tier
-![Model Tier Code Coverage](model_coverage.png)
+![Model Tier Code Coverage](pics/model_coverage.png)
 
 #### UI Tier
-![UI Tier Code Coverage](ui_coverage.png)
+![UI Tier Code Coverage](pics/ui_coverage.png)
 
 #### Checkersplay  Sub-Tier
-![Checkersplay Sub-Tier Code Coverage](check_coverage.png)
+![Checkersplay Sub-Tier Code Coverage](pics/check_coverage.png)
 
 #### Util Tier
-![Util Tier Code Coverage](util_coverage.png)
+![Util Tier Code Coverage](pics/util_coverage.png)
 
 
 

@@ -173,15 +173,27 @@ After we finished all our enhancements, we had to re-test few components of our 
 
 
 ### Code Metrics 
-
-WIP
+We ran multiple code metric measurements to test our code. There were no metric warnings for Chidamber-Kemerer metrics,
+JavaDoc coverage metrics, Lines of code metrics and Martin package metrics. We has several warnings when running the 
+complexity metrics. On a package level, all packages did not provoke any warnings. There were several classes that were
+above the threshold. These were CreateModeOptions, BoardController, BoardTest, Board and Move. On the method level,
+some of the methods that exceed the thresholds included canJumpTo, canMoveTop, getGameState, mustJumpThisTurn, 
+shouldKing, in the BoardController class. Also included is bestRoute in Chinook, validName in PlayerLobby, hasPiece in 
+Board, testGetSpaces in BoardTest, ConnectMoves in Move and CreateModeOptions and PostSubmitRoute in CheckersPlay.
+ 
+The recommendation for most of the methods outside of the BoardController class would be to leave as is, because they
+are necessary for the final output and that would be risked by attempting to make it more complex. For testGetSpaces, 
+the codecould be reimplemented to be simplified by reusing code. The hasPiece and ConnectedMoves could be reimplemented 
+as wellto make better use of iteration.The recommendation for the BoardController class would be to redesign the class 
+as a whole. This class' complexity stems from its effort to coordinate a large amount of information. It would be more 
+effective the responsbility was spread throughout multiple classes and methods.
+ 
 
 
 ### Code Coverage Results
 
 #### Overall Tiers
 ![Overall Tier Code Coverage](overall_coverage.png)
-
 #### Application Tier
 ![Application Tier Code Coverage](appl_coverage.png)
 

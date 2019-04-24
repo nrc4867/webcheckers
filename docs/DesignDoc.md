@@ -49,10 +49,12 @@ Stories/Epics involved in completion of the MVP:
   * Start a Game
   
 ### Roadmap of Enhancements
-* We plan on adding an AI that could play against a user replacing a human opponent.
-  * We are considering having multiple difficulty levels for the AI, ex. easy, medium, hard.
-* We also plan on adding a Spectator mode where a third user could watch a match occur without
-having the ability to play.
+* We have developed an AI that a user can play against replacing a human opponent. 
+* We have also developed a "Spectator" mode where a third user could watch a match occuring 
+between two other players without having the ability to play.
+* Lastly, we have added a third enhancement where a user could watch the replay of the match,
+meaning the user could simulated the game that was previously played and can control what to 
+watch- next move, previous move.
 
 
 ## Application Domain

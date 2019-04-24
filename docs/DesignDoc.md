@@ -133,24 +133,29 @@ to sign in and play against other users. It also holds the
 BoardController, which takes in moves from Players and updates the
 Model's Board accordingly.
 
+Additionally, the Application tier also holds Chinook, our implementation
+of an AI. Chinook extends the Player class and simply sits in the lobby
+waiting to be challenged. When playing, Chinook will recursively check
+every jump available and assign each a score using a ScoredMoveList. It
+then plays the highest-scored route.
+
+
 ### Model Tier
 The Model Tier holds the most basic features of WebCheckers. It contains
 the Board, Pieces, etc. It has few dependencies on classes outside of
 its package. Board holds an array of Spaces, each of which may hold a
 Piece. The Model Tier only holds the most basic access methods and
 defers to the Application Tier's BoardController class to deal with
-Player Moves.
+Player Moves. Outside of classes, the Model Tier also contains an
+enum for holding GameState (RED WINS, WHITE WINS, or IN PROGRESS).
 
 ### Design Improvements
-Moving forward, we want to clean up the code so that follows more
-closely with GRASP and SOLID principles. Currently, the schema has
-high cohesion, but it also has high coupling. Additionally, it
-occasionally violates the Law of Demeter, forcing others to use
-multi-dot notation.
-
-Additionally, we hope to implement Replay and Spectator modes by
-the end of sprint 3. Time permitting, we may also implement an AI
-player.
+Moving forward, we should clean up BoardController and possibly split
+it into several smaller classes. Right now, it has much more
+functionality than is appropriate for one class. It may make more
+sense to split it into BoardController and MoveValidator classes.
+In that vein, we need to refactor several methods directly into
+Move, Piece, etc.
 
 ## Testing
 This section provides information about the testing performed

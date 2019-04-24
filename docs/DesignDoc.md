@@ -106,11 +106,12 @@ You may sign out after playing a game and you render back to the home page.
 ### UI Tier
 The UI tier contains classes that allow users to make web requests and therefore allows for user interaction. The UI tier is responsible for using model, application, and session data to generate dynamic webpages that respond to changes in the programs state. The UI tier, therefore, is also responsible for the handling of any AJAX calls that a users browser may send. 
 
+#### Generation
 ![UI Tier Generation](UITierGeneration.png)
 
 The UI tier is built by the `Webserver` class when the application starts. When building the `Webserver` maps all the classes in this tier labeled 'Route' to different URLs. All Route classes implement the SparkJava interface `Route` which allows these classes to handle web requests and generate webpages for end-users. 
 
-
+#### Play Mode
 ![POST /validateMove](Validate&#32;Move.png)
 
 The UI tier handles events for gameplay. Above depicts the sequence that is executed when a player asks the server to submit a move for validation. When a player makes a move it must be validated on the server to ensure the move follows the rules of checkers.
@@ -119,13 +120,18 @@ The UI tier handles events for gameplay. Above depicts the sequence that is exec
 
 Above depicts the average expected sequence for any particular checkers turn. When a player takes a turn they are expected to make a number of moves, then submit there turn for validation. The turn is either rejected or the moves are performed on the board.
 
+#### Spectator Mode
+The UI tier allows for people to spectate active games. A spectator will watch a chosen player, as they watch their web-browser will periodically ask the webserver (Through `PostSpectatorCheckRoute`) if any additional turns have been made. If an additional turn was made then the spectator's browser will automatically refresh grabbing the most recent copy of the board.  
+
+#### Replay Mode
+The UI tier allows for players to re-watch games that have already been played. When a player first request to see a game (or board) they are shown the board on the first turn of the game. When they press "Next Turn" a request to `PostNextTurnRoute` is made and the webpage is reloaded. A similar event occurs when "Previous Turn" is pressed. 
+
 ### Application Tier
 The Application Tier holds the main interfaces between the Model Tier
 and users. It contains Players and PlayerLobbies, which allows users
 to sign in and play against other users. It also holds the
 BoardController, which takes in moves from Players and updates the
 Model's Board accordingly.
-
 
 ### Model Tier
 The Model Tier holds the most basic features of WebCheckers. It contains

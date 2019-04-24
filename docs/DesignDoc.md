@@ -34,7 +34,7 @@ This section describes the features of the application.
 The major features of the application include being able to signin with the name of your choosing, being able to select the player you want to challenge, move your own pieces, capture enemy pieces, beat your opponent, lose to your opponent, and resign to your opponent.
 
 ### Definition of MVP
-The MVP includes every player being sign-in before playing a game and being sign-out when the game is finished, the players must play according to the American rules of Checkers, and allowing players to resign at any point to end the game.
+The MVP includes every player being sign-in before playing a game and being sign-out when the game is finished, the players must play according to the American rules of Checkers and allowing players to resign at any point to end the game.
 
 ### MVP Features
 Stories/Epics involved in completion of the MVP:
@@ -50,11 +50,10 @@ Stories/Epics involved in completion of the MVP:
   
 ### Roadmap of Enhancements
 * We have developed an AI that a user can play against replacing a human opponent. 
-* We have also developed a "Spectator" mode where a third user could watch a match occuring 
+* We have also developed a "Spectator" mode where a third user could watch a match occurring 
 between two other players without having the ability to play.
 * Lastly, we have added a third enhancement where a user could watch the replay of the match,
-meaning the user could simulated the game that was previously played and can control what to 
-watch- next move, previous move.
+meaning the user could be simulated the game that was previously played and can control what to watch- next move, previous move.
 
 
 ## Application Domain
@@ -72,7 +71,7 @@ This section describes the application architecture.
 
 ### Summary
 
-The following Tiers/Layers model shows a high-level view of the webapp's architecture.
+The following Tiers/Layers model shows a high-level view of the web app's architecture.
 
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 
@@ -162,14 +161,14 @@ This section provides information about the testing performed
 and the results of the testing
 
 ### Acceptance Testing
-During sprint 3, we conducted a cross testing with other students. They tested the user stories of what havd been implemented. Once we had completed the MVP and enhancments were completed, we conducted our own testing to determine if our project worked properly.
-During the cross testing, the other students discovered an error in regards to the player list not updating for all players who were signed in. We fix the problem after learning of its existence. During the course of our testing, we did not encounter any errors in our user stories.
+During sprint 3, we conducted across testing with other students. They tested the user stories of what have been implemented. Once we had completed the MVP and enhancements were completed, we conducted our own testing to determine if our project worked properly.
+During the cross-testing, the other students discovered an error in regards to the player list not updating for all players who were signed in. We fix the problem after learning of its existence. During the course of our testing, we did not encounter any errors in our user stories.
 
 
 ### Unit Testing and Code Coverage
 Our strategy for unit testing the code was very straight forward. We decided that the members who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
-The code coverage target for our initial MVP was atleast 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result. 
-After we finished all our enhancements, we had to re-test few components of our code. Our target for the final project was 95% code coverage and we were able to accomplish it. We are very proud of achievement.
+The code coverage target for our initial MVP was at least 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result. 
+After we finished all our enhancements, we had to re-test a few components of our code. Our target for the final project was 95% code coverage and we were able to accomplish it. We are very proud of the achievement.
 
 
 ### Code Metrics 

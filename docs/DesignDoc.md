@@ -163,7 +163,7 @@ There hasn't been any failures and likewise any concerns.
 ### Unit Testing and Code Coverage
 Our strategy for unit testing the code was very straight forward. We decided that the members who weren't much involved with implementing the MVP were to test the code. We divided the testing into different parts based on the tiers- Application, Model, UI and also including util, which is our utility class. 
 The code coverage target for our initial MVP was atleast 90%. After finishing most of the testing, our code coverage, generated using jacoco, turned out to be 94% which was a satisfactory result. 
-After we finished all our enhancements, we had re-test few components of our code. Our target for the final project was 95% code coverage and we were able to accomplish it. We are very proud of what we were able to achieve.
+After we finished all our enhancements, we had to re-test few components of our code. Our target for the final project was 95% code coverage and we were able to accomplish it. We are very proud of achievement.
 
 
 ### Code Metrics 
